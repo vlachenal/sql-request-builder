@@ -135,6 +135,8 @@ public final class SQL {
   /**
    * Check if value is null or empty (according to its type)
    *
+   * @param <T> the value type
+   *
    * @param value the value
    *
    * @return {@code true} is value is not null, {@code false} otherwise
