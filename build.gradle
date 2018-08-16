@@ -26,6 +26,10 @@ repositories {
   jcenter()
 }
 
+javadoc {
+  destinationDir = file("docs")
+}
+
 dependencies {
   // Use JUnit test framework
   testImplementation 'junit:junit:4.12'
