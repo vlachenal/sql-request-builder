@@ -10,8 +10,8 @@
 apply plugin: 'java-library'
 apply plugin: 'eclipse'
 
-sourceCompatibility = 10
-targetCompatibility = 10
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 allprojects {
     eclipse.project {
