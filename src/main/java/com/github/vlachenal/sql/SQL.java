@@ -72,6 +72,8 @@ public final class SQL {
   /**
    * Initialize a new clauses builder
    *
+   * @param <T> the value type
+   *
    * @param column the column
    * @param clause the clause maker
    * @param value the value
@@ -84,6 +86,8 @@ public final class SQL {
 
   /**
    * Initialize a new clauses builder
+   *
+   * @param <T> the value type
    *
    * @param column the column
    * @param clause the clause maker

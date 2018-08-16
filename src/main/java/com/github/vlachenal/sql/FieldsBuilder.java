@@ -31,6 +31,7 @@ public class FieldsBuilder extends AbstractPartBuilder {
   /**
    * {@link FieldsBuilder} constructor
    *
+   * @param select the select query builder
    * @param column the selected column
    */
   public FieldsBuilder(final SelectBuilder select, final String column) {
@@ -133,7 +134,7 @@ public class FieldsBuilder extends AbstractPartBuilder {
   /**
    * Switch to 'from' builder
    *
-   * @param table the table where columns are selected form
+   * @param subquery the 'table' where columns are selected from
    * @param alias the 'table' alias
    *
    * @return the from builder

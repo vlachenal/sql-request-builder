@@ -103,6 +103,8 @@ public class ClausesBuilder {
   /**
    * Add NOT instruction
    *
+   * @param clauses the clauses to negate
+   *
    * @return {@code this}
    */
   public ClausesBuilder not(final ClausesBuilder clauses) {
