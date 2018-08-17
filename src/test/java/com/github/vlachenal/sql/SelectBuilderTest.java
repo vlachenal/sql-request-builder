@@ -204,7 +204,7 @@ public class SelectBuilderTest {
         .from("toto t")
         .innerJoin("tutu u").on(SQL.clauses()
                                 .field("t.i").equals().field("u.a")
-                                .and("u.u", ClausesBuilder::equalsTo, "UHU")
+                                .and("u.u", Clauses::equalsTo, "UHU")
             )
         .build();
     System.out.println("SQL query: " + query.getQuery());
@@ -390,16 +390,16 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("t.tata")
         .from("toto t")
-        .where(SQL.clauses("t.a", ClausesBuilder::equalsTo, "b")
-               .and("t.a", ClausesBuilder::notEquals, "c")
-               .and("t.a", ClausesBuilder::lesser, "d")
-               .and("t.a", ClausesBuilder::lesserEquals, "e")
-               .and("t.a", ClausesBuilder::greater, "f")
-               .and("t.a", ClausesBuilder::greateEquals, "g")
+        .where(SQL.clauses("t.a", Clauses::equalsTo, "b")
+               .and("t.a", Clauses::notEquals, "c")
+               .and("t.a", Clauses::lesser, "d")
+               .and("t.a", Clauses::lesserEquals, "e")
+               .and("t.a", Clauses::greater, "f")
+               .and("t.a", Clauses::greateEquals, "g")
 //               .and().field("t.i").between().field("1").and().field("10")
 //               .and().field("t.j").notBetween().field("1").and().field("10")
-               .and("t.k", ClausesBuilder::like, "%plip%")
-               .and("t.l", ClausesBuilder::notLike, "%plop%")
+               .and("t.k", Clauses::like, "%plip%")
+               .and("t.l", Clauses::notLike, "%plop%")
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -426,8 +426,8 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("t.tata")
         .from("toto t")
-        .where(SQL.clauses("t.a", ClausesBuilder::equalsTo, "b")
-               .and("t.a", ClausesBuilder::notEquals, null)
+        .where(SQL.clauses("t.a", Clauses::equalsTo, "b")
+               .and("t.a", Clauses::notEquals, null)
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -444,8 +444,8 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("t.tata")
         .from("toto t")
-        .where(SQL.clauses("t.a", ClausesBuilder::equalsTo, "b")
-               .and("t.a", ClausesBuilder::notEquals, "")
+        .where(SQL.clauses("t.a", Clauses::equalsTo, "b")
+               .and("t.a", Clauses::notEquals, "")
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -462,8 +462,8 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("t.tata")
         .from("toto t")
-        .where(SQL.clauses("t.a", ClausesBuilder::equalsTo, null)
-               .and("t.a", ClausesBuilder::notEquals, "c")
+        .where(SQL.clauses("t.a", Clauses::equalsTo, null)
+               .and("t.a", Clauses::notEquals, "c")
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -480,8 +480,8 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("t.tata")
         .from("toto t")
-        .where(SQL.clauses("t.a", ClausesBuilder::equalsTo, "b")
-               .and("t.a", ClausesBuilder::notEquals, 2, (i) -> i != 2)
+        .where(SQL.clauses("t.a", Clauses::equalsTo, "b")
+               .and("t.a", Clauses::notEquals, 2, (i) -> i != 2)
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -500,9 +500,9 @@ public class SelectBuilderTest {
         .from("toto t")
         .innerJoin("tutu u").on(SQL.clauses()
                                 .field("t.i").equals().field("u.a")
-                                .and("u.u", ClausesBuilder::equalsTo, "UHU")
+                                .and("u.u", Clauses::equalsTo, "UHU")
             )
-        .where(SQL.clauses("t.a", ClausesBuilder::equalsTo, "a"))
+        .where(SQL.clauses("t.a", Clauses::equalsTo, "a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
