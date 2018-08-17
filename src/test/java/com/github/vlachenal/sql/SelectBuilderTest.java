@@ -185,7 +185,7 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("u.tata")
         .from("toto t")
-        .innerJoin("tutu u").on(SQL.clauses().field("t.i").equals().field("u.a"))
+        .innerJoin("tutu u", SQL.clauses().field("t.i").equals().field("u.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -202,9 +202,8 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("u.tata")
         .from("toto t")
-        .innerJoin("tutu u").on(SQL.clauses()
-                                .field("t.i").equals().field("u.a")
-                                .and("u.u", Clauses::equalsTo, "UHU")
+        .innerJoin("tutu u", SQL.clauses().field("t.i").equals().field("u.a")
+                   .and("u.u", Clauses::equalsTo, "UHU")
             )
         .build();
     System.out.println("SQL query: " + query.getQuery());
@@ -223,7 +222,7 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("u.tata")
         .from("toto t")
-        .innerJoin(SQL.select().field("*").from("tutu").done(), "u").on(SQL.clauses().field("t.i").equals().field("u.a"))
+        .innerJoin(SQL.select().field("*").from("tutu").done(), "u", SQL.clauses().field("t.i").equals().field("u.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -240,7 +239,7 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("u.tata")
         .from("toto t")
-        .leftOuterJoin("tutu u").on(SQL.clauses().field("t.i").equals().field("u.a"))
+        .leftOuterJoin("tutu u", SQL.clauses().field("t.i").equals().field("u.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -257,7 +256,7 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("u.tata")
         .from("toto t")
-        .leftOuterJoin(SQL.select().field("*").from("tutu").done(), "u").on(SQL.clauses().field("t.i").equals().field("u.a"))
+        .leftOuterJoin(SQL.select().field("*").from("tutu").done(), "u", SQL.clauses().field("t.i").equals().field("u.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -274,7 +273,7 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("u.tata")
         .from("toto t")
-        .rightOuterJoin("tutu u").on(SQL.clauses().field("t.i").equals().field("u.a"))
+        .rightOuterJoin("tutu u", SQL.clauses().field("t.i").equals().field("u.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -291,7 +290,7 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("u.tata")
         .from("toto t")
-        .rightOuterJoin(SQL.select().field("*").from("tutu").done(), "u").on(SQL.clauses().field("t.i").equals().field("u.a"))
+        .rightOuterJoin(SQL.select().field("*").from("tutu").done(), "u", SQL.clauses().field("t.i").equals().field("u.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -308,7 +307,7 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("u.tata")
         .from("toto t")
-        .fullOuterJoin("tutu u").on(SQL.clauses().field("t.i").equals().field("u.a"))
+        .fullOuterJoin("tutu u", SQL.clauses().field("t.i").equals().field("u.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -325,7 +324,7 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("u.tata")
         .from("toto t")
-        .fullOuterJoin(SQL.select().field("*").from("tutu").done(), "u").on(SQL.clauses().field("t.i").equals().field("u.a"))
+        .fullOuterJoin(SQL.select().field("*").from("tutu").done(), "u", SQL.clauses().field("t.i").equals().field("u.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -498,9 +497,9 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("u.tata")
         .from("toto t")
-        .innerJoin("tutu u").on(SQL.clauses()
-                                .field("t.i").equals().field("u.a")
-                                .and("u.u", Clauses::equalsTo, "UHU")
+        .innerJoin("tutu u", SQL.clauses()
+                   .field("t.i").equals().field("u.a")
+                   .and("u.u", Clauses::equalsTo, "UHU")
             )
         .where(SQL.clauses("t.a", Clauses::equalsTo, "a"))
         .build();

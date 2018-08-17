@@ -134,11 +134,12 @@ public class FromBuilder extends AbstractPartBuilder {
    * Add inner join on other table
    *
    * @param table the table
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder join(final String table) {
-    return innerJoin(table);
+  public FromBuilder join(final String table, final ClausesBuilder clauses) {
+    return innerJoin(table, clauses);
   }
 
   /**
@@ -146,11 +147,12 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder join(final SQLQuery subquery, final String alias) {
-    return innerJoin(subquery, alias);
+  public FromBuilder join(final SQLQuery subquery, final String alias, final ClausesBuilder clauses) {
+    return innerJoin(subquery, alias, clauses);
   }
 
   /**
@@ -158,36 +160,24 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder join(final SelectBuilder subquery, final String alias) {
-    return innerJoin(subquery, alias);
+  public FromBuilder join(final SelectBuilder subquery, final String alias, final ClausesBuilder clauses) {
+    return innerJoin(subquery, alias, clauses);
   }
 
   /**
    * Add inner join on other table
    *
    * @param table the table
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder innerJoin(final String table) {
-    select.buffer.append(" INNER JOIN ").append(table);
-    return this;
-  }
-
-  /**
-   * Add inner join on other table
-   *
-   * @param subquery the subquery to use as table
-   * @param alias the 'table' alias
-   *
-   * @return {@code this}
-   */
-  public FromBuilder innerJoin(final SQLQuery subquery, final String alias) {
-    select.buffer.append(" INNER JOIN (").append(subquery.getQuery()).append(") ").append(alias);
-    select.values.addAll(subquery.getValues());
+  public FromBuilder innerJoin(final String table, final ClausesBuilder clauses) {
+    addJoin(" INNER JOIN ", table, clauses);
     return this;
   }
 
@@ -196,12 +186,26 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder innerJoin(final SelectBuilder subquery, final String alias) {
-    select.buffer.append(" INNER JOIN (").append(subquery.toString()).append(") ").append(alias);
-    select.values.addAll(subquery.values);
+  public FromBuilder innerJoin(final SQLQuery subquery, final String alias, final ClausesBuilder clauses) {
+    addJoin(" INNER JOIN ", subquery, alias, clauses);
+    return this;
+  }
+
+  /**
+   * Add inner join on other table
+   *
+   * @param subquery the subquery to use as table
+   * @param alias the 'table' alias
+   * @param clauses the join clauses
+   *
+   * @return {@code this}
+   */
+  public FromBuilder innerJoin(final SelectBuilder subquery, final String alias, final ClausesBuilder clauses) {
+    addJoin(" INNER JOIN ", subquery, alias, clauses);
     return this;
   }
 
@@ -212,8 +216,8 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @return {@code this}
    */
-  public FromBuilder leftJoin(final String table) {
-    return leftOuterJoin(table);
+  public FromBuilder leftJoin(final String table, final ClausesBuilder clauses) {
+    return leftOuterJoin(table, clauses);
   }
 
   /**
@@ -221,11 +225,12 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder leftJoin(final SQLQuery subquery, final String alias) {
-    return leftOuterJoin(subquery, alias);
+  public FromBuilder leftJoin(final SQLQuery subquery, final String alias, final ClausesBuilder clauses) {
+    return leftOuterJoin(subquery, alias, clauses);
   }
 
   /**
@@ -233,36 +238,24 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder leftJoin(final SelectBuilder subquery, final String alias) {
-    return leftOuterJoin(subquery, alias);
+  public FromBuilder leftJoin(final SelectBuilder subquery, final String alias, final ClausesBuilder clauses) {
+    return leftOuterJoin(subquery, alias, clauses);
   }
 
   /**
    * Add left outer join on other table
    *
    * @param table the table
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder leftOuterJoin(final String table) {
-    select.buffer.append(" LEFT OUTER JOIN ").append(table);
-    return this;
-  }
-
-  /**
-   * Add left outer join on other table
-   *
-   * @param subquery the subquery to use as table
-   * @param alias the 'table' alias
-   *
-   * @return {@code this}
-   */
-  public FromBuilder leftOuterJoin(final SQLQuery subquery, final String alias) {
-    select.buffer.append(" LEFT OUTER JOIN ").append(subquery.getQuery()).append(alias);
-    select.values.addAll(subquery.getValues());
+  public FromBuilder leftOuterJoin(final String table, final ClausesBuilder clauses) {
+    addJoin(" LEFT OUTER JOIN ", table, clauses);
     return this;
   }
 
@@ -271,12 +264,26 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder leftOuterJoin(final SelectBuilder subquery, final String alias) {
-    select.buffer.append(" LEFT OUTER JOIN (").append(subquery).append(") ").append(alias);
-    select.values.addAll(subquery.values);
+  public FromBuilder leftOuterJoin(final SQLQuery subquery, final String alias, final ClausesBuilder clauses) {
+    addJoin(" LEFT OUTER JOIN ", subquery, alias, clauses);
+    return this;
+  }
+
+  /**
+   * Add left outer join on other table
+   *
+   * @param subquery the subquery to use as table
+   * @param alias the 'table' alias
+   * @param clauses the join clauses
+   *
+   * @return {@code this}
+   */
+  public FromBuilder leftOuterJoin(final SelectBuilder subquery, final String alias, final ClausesBuilder clauses) {
+    addJoin(" LEFT OUTER JOIN ", subquery, alias, clauses);
     return this;
   }
 
@@ -284,11 +291,12 @@ public class FromBuilder extends AbstractPartBuilder {
    * Add right outer join on other table
    *
    * @param table the table
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder rightJoin(final String table) {
-    return rightOuterJoin(table);
+  public FromBuilder rightJoin(final String table, final ClausesBuilder clauses) {
+    return rightOuterJoin(table, clauses);
   }
 
   /**
@@ -296,11 +304,12 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder rightJoin(final SQLQuery subquery, final String alias) {
-    return rightOuterJoin(subquery, alias);
+  public FromBuilder rightJoin(final SQLQuery subquery, final String alias, final ClausesBuilder clauses) {
+    return rightOuterJoin(subquery, alias, clauses);
   }
 
   /**
@@ -308,22 +317,24 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder rightJoin(final SelectBuilder subquery, final String alias) {
-    return rightOuterJoin(subquery, alias);
+  public FromBuilder rightJoin(final SelectBuilder subquery, final String alias, final ClausesBuilder clauses) {
+    return rightOuterJoin(subquery, alias, clauses);
   }
 
   /**
    * Add right outer join on other table
    *
    * @param table the table
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder rightOuterJoin(final String table) {
-    select.buffer.append(" RIGHT OUTER JOIN ").append(table);
+  public FromBuilder rightOuterJoin(final String table, final ClausesBuilder clauses) {
+    addJoin(" RIGHT OUTER JOIN ", table, clauses);
     return this;
   }
 
@@ -332,12 +343,12 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder rightOuterJoin(final SQLQuery subquery, final String alias) {
-    select.buffer.append(" RIGHT OUTER JOIN (").append(subquery.getQuery()).append(") ").append(alias);
-    select.values.addAll(subquery.getValues());
+  public FromBuilder rightOuterJoin(final SQLQuery subquery, final String alias, final ClausesBuilder clauses) {
+    addJoin(" RIGHT OUTER JOIN ", subquery, alias, clauses);
     return this;
   }
 
@@ -346,12 +357,12 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder rightOuterJoin(final SelectBuilder subquery, final String alias) {
-    select.buffer.append(" RIGHT OUTER JOIN (").append(subquery).append(") ").append(alias);
-    select.values.addAll(subquery.values);
+  public FromBuilder rightOuterJoin(final SelectBuilder subquery, final String alias, final ClausesBuilder clauses) {
+    addJoin(" RIGHT OUTER JOIN ", subquery, alias, clauses);
     return this;
   }
 
@@ -359,11 +370,12 @@ public class FromBuilder extends AbstractPartBuilder {
    * Add full outer join on other table
    *
    * @param table the table
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder fullJoin(final String table) {
-    return fullOuterJoin(table);
+  public FromBuilder fullJoin(final String table, final ClausesBuilder clauses) {
+    return fullOuterJoin(table, clauses);
   }
 
   /**
@@ -371,11 +383,12 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder fullJoin(final SQLQuery subquery, final String alias) {
-    return fullOuterJoin(subquery, alias);
+  public FromBuilder fullJoin(final SQLQuery subquery, final String alias, final ClausesBuilder clauses) {
+    return fullOuterJoin(subquery, alias, clauses);
   }
 
   /**
@@ -383,22 +396,24 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder fullJoin(final SelectBuilder subquery, final String alias) {
-    return fullOuterJoin(subquery, alias);
+  public FromBuilder fullJoin(final SelectBuilder subquery, final String alias, final ClausesBuilder clauses) {
+    return fullOuterJoin(subquery, alias, clauses);
   }
 
   /**
    * Add full outer join on other table
    *
    * @param table the table
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder fullOuterJoin(final String table) {
-    select.buffer.append(" FULL OUTER JOIN ").append(table);
+  public FromBuilder fullOuterJoin(final String table, final ClausesBuilder clauses) {
+    addJoin(" FULL OUTER JOIN ", table, clauses);
     return this;
   }
 
@@ -407,12 +422,12 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder fullOuterJoin(final SQLQuery subquery, final String alias) {
-    select.buffer.append(" FULL OUTER JOIN (").append(subquery.getQuery()).append(") ").append(alias);
-    select.values.addAll(subquery.getValues());
+  public FromBuilder fullOuterJoin(final SQLQuery subquery, final String alias, final ClausesBuilder clauses) {
+    addJoin(" FULL OUTER JOIN ", subquery, alias, clauses);
     return this;
   }
 
@@ -421,12 +436,12 @@ public class FromBuilder extends AbstractPartBuilder {
    *
    * @param subquery the subquery to use as table
    * @param alias the 'table' alias
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
-  public FromBuilder fullOuterJoin(final SelectBuilder subquery, final String alias) {
-    select.buffer.append(" FULL OUTER JOIN (").append(subquery).append(") ").append(alias);
-    select.values.addAll(subquery.values);
+  public FromBuilder fullOuterJoin(final SelectBuilder subquery, final String alias, final ClausesBuilder clauses) {
+    addJoin(" FULL OUTER JOIN ", subquery, alias, clauses);
     return this;
   }
 
@@ -511,16 +526,49 @@ public class FromBuilder extends AbstractPartBuilder {
   }
 
   /**
-   * Add clauses to join
+   * Add join
    *
-   * @param clauses the clauses to add
-   *
-   * @return {@code this}
+   * @param join the join type
+   * @param table the table
+   * @param clauses the join clauses
    */
-  public FromBuilder on(final ClausesBuilder clauses) {
-    select.buffer.append(" ON ").append(clauses.buffer);
-    select.values.addAll(clauses.values);
-    return this;
+  private void addJoin(final String join, final String table, final ClausesBuilder clauses) {
+    if(!clauses.firstClause) {
+      select.buffer.append(join).append(table).append(" ON ").append(clauses.buffer);
+      select.values.addAll(clauses.values);
+    }
+  }
+
+  /**
+   * Add join
+   *
+   * @param join the join type
+   * @param subquery the subquery
+   * @param alias the 'table' alias
+   * @param clauses the join clauses
+   */
+  private void addJoin(final String join, final SelectBuilder subquery, final String alias, final ClausesBuilder clauses) {
+    if(!clauses.firstClause) {
+      select.buffer.append(join).append('(').append(subquery).append(") ").append(alias).append(" ON ").append(clauses.buffer);
+      select.values.addAll(subquery.values);
+      select.values.addAll(clauses.values);
+    }
+  }
+
+  /**
+   * Add join
+   *
+   * @param join the join type
+   * @param subquery the subquery
+   * @param alias the 'table' alias
+   * @param clauses the join clauses
+   */
+  private void addJoin(final String join, final SQLQuery subquery, final String alias, final ClausesBuilder clauses) {
+    if(!clauses.firstClause) {
+      select.buffer.append(join).append('(').append(subquery.getQuery()).append(") ").append(alias).append(" ON ").append(clauses.buffer);
+      select.values.addAll(subquery.getValues());
+      select.values.addAll(clauses.values);
+    }
   }
 
   /**

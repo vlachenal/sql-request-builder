@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/vlachenal/sql-request-builder.svg?branch=master)](https://travis-ci.org/vlachenal/sql-request-builder)
 
 # sql-request-builder
-Dynamic SQL request builder aims to way a fluent API to easily write dynamic SQL request.
+Dynamic SQL request builder aims to provides a fluent API to easily write dynamic SQL request.
 
 ## Synopsis
 In most web services, there are search features. These features may have several optional filters which will add clauses in SQL request.
@@ -30,7 +30,7 @@ By priority order:
  - Manage optional BETWEEN clause with prepared statement
  - Examples
  - Wiki
- - Manage optional join (for the ones which has to be followed by clauses)
+ - ~~Manage optional join (for the ones which has to be followed by clauses)~~
  - Manage LIMIT/OFFSET
  - More Javadoc
  - DELETE and UPDATE queries
