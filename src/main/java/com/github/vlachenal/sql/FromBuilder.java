@@ -111,8 +111,7 @@ public class FromBuilder extends AbstractPartBuilder {
    * @return {@code this}
    */
   public FromBuilder selfJoin(final SQLQuery subquery, final String alias) {
-    select.buffer.append(",(").append(subquery.getQuery()).append(") ").append(alias);
-    select.values.addAll(subquery.getValues());
+    addJoin(",", subquery, alias);
     return this;
   }
 
@@ -125,8 +124,7 @@ public class FromBuilder extends AbstractPartBuilder {
    * @return {@code this}
    */
   public FromBuilder selfJoin(final SelectBuilder subquery, final String alias) {
-    select.buffer.append(",(").append(subquery).append(") ").append(alias);
-    select.values.addAll(subquery.values);
+    addJoin(",", subquery, alias);
     return this;
   }
 
@@ -466,8 +464,7 @@ public class FromBuilder extends AbstractPartBuilder {
    * @return {@code this}
    */
   public FromBuilder naturalJoin(final SelectBuilder subquery, final String alias) {
-    select.buffer.append(" NATURAL JOIN (").append(subquery).append(") ").append(alias);
-    select.values.addAll(subquery.values);
+    addJoin(" NATURAL JOIN ", subquery, alias);
     return this;
   }
 
@@ -480,8 +477,7 @@ public class FromBuilder extends AbstractPartBuilder {
    * @return {@code this}
    */
   public FromBuilder naturalJoin(final SQLQuery subquery, final String alias) {
-    select.buffer.append(" NATURAL JOIN (").append(subquery).append(") ").append(alias);
-    select.values.addAll(subquery.getValues());
+    addJoin(" NATURAL JOIN ", subquery, alias);
     return this;
   }
 
@@ -506,8 +502,7 @@ public class FromBuilder extends AbstractPartBuilder {
    * @return {@code this}
    */
   public FromBuilder crossJoin(final SelectBuilder subquery, final String alias) {
-    select.buffer.append(" CROSS JOIN (").append(subquery).append(") ").append(alias);
-    select.values.addAll(subquery.values);
+    addJoin(" CROSS JOIN ", subquery, alias);
     return this;
   }
 
@@ -520,9 +515,32 @@ public class FromBuilder extends AbstractPartBuilder {
    * @return {@code this}
    */
   public FromBuilder crossJoin(final SQLQuery subquery, final String alias) {
-    select.buffer.append(" CROSS JOIN (").append(subquery).append(") ").append(alias);
-    select.values.addAll(subquery.getValues());
+    addJoin(" CROSS JOIN ", subquery, alias);
     return this;
+  }
+
+  /**
+   * Add join
+   *
+   * @param join the join type
+   * @param subquery the subquery
+   * @param alias the 'table' alias
+   */
+  private void addJoin(final String join, final SelectBuilder subquery, final String alias) {
+    select.buffer.append(join).append('(').append(subquery).append(") ").append(alias);
+    select.values.addAll(subquery.values);
+  }
+
+  /**
+   * Add join
+   *
+   * @param join the join type
+   * @param subquery the subquery
+   * @param alias the 'table' alias
+   */
+  private void addJoin(final String join, final SQLQuery subquery, final String alias) {
+    select.buffer.append(join).append('(').append(subquery.getQuery()).append(") ").append(alias);
+    select.values.addAll(subquery.getValues());
   }
 
   /**
