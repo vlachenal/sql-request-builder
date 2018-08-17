@@ -44,25 +44,23 @@ public class SelectBuilder {
    * {@link SelectBuilder} constructor
    */
   public SelectBuilder() {
-    this(false);
-  }
-
-  /**
-   * {@link SelectBuilder} constructor
-   *
-   * @param distinct add DISTINCT on SELECT instruction
-   */
-  public SelectBuilder(final boolean distinct) {
     buffer = new StringBuilder("SELECT ");
-    if(distinct) {
-      buffer.append("DISTINCT ");
-    }
     values = new ArrayList<>();
   }
   // Constructors -
 
 
   // Methods +
+  /**
+   * Add DISTINCT instruction
+   *
+   * @return {@code this}
+   */
+  public SelectBuilder distinct() {
+    buffer.append("DISTINCT ");
+    return this;
+  }
+
   /**
    * Get SQL query.<br>
    * {@inheritDoc}
@@ -115,7 +113,10 @@ public class SelectBuilder {
    * @return {@code this}
    */
   public SelectBuilder having(final ClausesBuilder clauses) {
-    buffer.append(" HAVING ");
+    if(!clauses.firstClause) {
+      buffer.append(" HAVING ").append(clauses.buffer);
+      values.addAll(clauses.values);
+    }
     return this;
   }
 

@@ -52,15 +52,6 @@ public final class SQL {
   }
 
   /**
-   * Get a new select builder
-   *
-   * @return the new builder
-   */
-  public static SelectBuilder selectDistinct() {
-    return new SelectBuilder();
-  }
-
-  /**
    * Initialize a new clauses builder
    *
    * @return the new builder
