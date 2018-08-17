@@ -9,6 +9,7 @@
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java-library'
 apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -35,3 +36,29 @@ dependencies {
   // Use JUnit test framework
   testImplementation 'junit:junit:4.12'
 }
+
+// Publish to Maven +
+group = 'com.github.vlachenal'
+version = '0.1'
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+
+      artifact sourcesJar
+      artifact javadocJar
+    }
+  }
+}
+// Publish to Maven -
