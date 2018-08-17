@@ -20,7 +20,7 @@ I will not recommended to use this library for static SQL request. It will induc
 You can consult Javadoc [here](https://vlachenal.github.io/sql-request-builder/index.html?com/github/vlachenal/sql/package-summary.html).
 
 ### Wiki
-Wiki is under construction (not started yet ...).
+[Wiki](https://github.com/vlachenal/sql-request-builder/wiki) contains detailled library usage, releases notes and reamaining tasks.
 
 ### Examples
 You can find a lot of example in unit tests class.
@@ -72,14 +72,3 @@ String strQuery = query.getQuery();
 List<Object> valueLst = query.getValues();
 Object[] values = query.values();
 ```
-
-## TODO
-By priority order:
- - ~~Manage optional BETWEEN clause with prepared statement~~
- - ~~Examples~~
- - Wiki
- - ~~Manage optional join (for the ones which has to be followed by clauses)~~
- - Manage LIMIT/OFFSET
- - Improve Javadoc
- - DELETE and UPDATE queries
- - Publish library
