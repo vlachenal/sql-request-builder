@@ -78,6 +78,6 @@ By priority order:
  - Wiki
  - ~~Manage optional join (for the ones which has to be followed by clauses)~~
  - Manage LIMIT/OFFSET
- - More Javadoc
+ - Improve Javadoc
  - DELETE and UPDATE queries
  - Publish library
