@@ -23,6 +23,8 @@ You can consult Javadoc [here](https://vlachenal.github.io/sql-request-builder/i
 Wiki is under construction (not started yet ...).
 
 ### Examples
+You can find a lot of example in unit tests class.
+
 Here is a sample of library usage:
 
 The following request bean:
