@@ -73,8 +73,8 @@ Object[] values = query.values();
 
 ## TODO
 By priority order:
- - Manage optional BETWEEN clause with prepared statement
- - Examples
+ - ~~Manage optional BETWEEN clause with prepared statement~~
+ - ~~Examples~~
  - Wiki
  - ~~Manage optional join (for the ones which has to be followed by clauses)~~
  - Manage LIMIT/OFFSET
