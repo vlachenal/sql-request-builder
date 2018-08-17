@@ -395,8 +395,8 @@ public class SelectBuilderTest {
                .and("t.a", Clauses::lesserEquals, "e")
                .and("t.a", Clauses::greater, "f")
                .and("t.a", Clauses::greateEquals, "g")
-//               .and().field("t.i").between().field("1").and().field("10")
-//               .and().field("t.j").notBetween().field("1").and().field("10")
+               .and("t.i", Clauses::between, 1, 10)
+               .and("t.j", Clauses::notBetween, 1 ,10)
                .and("t.k", Clauses::like, "%plip%")
                .and("t.l", Clauses::notLike, "%plop%")
             ).build();
@@ -409,11 +409,11 @@ public class SelectBuilderTest {
         + "AND t.a <= ? "
         + "AND t.a > ? "
         + "AND t.a >= ? "
-//        + "AND t.i BETWEEN 1 AND 10 "
-//        + "AND t.j NOT BETWEEN 1 AND 10 "
+        + "AND t.i BETWEEN ? AND ? "
+        + "AND t.j NOT BETWEEN ? AND ? "
         + "AND t.k LIKE ? "
         + "AND t.l NOT LIKE ?", query.getQuery());
-    assertEquals(Stream.of("b","c","d","e","f","g","%plip%","%plop%").collect(Collectors.toList()), query.getValues());
+    assertEquals(Stream.of("b","c","d","e","f","g", 1, 10, 1, 10,"%plip%","%plop%").collect(Collectors.toList()), query.getValues());
   }
 
   /**

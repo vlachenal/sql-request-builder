@@ -337,6 +337,42 @@ public class ClausesBuilder {
   }
 
   /**
+   * Add AND clause if value is valid. Value will be validate with {@code SQL::isValidValue}
+   * function.
+   *
+   * @param <T> the value type
+   *
+   * @param column the column
+   * @param clause the clause maker
+   * @param value1 the first value
+   * @param value2 the second value
+   *
+   * @return {@code this}
+   */
+  public <T> ClausesBuilder and(final String column, final ClauseMaker clause, final T value1, final T value2) {
+    checkAndAddClause("AND", column, clause, value1, value2, SQL::isValidValue);
+    return this;
+  }
+
+  /**
+   * Add AND clause if value is valid
+   *
+   * @param <T> the value type
+   *
+   * @param column the column
+   * @param clause the clause maker
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param checker the value checker to use
+   *
+   * @return {@code this}
+   */
+  public <T> ClausesBuilder and(final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
+    checkAndAddClause("AND", column, clause, value1, value2, checker);
+    return this;
+  }
+
+  /**
    * Add OR clause if value is valid. Value will be validate with {@code SQL::isValidValue}
    * function.
    *
@@ -371,6 +407,42 @@ public class ClausesBuilder {
   }
 
   /**
+   * Add OR clause if value is valid. Value will be validate with {@code SQL::isValidValue}
+   * function.
+   *
+   * @param <T> the value type
+   *
+   * @param column the column
+   * @param clause the clause maker
+   * @param value1 the first value
+   * @param value2 the second value
+   *
+   * @return {@code this}
+   */
+  public <T> ClausesBuilder or(final String column, final ClauseMaker clause, final T value1, final T value2) {
+    checkAndAddClause("OR", column, clause, value1, value2, SQL::isValidValue);
+    return this;
+  }
+
+  /**
+   * Add OR clause if value is valid
+   *
+   * @param <T> the value type
+   *
+   * @param column the column
+   * @param clause the clause maker
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param checker the value checker to use
+   *
+   * @return {@code this}
+   */
+  public <T> ClausesBuilder or(final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
+    checkAndAddClause("OR", column, clause, value1, value2, checker);
+    return this;
+  }
+
+  /**
    * Check and add clause
    *
    * @param <T> the value type
@@ -388,6 +460,30 @@ public class ClausesBuilder {
       }
       buffer.append(clause.makeClause(column));
       values.add(value);
+      firstClause = false;
+    }
+  }
+
+  /**
+   * Check and add clause
+   *
+   * @param <T> the value type
+   *
+   * @param boolAgg the boolean aggregator to use
+   * @param column the column (first operand)
+   * @param clause the clause type (operator)
+   * @param value1 the first value (second operand)
+   * @param value2 the first value (third operand)
+   * @param checker the value checker
+   */
+  private final <T> void checkAndAddClause(final String boolAgg, final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
+    if(checker.isValid(value1) && checker.isValid(value2)) {
+      if(!firstClause) {
+        buffer.append(' ').append(boolAgg).append(' ');
+      }
+      buffer.append(clause.makeClause(column));
+      values.add(value1);
+      values.add(value2);
       firstClause = false;
     }
   }
