@@ -23,7 +23,7 @@ You can consult Javadoc [here](https://vlachenal.github.io/sql-request-builder/i
 [Wiki](https://github.com/vlachenal/sql-request-builder/wiki) contains detailled library usage, releases notes and reamaining tasks.
 
 ### Examples
-You can find a lot of example in unit tests class.
+More examples can be found in unit tests and wiki.
 
 Here is a sample of library usage:
 

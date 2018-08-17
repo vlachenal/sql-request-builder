@@ -198,6 +198,24 @@ public class SelectBuilderTest {
    * Test select without clauses
    */
   @Test
+  public void testQueryJoinWithoutValidClause() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("u.tata")
+        .from("toto t")
+        .innerJoin("tutu u", SQL.clauses().field("t.i").equals().field("u.a"))
+        .leftOuterJoin("tata a", SQL.clauses("a.a", Clauses::equalsTo, null))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,u.tata FROM toto t INNER JOIN tutu u ON t.i = u.a", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test select without clauses
+   */
+  @Test
   public void testQueryInnerJoinWithOptionalValueWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -436,6 +454,22 @@ public class SelectBuilderTest {
   }
 
   /**
+   * Test clauses with null value
+   */
+  @Test
+  public void testClausesWhereNoValidValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::notEquals, null)).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
    * Test clause with empty value
    */
   @Test
@@ -544,6 +578,7 @@ public class SelectBuilderTest {
         + "WHERE last_name LIKE ? "
         + "AND gender = ?", query.getQuery());
     assertEquals(Stream.of("%Croft%","F").collect(Collectors.toList()), query.getValues());
+    System.out.println(SQL.select().field("a").as("b").field("c").from("T").build().getQuery());
   }
   // Tests -
 
