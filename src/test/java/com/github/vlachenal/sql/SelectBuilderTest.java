@@ -2,6 +2,7 @@ package com.github.vlachenal.sql;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -509,6 +510,40 @@ public class SelectBuilderTest {
         + "INNER JOIN tutu u ON t.i = u.a AND u.u = ? "
         + "WHERE t.a = ?", query.getQuery());
     assertEquals(Stream.of("UHU","a").collect(Collectors.toList()), query.getValues());
+  }
+
+  public class ExampleRequest {
+    public UUID id;
+    public String firstName;
+    public String lastName;
+    public String email;
+    public String gender;
+    public String country;
+  }
+
+  /**
+   * Test exemple query
+   */
+  @Test
+  public void testExampleQuery() {
+    final ExampleRequest req = new ExampleRequest();
+    req.gender = "F";
+    req.lastName = "%Croft%";
+    final SQLQuery query = SQL.select().field("*")
+        .from("Heroes")
+        .where(SQL.clauses("id", Clauses::equalsTo, req.id)
+               .and("first_name", Clauses::like, req.firstName)
+               .and("last_name", Clauses::like, req.lastName)
+               .and("email", Clauses::equalsTo, req.email)
+               .and("gender", Clauses::equalsTo, req.gender)
+               .and("country", Clauses::equalsTo, req.country)
+            ).build();
+    System.out.println("Query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT * FROM Heroes "
+        + "WHERE last_name LIKE ? "
+        + "AND gender = ?", query.getQuery());
+    assertEquals(Stream.of("%Croft%","F").collect(Collectors.toList()), query.getValues());
   }
   // Tests -
 

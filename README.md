@@ -23,7 +23,53 @@ You can consult Javadoc [here](https://vlachenal.github.io/sql-request-builder/i
 Wiki is under construction (not started yet ...).
 
 ### Examples
-TODO
+Here is a sample of library usage:
+
+The following request bean:
+```java
+public class ExampleRequest {
+  public UUID id;
+  public String firstName;
+  public String lastName;
+  public String email;
+  public String gender;
+  public String country;
+}
+```
+
+is filled with the following values:
+```java
+final ExampleRequest req = new ExampleRequest();
+req.gender = "F";
+req.lastName = "%Croft%";
+```
+
+The following code will generate an SQL request to retrieve 'heroes' according to the request:
+```java
+final SQLQuery query = SQL.select().field("*")
+    .from("Heroes")
+    .where(SQL.clauses("id", Clauses::equalsTo, req.id)
+           .and("first_name", Clauses::like, req.firstName)
+           .and("last_name", Clauses::like, req.lastName)
+           .and("email", Clauses::equalsTo, req.email)
+           .and("gender", Clauses::equalsTo, req.gender)
+           .and("country", Clauses::equalsTo, req.country)
+        ).build();
+```
+
+The generated SQL request will be:
+```sql
+SELECT * FROM Heroes WHERE last_name LIKE ? AND gender = ?
+```
+
+With `%Croft%` and `F` as values.
+
+You can retrieve query and values like this:
+```java
+String strQuery = query.getQuery();
+List<Object> valueLst = query.getValues();
+Object[] values = query.values();
+```
 
 ## TODO
 By priority order:
