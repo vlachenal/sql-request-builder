@@ -34,3 +34,4 @@ By priority order:
  - Manage LIMIT/OFFSET
  - More Javadoc
  - DELETE and UPDATE queries
+ - Publish library
