@@ -211,6 +211,7 @@ public class FromBuilder extends AbstractPartBuilder {
    * Add left outer join on other table
    *
    * @param table the table
+   * @param clauses the join clauses
    *
    * @return {@code this}
    */
