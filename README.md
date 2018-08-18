@@ -44,7 +44,7 @@ Otherwise, you can clone this repository and build library using `jar` task.
 You can consult Javadoc [here](https://vlachenal.github.io/sql-request-builder/index.html?com/github/vlachenal/sql/package-summary.html).
 
 ### Wiki
-[Wiki](https://github.com/vlachenal/sql-request-builder/wiki) contains detailled library usage, releases notes and reamaining tasks.
+[Wiki](https://github.com/vlachenal/sql-request-builder/wiki) contains detailled library usage, releases notes and remaining tasks.
 
 ### Examples
 More examples can be found in unit tests and wiki.
