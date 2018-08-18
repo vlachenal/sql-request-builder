@@ -7,10 +7,12 @@
  */
 
 // Apply the java-library plugin to add support for Java Library
-apply plugin: 'java-library'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
+plugins {
+  id 'java-library'
+  id 'eclipse'
+  id 'maven-publish'
+  id 'signing'
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -26,11 +28,14 @@ repositories {
   // Use jcenter for resolving your dependencies.
   // You can declare any Maven/Ivy/file repository here.
   jcenter()
+  mavenCentral()
 }
 
 javadoc {
   destinationDir = file("docs")
-  options.addBooleanOption('html5', true)
+  if(JavaVersion.current().isJava9Compatible()) {
+    options.addBooleanOption('html5', true)
+  }
 }
 
 dependencies {
@@ -55,15 +60,51 @@ task javadocJar(type: Jar) {
 publishing {
   publications {
     mavenJava(MavenPublication) {
+      artifactId = 'sql-request-builder'
       from components.java
-
       artifact sourcesJar
       artifact javadocJar
+
+      pom {
+        name = 'sql-request-builder'
+        description = 'Dynamic SQL request builder'
+        url = 'https://github.com/vlachenal/sql-request-builder'
+        licenses {
+          license {
+            name = 'GNU Lesser General Public License, Version 3.0'
+            url = 'https://www.gnu.org/copyleft/lesser.html'
+          }
+        }
+        developers {
+          developer {
+            id = 'vlachenal'
+            name = 'Vincent Lachenal'
+          }
+        }
+        scm {
+          connection = 'scm:git:git://github.com/vlachenal/sql-request-builder.git'
+          developerConnection = 'scm:git:ssh://github.com:vlachenal/sql-request-builder.git'
+          url = 'https://github.com/vlachenal/sql-request-builder'
+        }
+      }
+    }
+  }
+
+  repositories {
+    maven {
+      name = 'central'
+      def releasesRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+      def snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+      url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+      credentials {
+        username = "${ossrhUsername}"
+        password = "${ossrhPassword}"
+      }
     }
   }
 }
 
 signing {
-    sign publishing.publications.mavenJava
+  sign publishing.publications.mavenJava
 }
 // Publish to Maven -
