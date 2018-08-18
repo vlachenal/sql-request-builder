@@ -14,6 +14,30 @@ Every valid value will be added as prepared statement value to avoid SQL injecti
 
 I will not recommended to use this library for static SQL request. It will induce overhead compared to static SQL query string.
 
+## Requirements
+sql-request-builder is a standalone library. The only requirement is Java 1.8+.
+
+Build and unit tests are automatically executed with Oracle JDK 1.8 and OpenJDK 10.
+
+## Installation
+sql-request-builder library is published on Maven Central.
+
+If you are using Maven, you can add the following dependency to your `pom.xml`:
+```xml
+<dependency>
+  <groupId>com.github.vlachenal</groupId>
+  <artifactId>sql-request-builder</artifactId>
+  <version>0.1</version>
+</dependency>
+```
+
+If you are using Gradle, you can add the following dependency:
+```groovy
+compile "com.github.vlachenal:sql-request-builder:0.1"
+```
+
+Otherwise, you can clone this repository and build library using `jar` task.
+
 ## Documentation
 
 ### Javadoc
