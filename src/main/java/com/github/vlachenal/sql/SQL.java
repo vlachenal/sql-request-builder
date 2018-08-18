@@ -92,6 +92,39 @@ public final class SQL {
   }
 
   /**
+   * Initialize a new clauses builder
+   *
+   * @param <T> the value type
+   *
+   * @param column the column
+   * @param clause the clause maker
+   * @param value1 the first value
+   * @param value2 the second value
+   *
+   * @return the new builder
+   */
+  public static <T> ClausesBuilder clauses(final String column, final ClauseMaker clause, final T value1, final T value2) {
+    return new ClausesBuilder(column, clause, value1, value2);
+  }
+
+  /**
+   * Initialize a new clauses builder
+   *
+   * @param <T> the value type
+   *
+   * @param column the column
+   * @param clause the clause maker
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param checker the value checker to use
+   *
+   * @return the new builder
+   */
+  public static <T> ClausesBuilder clauses(final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
+    return new ClausesBuilder(column, clause, value1, value2, checker);
+  }
+
+  /**
    * Format value for text column adding quote before and after value.<br>
    * {@code Object} will be cast into {@code String} with {@code toString()} method.
    *

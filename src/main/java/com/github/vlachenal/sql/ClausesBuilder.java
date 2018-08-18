@@ -82,6 +82,40 @@ public class ClausesBuilder {
     this();
     checkAndAddClause(null, column, clause, value, checker);
   }
+
+  /**
+   * {@link ClausesBuilder} constructor.<br>
+   * This constructor will try to add a first clause if value is valid. Value will
+   * be validated with {@code SQL::isValidValue} function.
+   *
+   * @param <T> the value type
+   *
+   * @param column the column
+   * @param clause the clause maker
+   * @param value1 the first value
+   * @param value2 the second value
+   */
+  public <T> ClausesBuilder(final String column, final ClauseMaker clause, final T value1, final T value2) {
+    this();
+    checkAndAddClause(null, column, clause, value1, value2, SQL::isValidValue);
+  }
+
+  /**
+   * {@link ClausesBuilder} constructor<br>
+   * This constructor will try to add a first clause if value is valid.
+   *
+   * @param <T> the value type
+   *
+   * @param column the column
+   * @param clause the clause maker
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param checker the value checker to use
+   */
+  public <T> ClausesBuilder(final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
+    this();
+    checkAndAddClause(null, column, clause, value1, value2, checker);
+  }
   // Constructors -
 
 
