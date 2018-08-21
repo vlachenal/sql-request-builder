@@ -249,6 +249,54 @@ public class ClausesBuilder {
   }
 
   /**
+   * Add IN subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder in(final SQLQuery query) {
+    buffer.append(" IN (").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add NOT IN subquery clause.
+   *
+   * @param values the values
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder notIn(final SQLQuery query) {
+    buffer.append(" NOT IN (").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add IN subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder in(final SelectBuilder query) {
+    buffer.append(" IN (").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add NOT IN subquery clause.
+   *
+   * @param values the values
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder notIn(final SelectBuilder query) {
+    buffer.append(" NOT IN (").append(query).append(')');
+    return this;
+  }
+
+  /**
    * Greater clause
    *
    * @return {@code this}

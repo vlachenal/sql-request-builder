@@ -599,7 +599,7 @@ public class SelectBuilderTest {
   }
 
   /**
-   * Test optional valid IN clause
+   * Test optional invalid IN clause
    */
   @Test
   public void testOptionalInvalidIn() {
@@ -616,7 +616,7 @@ public class SelectBuilderTest {
   }
 
   /**
-   * Test optional valid IN clause
+   * Test optional valid NOT IN clause
    */
   @Test
   public void testOptionalValidNotIn() {
@@ -633,7 +633,7 @@ public class SelectBuilderTest {
   }
 
   /**
-   * Test optional valid IN clause
+   * Test optional invalid NOT IN clause
    */
   @Test
   public void testOptionalInvalidNotIn() {
@@ -650,7 +650,7 @@ public class SelectBuilderTest {
   }
 
   /**
-   * Test optional valid IN clause
+   * Test valid IN clause
    */
   @Test
   public void testSelectIn() {
@@ -667,7 +667,7 @@ public class SelectBuilderTest {
   }
 
   /**
-   * Test optional valid IN clause
+   * Test valid NOT IN clause
    */
   @Test
   public void testSelectNotIn() {
@@ -680,6 +680,74 @@ public class SelectBuilderTest {
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
     assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN ('plip','plop')", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test IN subquery clause
+   */
+  @Test
+  public void testSelectInSelect() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses().field("t.a").in(SQL.select().field("u.a").from("tutu u").done())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN (SELECT u.a FROM tutu u)", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test NOT IN subquery clause
+   */
+  @Test
+  public void testSelectNotInSelect() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses().field("t.a").notIn(SQL.select().field("u.a").from("tutu u").done())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN (SELECT u.a FROM tutu u)", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test IN subquery clause
+   */
+  @Test
+  public void testSelectInSelectRes() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses().field("t.a").in(SQL.select().field("u.a").from("tutu u").build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN (SELECT u.a FROM tutu u)", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test NOT IN subquery clause
+   */
+  @Test
+  public void testSelectNotInSelectRes() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses().field("t.a").notIn(SQL.select().field("u.a").from("tutu u").build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN (SELECT u.a FROM tutu u)", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
   // Tests -
