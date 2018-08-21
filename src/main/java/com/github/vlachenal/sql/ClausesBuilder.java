@@ -214,16 +214,6 @@ public class ClausesBuilder {
     return this;
   }
 
-  private <T> String formatList(final Collection<T> values) {
-    final StringBuilder buf1 = new StringBuilder("(");
-    final StringBuilder buf2 = new StringBuilder();
-    for(final T val : values) {
-      buf2.append(',').append(val);
-    }
-    buf1.append(buf2.substring(1)).append(')');
-    return buf1.toString();
-  }
-
   /**
    * Add IN clause.<br>
    * Due to many database engine limitation about the maximum number of prepared
@@ -237,7 +227,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder in(final Collection<T> values) {
-    buffer.append(" IN ").append(formatList(values));
+    buffer.append(" IN ").append(SQL.toSQLList(values));
     return this;
   }
 
@@ -254,7 +244,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder notIn(final Collection<T> values) {
-    buffer.append(" NOT IN ").append(formatList(values));
+    buffer.append(" NOT IN ").append(SQL.toSQLList(values));
     return this;
   }
 
@@ -518,7 +508,7 @@ public class ClausesBuilder {
       }
       buffer.append(clause.makeClause(column));
       if(value instanceof Collection) {
-        buffer.append(formatList((Collection<?>)value));
+        buffer.append(SQL.toSQLList((Collection<?>)value));
       } else {
        values.add(value);
       }

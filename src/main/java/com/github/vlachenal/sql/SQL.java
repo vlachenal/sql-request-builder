@@ -148,12 +148,29 @@ public final class SQL {
    *
    * @return the formatter values
    */
-  public static List<String> formatText(final List<Object> values) {
+  public static List<String> formatText(final Collection<?> values) {
     List<String> texts = null;
     if(values != null) {
       texts = values.stream().map(SQL::formatText).collect(Collectors.toList());
     }
     return texts;
+  }
+
+  /**
+   * Format value collection for SQL query (i.e for IN clause)
+   *
+   * @param values the values
+   *
+   * @return the SQL list
+   */
+  public static <T> String toSQLList(final Collection<T> values) {
+    final StringBuilder buffer = new StringBuilder("(");
+    final StringBuilder buf = new StringBuilder();
+    for(final T val : values) {
+      buf.append(',').append(val);
+    }
+    buffer.append(buf.substring(1)).append(')');
+    return buffer.toString();
   }
 
   /**
