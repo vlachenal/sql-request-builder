@@ -580,6 +580,108 @@ public class SelectBuilderTest {
     assertEquals(Stream.of("%Croft%","F").collect(Collectors.toList()), query.getValues());
     System.out.println(SQL.select().field("a").as("b").field("c").from("T").build().getQuery());
   }
+
+  /**
+   * Test optional valid IN clause
+   */
+  @Test
+  public void testOptionalValidIn() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::in, Stream.of("'plip'","'plop'").collect(Collectors.toList()))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN ('plip','plop')", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test optional valid IN clause
+   */
+  @Test
+  public void testOptionalInvalidIn() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::in, Stream.of().collect(Collectors.toList()))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test optional valid IN clause
+   */
+  @Test
+  public void testOptionalValidNotIn() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::notIn, Stream.of("'plip'","'plop'").collect(Collectors.toList()))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN ('plip','plop')", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test optional valid IN clause
+   */
+  @Test
+  public void testOptionalInvalidNotIn() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::notIn, Stream.of().collect(Collectors.toList()))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test optional valid IN clause
+   */
+  @Test
+  public void testSelectIn() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses().field("t.a").in(Stream.of("'plip'","'plop'").collect(Collectors.toList()))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN ('plip','plop')", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test optional valid IN clause
+   */
+  @Test
+  public void testSelectNotIn() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses().field("t.a").notIn(Stream.of("'plip'","'plop'").collect(Collectors.toList()))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN ('plip','plop')", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
   // Tests -
 
 }

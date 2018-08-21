@@ -20,6 +20,7 @@
 package com.github.vlachenal.sql;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -213,6 +214,16 @@ public class ClausesBuilder {
     return this;
   }
 
+  private <T> String formatList(final Collection<T> values) {
+    final StringBuilder buf1 = new StringBuilder("(");
+    final StringBuilder buf2 = new StringBuilder();
+    for(final T val : values) {
+      buf2.append(',').append(val);
+    }
+    buf1.append(buf2.substring(1)).append(')');
+    return buf1.toString();
+  }
+
   /**
    * Add IN clause.<br>
    * Due to many database engine limitation about the maximum number of prepared
@@ -225,12 +236,25 @@ public class ClausesBuilder {
    *
    * @return {@code this}
    */
-  public <T> ClausesBuilder in(final List<T> values) {
-    final StringBuilder buf = new StringBuilder();
-    for(final T val : values) {
-      buf.append(',').append(val);
-    }
-    buffer.append(buf.substring(1));
+  public <T> ClausesBuilder in(final Collection<T> values) {
+    buffer.append(" IN ").append(formatList(values));
+    return this;
+  }
+
+  /**
+   * Add NOT IN clause.<br>
+   * Due to many database engine limitation about the maximum number of prepared
+   * statement per connection, IN operator will never be treated with place holder
+   * prepared statement values.<br>
+   * You can format text values with {@link SQL} utility methods.
+   *
+   * @param <T> the values' type
+   * @param values the values
+   *
+   * @return {@code this}
+   */
+  public <T> ClausesBuilder notIn(final Collection<T> values) {
+    buffer.append(" NOT IN ").append(formatList(values));
     return this;
   }
 
@@ -493,7 +517,11 @@ public class ClausesBuilder {
         buffer.append(' ').append(boolAgg).append(' ');
       }
       buffer.append(clause.makeClause(column));
-      values.add(value);
+      if(value instanceof Collection) {
+        buffer.append(formatList((Collection<?>)value));
+      } else {
+       values.add(value);
+      }
       firstClause = false;
     }
   }

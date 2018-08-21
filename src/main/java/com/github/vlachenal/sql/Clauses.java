@@ -44,7 +44,7 @@ public final class Clauses {
    *
    * @param column the column
    *
-   * @return {@code this}
+   * @return clause request part
    */
   public static String notEquals(final String column) {
     return column + " <> ?";
@@ -55,7 +55,7 @@ public final class Clauses {
    *
    * @param column the column
    *
-   * @return {@code this}
+   * @return clause request part
    */
   public static String equalsTo(final String column) {
     return column + " = ?";
@@ -66,7 +66,7 @@ public final class Clauses {
    *
    * @param column the column
    *
-   * @return {@code this}
+   * @return clause request part
    */
   public static String greater(final String column) {
     return column + " > ?";
@@ -77,7 +77,7 @@ public final class Clauses {
    *
    * @param column the column
    *
-   * @return {@code this}
+   * @return clause request part
    */
   public static String greateEquals(final String column) {
     return column + " >= ?";
@@ -88,7 +88,7 @@ public final class Clauses {
    *
    * @param column the column
    *
-   * @return {@code this}
+   * @return clause request part
    */
   public static String lesser(final String column) {
     return column + " < ?";
@@ -99,54 +99,76 @@ public final class Clauses {
    *
    * @param column the column
    *
-   * @return {@code this}
+   * @return clause request part
    */
   public static String lesserEquals(final String column) {
     return column + " <= ?";
   }
 
   /**
-   * Lesser or equals clause
+   * Like clause
    *
    * @param column the column
    *
-   * @return {@code this}
+   * @return clause request part
    */
   public static String like(final String column) {
     return column + " LIKE ?";
   }
 
   /**
-   * Lesser or equals clause
+   * Not like clause
    *
    * @param column the column
    *
-   * @return {@code this}
+   * @return clause request part
    */
   public static String notLike(final String column) {
     return column + " NOT LIKE ?";
   }
 
   /**
-   * Lesser or equals clause
+   * Between clause
    *
    * @param column the column
    *
-   * @return {@code this}
+   * @return clause request part
    */
   public static String between(final String column) {
     return column + " BETWEEN ? AND ?";
   }
 
   /**
-   * Lesser or equals clause
+   * Not between clause
    *
    * @param column the column
    *
-   * @return {@code this}
+   * @return clause request part
    */
   public static String notBetween(final String column) {
     return column + " NOT BETWEEN ? AND ?";
+  }
+
+  /**
+   * In clause
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String in(final String column) {
+    return column + " IN ";
+  }
+
+  /**
+   * Not in clause
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String notIn(final String column) {
+    return column + " NOT IN ";
   }
   // Methods -
 
