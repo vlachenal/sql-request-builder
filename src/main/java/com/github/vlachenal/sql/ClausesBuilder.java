@@ -263,7 +263,7 @@ public class ClausesBuilder {
   /**
    * Add NOT IN subquery clause.
    *
-   * @param values the values
+   * @param query the subquery
    *
    * @return {@code this}
    */
@@ -287,7 +287,7 @@ public class ClausesBuilder {
   /**
    * Add NOT IN subquery clause.
    *
-   * @param values the values
+   * @param query the subquery
    *
    * @return {@code this}
    */

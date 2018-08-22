@@ -159,6 +159,8 @@ public final class SQL {
   /**
    * Format value collection for SQL query (i.e for IN clause)
    *
+   * @param <T> the collection type
+   *
    * @param values the values
    *
    * @return the SQL list
