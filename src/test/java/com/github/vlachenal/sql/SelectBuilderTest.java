@@ -750,6 +750,42 @@ public class SelectBuilderTest {
     assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN (SELECT u.a FROM tutu u)", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
+
+  /**
+   * Test window function with only limit
+   */
+  @Test
+  public void testLimit() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::notEquals, "a"))
+        .fetch(10)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ? FETCH FIRST 10 ROWS ONLY", query.getQuery());
+    assertEquals(1, query.getValues().size());
+  }
+
+  /**
+   * Test window function with limit and offset
+   */
+  @Test
+  public void testLimitOffset() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::notEquals, "a"))
+        .offset(50).fetch(10)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ? OFFSET 50 ROWS FETCH FIRST 10 ROWS ONLY", query.getQuery());
+    assertEquals(1, query.getValues().size());
+  }
   // Tests -
 
 }

@@ -145,6 +145,30 @@ public class SelectBuilder {
   }
 
   /**
+   * Add OFFSET n ROWS
+   *
+   * @param offset the offset value
+   *
+   * @return {@code this}
+   */
+  public SelectBuilder offset(final long offset) {
+    buffer.append(" OFFSET ").append(offset).append(" ROWS");
+    return this;
+  }
+
+  /**
+   * Add FETCH FIRST n ROWS ONLY
+   *
+   * @param limit the limit value
+   *
+   * @return {@code this}
+   */
+  public SelectBuilder fetch(final long limit) {
+    buffer.append(" FETCH FIRST ").append(limit).append(" ROWS ONLY");
+    return this;
+  }
+
+  /**
    * Build SQL query
    *
    * @return the query and its prepared statement values

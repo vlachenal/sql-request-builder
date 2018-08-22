@@ -118,6 +118,28 @@ public class AbstractPartBuilder {
   public SelectBuilder unionAll(final SelectBuilder other) {
     return select.union(other);
   }
+
+  /**
+   * Add OFFSET n ROWS
+   *
+   * @param offset the offset value
+   *
+   * @return {@code this}
+   */
+  public SelectBuilder offset(final long offset) {
+    return select.offset(offset);
+  }
+
+  /**
+   * Add FETCH FIRST n ROWS ONLY
+   *
+   * @param limit the limit value
+   *
+   * @return {@code this}
+   */
+  public SelectBuilder fetch(final long limit) {
+    return select.fetch(limit);
+  }
   // Methods -
 
 }
