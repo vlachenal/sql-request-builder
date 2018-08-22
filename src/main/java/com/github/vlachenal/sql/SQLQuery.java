@@ -24,7 +24,15 @@ import java.util.List;
 
 
 /**
- * SQL query
+ * SQL query.<br>
+ * <br>
+ * This is the result of the builders. It provides:
+ * <ul>
+ * <li>query to send to database</li>
+ * <li>values to add to prepared statement</li>
+ * </ul>
+ *
+ * @since 0.1
  *
  * @author Vincent Lachenal
  */
@@ -73,9 +81,9 @@ public class SQLQuery {
   }
 
   /**
-   * Prepared statement values array getter
+   * Prepared statement values' array getter
    *
-   * @return the values array
+   * @return the values' array
    */
   public final Object[] values() {
     return values.toArray();
