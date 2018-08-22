@@ -45,7 +45,7 @@ dependencies {
 
 // Publish to Maven +
 group = 'com.github.vlachenal'
-version = '0.1'
+version = '0.2'
 
 task sourcesJar(type: Jar) {
     classifier = 'sources'
