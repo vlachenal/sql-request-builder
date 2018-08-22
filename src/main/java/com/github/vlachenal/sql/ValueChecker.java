@@ -21,9 +21,12 @@ package com.github.vlachenal.sql;
 
 
 /**
- * Value checker functional interface
+ * Value checker functional interface.<br>
+ * Provides a method to check if a value is valid for adding it into SQL query.
  *
  * @param <T> the value type
+ *
+ * @since 0.1
  *
  * @author Vincent Lachenal
  */
