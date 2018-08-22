@@ -25,7 +25,9 @@ import java.util.stream.Collectors;
 
 
 /**
- * SQL request builder entry point
+ * SQL request builder entry point and utility methods
+ *
+ * @since 0.1
  *
  * @author Vincent Lachenal
  */
@@ -43,9 +45,9 @@ public final class SQL {
 
   // Methods +
   /**
-   * Get a new select builder
+   * Initialize a new select builder
    *
-   * @return the new builder
+   * @return the new {@link SelectBuilder}
    */
   public static SelectBuilder select() {
     return new SelectBuilder();
@@ -54,14 +56,14 @@ public final class SQL {
   /**
    * Initialize a new clauses builder
    *
-   * @return the new builder
+   * @return the new {@link ClausesBuilder}
    */
   public static ClausesBuilder clauses() {
     return new ClausesBuilder();
   }
 
   /**
-   * Initialize a new clauses builder
+   * Initialize a new clauses builder and add the first clause if vaue is valid
    *
    * @param <T> the value type
    *
@@ -69,14 +71,14 @@ public final class SQL {
    * @param clause the clause maker
    * @param value the value
    *
-   * @return the new builder
+   * @return the new {@link ClausesBuilder}
    */
   public static <T> ClausesBuilder clauses(final String column, final ClauseMaker clause, final T value) {
     return new ClausesBuilder(column, clause, value);
   }
 
   /**
-   * Initialize a new clauses builder
+   * Initialize a new clauses builder and add the first clause if vaue is valid
    *
    * @param <T> the value type
    *
@@ -85,14 +87,14 @@ public final class SQL {
    * @param value the value
    * @param checker the value checker to use
    *
-   * @return the new builder
+   * @return the new {@link ClausesBuilder}
    */
   public static <T> ClausesBuilder clauses(final String column, final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
     return new ClausesBuilder(column, clause, value, checker);
   }
 
   /**
-   * Initialize a new clauses builder
+   * Initialize a new clauses builder and add the first clause if vaue is valid
    *
    * @param <T> the value type
    *
@@ -101,14 +103,14 @@ public final class SQL {
    * @param value1 the first value
    * @param value2 the second value
    *
-   * @return the new builder
+   * @return the new {@link ClausesBuilder}
    */
   public static <T> ClausesBuilder clauses(final String column, final ClauseMaker clause, final T value1, final T value2) {
     return new ClausesBuilder(column, clause, value1, value2);
   }
 
   /**
-   * Initialize a new clauses builder
+   * Initialize a new clauses builder and add the first clause if vaue is valid
    *
    * @param <T> the value type
    *
@@ -118,7 +120,7 @@ public final class SQL {
    * @param value2 the second value
    * @param checker the value checker to use
    *
-   * @return the new builder
+   * @return the new {@link ClausesBuilder}
    */
   public static <T> ClausesBuilder clauses(final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
     return new ClausesBuilder(column, clause, value1, value2, checker);
@@ -176,7 +178,8 @@ public final class SQL {
   }
 
   /**
-   * Check if value is null or empty (according to its type)
+   * Check if value is null or empty (for {@link String} and {@link Collection}).<br>
+   * This is the value {@link ValueChecker} which is used ot check value validity.
    *
    * @param <T> the value type
    *
