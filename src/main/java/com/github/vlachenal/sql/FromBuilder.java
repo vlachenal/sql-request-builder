@@ -23,6 +23,8 @@ package com.github.vlachenal.sql;
 /**
  * SQL from table builder
  *
+ * @since 0.1
+ *
  * @author Vincent Lachenal
  */
 public class FromBuilder extends AbstractPartBuilder {
@@ -40,7 +42,7 @@ public class FromBuilder extends AbstractPartBuilder {
   }
 
   /**
-   * {@link FromBuilder} constructor
+   * {@link FromBuilder} constructor on subquery
    *
    * @param select the base {@link SelectBuilder}
    * @param subquery the subquery
@@ -52,7 +54,7 @@ public class FromBuilder extends AbstractPartBuilder {
   }
 
   /**
-   * {@link FromBuilder} constructor
+   * {@link FromBuilder} constructor on subquery
    *
    * @param select the base {@link SelectBuilder}
    * @param subquery the subquery
@@ -64,7 +66,7 @@ public class FromBuilder extends AbstractPartBuilder {
   }
 
   /**
-   * {@link FromBuilder} constructor
+   * {@link FromBuilder} constructor on subquery
    *
    * @param select the base {@link SelectBuilder}
    * @param subquery the subquery
@@ -76,7 +78,7 @@ public class FromBuilder extends AbstractPartBuilder {
   }
 
   /**
-   * {@link FromBuilder} constructor
+   * {@link FromBuilder} constructor on subquery
    *
    * @param select the base {@link SelectBuilder}
    * @param subquery the subquery
