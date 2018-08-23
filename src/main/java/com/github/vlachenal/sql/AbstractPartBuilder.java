@@ -21,7 +21,10 @@ package com.github.vlachenal.sql;
 
 
 /**
- * Abstract SQL query part builder
+ * Abstract SQL query part builder.<br>
+ * Acts like a decorator to call some initial {@link SelectBuilder} methods.
+ *
+ * @since 0.1
  *
  * @author Vincent Lachenal
  */
@@ -65,7 +68,7 @@ public class AbstractPartBuilder {
   }
 
   /**
-   * Add SQL 'group by' instruction
+   * Add SQL 'group by' command
    *
    * @param column the first column to group by
    *
@@ -76,7 +79,7 @@ public class AbstractPartBuilder {
   }
 
   /**
-   * Add SQL HAVING instruction and its clauses if not empty
+   * Add SQL HAVING command and its clauses if not empty
    *
    * @param clauses the clauses
    *
@@ -87,7 +90,7 @@ public class AbstractPartBuilder {
   }
 
   /**
-   * Add SQL 'order by' instruction.
+   * Add SQL 'order by' command.
    *
    * @param column the first column to order by
    *
@@ -120,22 +123,22 @@ public class AbstractPartBuilder {
   }
 
   /**
-   * Add OFFSET n ROWS
+   * Add {@code OFFSET n ROWS}
    *
    * @param offset the offset value
    *
-   * @return {@code this}
+   * @return the {@link SelectBuilder}
    */
   public SelectBuilder offset(final long offset) {
     return select.offset(offset);
   }
 
   /**
-   * Add FETCH FIRST n ROWS ONLY
+   * Add {@code FETCH FIRST n ROWS ONLY}
    *
    * @param limit the limit value
    *
-   * @return {@code this}
+   * @return the {@link SelectBuilder}
    */
   public SelectBuilder fetch(final long limit) {
     return select.fetch(limit);
