@@ -25,7 +25,10 @@ import java.util.List;
 
 
 /**
- * Clauses builder
+ * SQL clauses builder.<br>
+ * This class should be instanciated through {@link SQL}.
+ *
+ * @since 0.1
  *
  * @author Vincent Lachenal
  */
@@ -45,7 +48,7 @@ public class ClausesBuilder {
 
   // Constructors +
   /**
-   * {@link ClausesBuilder} constructor
+   * {@link ClausesBuilder} default constructor
    */
   public ClausesBuilder() {
     buffer = new StringBuilder();
@@ -136,7 +139,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add NOT instruction
+   * Add {@code NOT} command
    *
    * @param clauses the clauses to negate
    *
@@ -149,7 +152,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * IS NULL clause
+   * Add {@code IS NULL} clause
    *
    * @return {@code this}
    */
@@ -159,7 +162,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * IS NOT NULL clause
+   * Add {@code IS NOT NULL} clause
    *
    * @return {@code this}
    */
@@ -169,7 +172,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Not equals clause
+   * Add not equals clause with {@code <>} operator
    *
    * @return {@code this}
    */
@@ -179,7 +182,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Equals clause
+   * Add equals clause with {@code =} operator
    *
    * @return {@code this}
    */
@@ -189,7 +192,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * EXISTS clause
+   * Add {@code NOT EXISTS} in subquery clause
    *
    * @param query the select query
    *
@@ -202,7 +205,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * EXISTS clause
+   * Add {@code EXISTS} in subquery clause
    *
    * @param query the select query
    *
@@ -215,9 +218,9 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add IN clause.<br>
+   * Add {@code IN} clause.<br>
    * Due to many database engine limitation about the maximum number of prepared
-   * statement per connection, IN operator will never be treated with place holder
+   * statement per connection, {@code IN} operator will never be treated with place holder
    * prepared statement values.<br>
    * You can format text values with {@link SQL} utility methods.
    *
@@ -232,9 +235,9 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add NOT IN clause.<br>
+   * Add {@code NOT IN} clause.<br>
    * Due to many database engine limitation about the maximum number of prepared
-   * statement per connection, IN operator will never be treated with place holder
+   * statement per connection, {@code NOT IN} operator will never be treated with place holder
    * prepared statement values.<br>
    * You can format text values with {@link SQL} utility methods.
    *
@@ -249,7 +252,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add IN subquery clause.
+   * Add {@code IN} subquery clause.
    *
    * @param query the subquery
    *
@@ -261,7 +264,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add NOT IN subquery clause.
+   * Add {@code NOT IN} subquery clause.
    *
    * @param query the subquery
    *
@@ -273,7 +276,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add IN subquery clause.
+   * Add {@code IN} subquery clause.
    *
    * @param query the subquery
    *
@@ -285,7 +288,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add NOT IN subquery clause.
+   * Add {@code NOT IN} subquery clause.
    *
    * @param query the subquery
    *
@@ -297,7 +300,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Greater clause
+   * Add greater clause with {@code >} operator
    *
    * @return {@code this}
    */
@@ -307,7 +310,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Greater or equals clause
+   * Add greater or equals clause with {@code >=} operator
    *
    * @return {@code this}
    */
@@ -317,7 +320,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Lesser clause
+   * Add lesser clause with {@code <} operator
    *
    * @return {@code this}
    */
@@ -327,7 +330,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Lesser or equals clause
+   * Add lesser or equals clause with {@code <=} operator
    *
    * @return {@code this}
    */
@@ -337,7 +340,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Like clause
+   * Add {@code LIKE} clause
    *
    * @return {@code this}
    */
@@ -347,7 +350,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Not like clause
+   * Add {@code NOT LIKE} clause
    *
    * @return {@code this}
    */
@@ -357,7 +360,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Between clause
+   * Add {@code BETWEEN} clause
    *
    * @return {@code this}
    */
@@ -367,7 +370,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Not between clause
+   * Add {@code NOT BETWEEN} clause
    *
    * @return {@code this}
    */
@@ -377,7 +380,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add AND to SQL query
+   * Add {@code AND} to SQL query
    *
    * @return {@code this}
    */
@@ -387,7 +390,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add OR to SQL query
+   * Add {@code OR} to SQL query
    *
    * @return {@code this}
    */
@@ -399,8 +402,8 @@ public class ClausesBuilder {
 
   // Check and add value to prepared statement +
   /**
-   * Add AND clause if value is valid. Value will be validate with {@code SQL::isValidValue}
-   * function.
+   * Add {@code AND} clause if value is valid. Value will be validate with
+   * {@code SQL::isValidValue} function.
    *
    * @param <T> the value type
    *
@@ -416,7 +419,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add AND clause if value is valid
+   * Add {@code AND} clause if value is valid
    *
    * @param <T> the value type
    *
@@ -433,8 +436,8 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add AND clause if value is valid. Value will be validate with {@code SQL::isValidValue}
-   * function.
+   * Add {@code AND} clause if value is valid. Value will be validate with
+   *  {@code SQL::isValidValue} function.
    *
    * @param <T> the value type
    *
@@ -451,7 +454,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add AND clause if value is valid
+   * Add {@code AND} clause if value is valid
    *
    * @param <T> the value type
    *
@@ -469,8 +472,8 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add OR clause if value is valid. Value will be validate with {@code SQL::isValidValue}
-   * function.
+   * Add {@code OR} clause if value is valid. Value will be validate with
+   * {@code SQL::isValidValue} function.
    *
    * @param <T> the value type
    *
@@ -486,7 +489,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add OR clause if value is valid
+   * Add {@code OR} clause if value is valid
    *
    * @param <T> the value type
    *
@@ -503,8 +506,8 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add OR clause if value is valid. Value will be validate with {@code SQL::isValidValue}
-   * function.
+   * Add {@code OR} clause if value is valid. Value will be validate with
+   * {@code SQL::isValidValue} function.
    *
    * @param <T> the value type
    *
@@ -521,7 +524,7 @@ public class ClausesBuilder {
   }
 
   /**
-   * Add OR clause if value is valid
+   * Add {@code OR} clause if value is valid
    *
    * @param <T> the value type
    *
