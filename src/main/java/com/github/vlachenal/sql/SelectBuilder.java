@@ -24,7 +24,10 @@ import java.util.List;
 
 
 /**
- * SQL SELECT query builder
+ * SQL {@code SELECT} query builder.<br>
+ * This class should be instanciated through {@link SQL} static method.
+ *
+ * @since 0.1
  *
  * @author Vincent Lachenal
  */
@@ -52,7 +55,7 @@ public class SelectBuilder {
 
   // Methods +
   /**
-   * Add DISTINCT instruction
+   * Add {@code DISTINCT} command
    *
    * @return {@code this}
    */
@@ -75,14 +78,14 @@ public class SelectBuilder {
    *
    * @param column the selected column
    *
-   * @return the new field builder
+   * @return the new {@link FieldsBuilder}
    */
   public FieldsBuilder field(final String column) {
     return new FieldsBuilder(this, column);
   }
 
   /**
-   * Add SQL 'group by' instruction
+   * Add SQL {@code GROUP BY} command
    *
    * @param column the first column to group by
    *
@@ -94,7 +97,7 @@ public class SelectBuilder {
   }
 
   /**
-   * Add SQL 'order by' instruction.
+   * Add SQL {@code ORDER BY} command.
    *
    * @param column the first column to order by
    *
@@ -106,7 +109,7 @@ public class SelectBuilder {
   }
 
   /**
-   * Add SQL HAVING instruction and its clauses if not empty
+   * Add SQL {@code HAVING} command and its clauses if not empty
    *
    * @param clauses the clauses
    *
@@ -121,7 +124,7 @@ public class SelectBuilder {
   }
 
   /**
-   * Add union to other SQL request
+   * Add {@code UNION} to other SQL request
    *
    * @param other the other SQL request
    *
@@ -133,7 +136,7 @@ public class SelectBuilder {
   }
 
   /**
-   * Add union to other SQL request with duplicate entries
+   * Add {@code UNION ALL} to other SQL request with duplicate entries
    *
    * @param other the other SQL request
    *
@@ -145,7 +148,7 @@ public class SelectBuilder {
   }
 
   /**
-   * Add OFFSET n ROWS
+   * Add {@code OFFSET n ROWS}
    *
    * @param offset the offset value
    *
@@ -157,7 +160,7 @@ public class SelectBuilder {
   }
 
   /**
-   * Add FETCH FIRST n ROWS ONLY
+   * Add {@code FETCH FIRST n ROWS ONLY}
    *
    * @param limit the limit value
    *
