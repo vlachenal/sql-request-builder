@@ -23,6 +23,8 @@ package com.github.vlachenal.sql;
 /**
  * Clause maker functional interface
  *
+ * @since 0.1
+ *
  * @author Vincent Lachenal
  */
 @FunctionalInterface
