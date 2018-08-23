@@ -21,7 +21,12 @@ package com.github.vlachenal.sql;
 
 
 /**
- * Provides clauses function for optional clauses in {@link ClausesBuilder}
+ * Provides clauses function for optional clauses in {@link ClausesBuilder}.<br>
+ * Functions can (should) be used as {@link ClauseMaker}. Every function will format
+ * SQL clause for {@link java.sql.PreparedStatement} with the {@code ?} wildcard
+ * but {@code in} and {@code notIn} clauses.
+ *
+ * @since 0.1
  *
  * @author Vincent Lachenal
  */
@@ -40,7 +45,7 @@ public final class Clauses {
 
   // Methods +
   /**
-   * Not equals clause
+   * Provides 'not equals' clause with {@code <>} operator
    *
    * @param column the column
    *
@@ -51,7 +56,8 @@ public final class Clauses {
   }
 
   /**
-   * Equals clause ... add 'To' suffix because it does not compile with JDK10 (works fine with 1.8)
+   * Provides 'equals' clause with {@code =} operator
+   * ... add 'To' suffix because it does not compile with JDK10 (works fine with 1.8)
    *
    * @param column the column
    *
@@ -62,7 +68,7 @@ public final class Clauses {
   }
 
   /**
-   * Greater clause
+   * Provides 'greater' clause with {@code >} operator
    *
    * @param column the column
    *
@@ -73,7 +79,7 @@ public final class Clauses {
   }
 
   /**
-   * Greater or equals clause
+   * Provides 'greater or equals' clause with {@code >=} operator
    *
    * @param column the column
    *
@@ -84,7 +90,7 @@ public final class Clauses {
   }
 
   /**
-   * Lesser clause
+   * Provides 'lesser' clause with {@code <} operator
    *
    * @param column the column
    *
@@ -95,7 +101,7 @@ public final class Clauses {
   }
 
   /**
-   * Lesser or equals clause
+   * Provides 'lesser or equals' clause with {@code <=} operator
    *
    * @param column the column
    *
@@ -106,7 +112,7 @@ public final class Clauses {
   }
 
   /**
-   * Like clause
+   * Provides 'like' clause with {@code LIKE} operator
    *
    * @param column the column
    *
@@ -117,7 +123,7 @@ public final class Clauses {
   }
 
   /**
-   * Not like clause
+   * Provides 'not like' clause with {@code NOT LIKE} operator
    *
    * @param column the column
    *
@@ -128,7 +134,7 @@ public final class Clauses {
   }
 
   /**
-   * Between clause
+   * Provides 'beween' clause with {@code BETWEEN} operator
    *
    * @param column the column
    *
@@ -139,7 +145,7 @@ public final class Clauses {
   }
 
   /**
-   * Not between clause
+   * Provides 'not between' clause with {@code NOT BETWEEN} operator
    *
    * @param column the column
    *
@@ -150,7 +156,8 @@ public final class Clauses {
   }
 
   /**
-   * In clause
+   * Provides 'in' clause with {@code IN} operator.<br>
+   * This clause is not managed with {@link java.sql.PreparedStatement}.
    *
    * @param column the column
    *
@@ -161,7 +168,8 @@ public final class Clauses {
   }
 
   /**
-   * Not in clause
+   * Provides 'not in' clause with {@code NOT IN} operator.<br>
+   * This clause is not managed with {@link java.sql.PreparedStatement}.
    *
    * @param column the column
    *
