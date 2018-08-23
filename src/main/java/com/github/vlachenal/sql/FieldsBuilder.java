@@ -21,7 +21,11 @@ package com.github.vlachenal.sql;
 
 
 /**
- * Field builder
+ * Field builder.<br>
+ * This class will be used to append selected 'columns' in {@code SELECT} queries
+ * and in {@code ORDER BY} and {@code GROUP BY} command.
+ *
+ * @since 0.1
  *
  * @author Vincent Lachenal
  */
@@ -45,7 +49,7 @@ public class FieldsBuilder extends AbstractPartBuilder {
   /**
    * Add new field
    *
-   * @param column the selected column
+   * @param column the column
    *
    * @return {@code this}
    */
@@ -55,7 +59,7 @@ public class FieldsBuilder extends AbstractPartBuilder {
   }
 
   /**
-   * Add AS alias on field
+   * Add {@code AS} alias on field
    *
    * @param alias the alias
    *
@@ -67,7 +71,7 @@ public class FieldsBuilder extends AbstractPartBuilder {
   }
 
   /**
-   * Add ASC order by direction.
+   * Add {@code ASC} order by direction.
    *
    * @return {@code this}
    */
@@ -77,7 +81,7 @@ public class FieldsBuilder extends AbstractPartBuilder {
   }
 
   /**
-   * Add DESC order by direction.
+   * Add {@code DESC} order by direction.
    *
    * @return {@code this}
    */
@@ -91,7 +95,7 @@ public class FieldsBuilder extends AbstractPartBuilder {
    *
    * @param table the table where columns are selected from
    *
-   * @return the from builder
+   * @return the new {@link FromBuilder}
    */
   public FromBuilder from(final String table) {
     return new FromBuilder(select, table);
@@ -102,7 +106,7 @@ public class FieldsBuilder extends AbstractPartBuilder {
    *
    * @param subquery the 'table' where columns are selected from
    *
-   * @return the from builder
+   * @return the new {@link FromBuilder}
    */
   public FromBuilder from(final SelectBuilder subquery) {
     return new FromBuilder(select, subquery);
@@ -113,7 +117,7 @@ public class FieldsBuilder extends AbstractPartBuilder {
    *
    * @param subquery the 'table' where columns are selected from
    *
-   * @return the from builder
+   * @return the new {@link FromBuilder}
    */
   public FromBuilder from(final SQLQuery subquery) {
     return new FromBuilder(select, subquery);
@@ -125,7 +129,7 @@ public class FieldsBuilder extends AbstractPartBuilder {
    * @param subquery the 'table' where columns are selected from
    * @param alias the 'table' alias
    *
-   * @return the from builder
+   * @return the new {@link FromBuilder}
    */
   public FromBuilder from(final SelectBuilder subquery, final String alias) {
     return new FromBuilder(select, subquery, alias);
@@ -137,7 +141,7 @@ public class FieldsBuilder extends AbstractPartBuilder {
    * @param subquery the 'table' where columns are selected from
    * @param alias the 'table' alias
    *
-   * @return the from builder
+   * @return the new {@link FromBuilder}
    */
   public FromBuilder from(final SQLQuery subquery, final String alias) {
     return new FromBuilder(select, subquery, alias);
