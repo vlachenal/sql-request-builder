@@ -827,14 +827,32 @@ public class SelectBuilderTest {
   @Test
   public void testGroupBy() {
     final SQLQuery query = SQL.select()
-        .field("t.titi")
+        .field("count(t.titi)")
         .field("t.tata")
         .from("toto t")
         .groupBy("t.tata")
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t GROUP BY t.tata", query.getQuery());
+    assertEquals("SELECT count(t.titi),t.tata FROM toto t GROUP BY t.tata", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test group by
+   */
+  @Test
+  public void testGroupByHaving() {
+    final SQLQuery query = SQL.select()
+        .field("sum(t.titi)")
+        .field("t.tata")
+        .from("toto t")
+        .groupBy("t.tata")
+        .having(SQL.clauses().field("sum(t.titi)").greateEquals().field("2"))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT sum(t.titi),t.tata FROM toto t GROUP BY t.tata HAVING sum(t.titi) >= 2", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
 
@@ -852,6 +870,40 @@ public class SelectBuilderTest {
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
     assertEquals("SELECT t.titi,t.tata FROM toto t ORDER BY t.tata", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test order by
+   */
+  @Test
+  public void testOrderByAsc() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .orderBy("t.tata").asc()
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t ORDER BY t.tata ASC", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test order by
+   */
+  @Test
+  public void testOrderByDesc() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .orderBy("t.tata").desc()
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t ORDER BY t.tata DESC", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
 
