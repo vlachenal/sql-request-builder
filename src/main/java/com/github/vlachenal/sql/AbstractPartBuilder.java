@@ -42,7 +42,7 @@ public class AbstractPartBuilder {
    *
    * @param select the select query builder
    */
-  public AbstractPartBuilder(final SelectBuilder select) {
+  protected AbstractPartBuilder(final SelectBuilder select) {
     this.select = select;
   }
   // Constructors -
@@ -119,7 +119,7 @@ public class AbstractPartBuilder {
    * @return the {@link SelectBuilder}
    */
   public SelectBuilder unionAll(final SelectBuilder other) {
-    return select.union(other);
+    return select.unionAll(other);
   }
 
   /**

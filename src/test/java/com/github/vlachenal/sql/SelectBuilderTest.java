@@ -786,6 +786,106 @@ public class SelectBuilderTest {
     assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ? OFFSET 50 ROWS FETCH FIRST 10 ROWS ONLY", query.getQuery());
     assertEquals(1, query.getValues().size());
   }
+
+  /**
+   * Test window function with only limit in 'subbuilder'
+   */
+  @Test
+  public void testLimitWithoutWhere() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .fetch(10)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t FETCH FIRST 10 ROWS ONLY", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test limit/offset in 'subbuilder'
+   */
+  @Test
+  public void testLimitOffsetWithoutWhere() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .offset(50).fetch(10)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t OFFSET 50 ROWS FETCH FIRST 10 ROWS ONLY", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test group by
+   */
+  @Test
+  public void testGroupBy() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .groupBy("t.tata")
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t GROUP BY t.tata", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test order by
+   */
+  @Test
+  public void testOrderBy() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .orderBy("t.tata")
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t ORDER BY t.tata", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test SQL union
+   */
+  @Test
+  public void testUnion() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from("toto t")
+        .union(SQL.select().field("t.titi").from("tutu t").done())
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi FROM toto t UNION SELECT t.titi FROM tutu t", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test SQL union all
+   */
+  @Test
+  public void testUnionAll() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from("toto t")
+        .unionAll(SQL.select().field("t.titi").from("tutu t").done())
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi FROM toto t UNION ALL SELECT t.titi FROM tutu t", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
   // Tests -
 
 }
