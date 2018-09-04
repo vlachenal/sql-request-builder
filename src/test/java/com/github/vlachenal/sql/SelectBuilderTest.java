@@ -938,6 +938,78 @@ public class SelectBuilderTest {
     assertEquals("SELECT t.titi FROM toto t UNION ALL SELECT t.titi FROM tutu t", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
+
+  /**
+   * Test select from subquery
+   */
+  @Test
+  public void testFromSubquery() {
+    final SQLQuery query = SQL.select()
+        .field("titi")
+        .from(SQL.select()
+              .field("titi")
+              .from("tutu")
+              .build())
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT titi FROM (SELECT titi FROM tutu)", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test select from subquery
+   */
+  @Test
+  public void testFromSubqueryBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("titi")
+        .from(SQL.select()
+              .field("titi")
+              .from("tutu")
+              .done())
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT titi FROM (SELECT titi FROM tutu)", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test select from subquery
+   */
+  @Test
+  public void testFromSubqueryWithAlias() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from(SQL.select()
+              .field("titi")
+              .from("tutu")
+              .build(), "t")
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi FROM (SELECT titi FROM tutu) t", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test select from subquery
+   */
+  @Test
+  public void testFromSubqueryBuilderWithAlias() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from(SQL.select()
+              .field("titi")
+              .from("tutu")
+              .done(),"t")
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi FROM (SELECT titi FROM tutu) t", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
   // Tests -
 
 }
