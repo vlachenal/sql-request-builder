@@ -658,7 +658,7 @@ public class SelectBuilderTest {
         .field("t.titi")
         .field("t.tata")
         .from("toto t")
-        .where(SQL.clauses().field("t.a").in(Stream.of("'plip'","'plop'").collect(Collectors.toList()))
+        .where(SQL.clauses().field("t.a").in(SQL.formatText(Stream.of("plip","plop").collect(Collectors.toList())))
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
@@ -1009,6 +1009,54 @@ public class SelectBuilderTest {
     System.out.println("Values: " + query.getValues());
     assertEquals("SELECT t.titi FROM (SELECT titi FROM tutu) t", query.getQuery());
     assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test clause with custom checker
+   */
+  @Test
+  public void testClauseCustomChecker() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from("toto t")
+        .where(SQL.clauses("t.tata", Clauses::like, "%tutu%", (val) -> val != null && val.contains("%")))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi FROM toto t WHERE t.tata LIKE ?", query.getQuery());
+    assertEquals(1, query.getValues().size());
+  }
+
+  /**
+   * Test clause with custom checker
+   */
+  @Test
+  public void testClauseTwoValues() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from("toto t")
+        .where(SQL.clauses("t.tata", Clauses::between, 1, 2))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi FROM toto t WHERE t.tata BETWEEN ? AND ?", query.getQuery());
+    assertEquals(2, query.getValues().size());
+  }
+
+  /**
+   * Test clause with custom checker
+   */
+  @Test
+  public void testClauseTwoValuesCustomChecker() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from("toto t")
+        .where(SQL.clauses("t.tata", Clauses::between, 1, 2, (val) -> val < 1000))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi FROM toto t WHERE t.tata BETWEEN ? AND ?", query.getQuery());
+    assertEquals(2, query.getValues().size());
   }
   // Tests -
 
