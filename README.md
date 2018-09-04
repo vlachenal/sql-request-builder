@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/vlachenal/sql-request-builder.svg?branch=master)](https://travis-ci.org/vlachenal/sql-request-builder) [![Maintainability](https://api.codeclimate.com/v1/badges/50db46caf82379434877/maintainability)](https://codeclimate.com/github/vlachenal/sql-request-builder/maintainability)
+[![Build Status](https://travis-ci.org/vlachenal/sql-request-builder.svg?branch=master)](https://travis-ci.org/vlachenal/sql-request-builder) [![Maintainability](https://api.codeclimate.com/v1/badges/50db46caf82379434877/maintainability)](https://codeclimate.com/github/vlachenal/sql-request-builder/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/50db46caf82379434877/test_coverage)](https://codeclimate.com/github/vlachenal/sql-request-builder/test_coverage)
 
 # sql-request-builder
 Dynamic SQL request builder aims to provides a fluent API to easily write dynamic SQL request.
