@@ -117,10 +117,14 @@ public class SelectBuilderTest {
         .field("u.tata")
         .from("toto t")
         .selfJoin(SQL.select().field("*").from("tutu").done(), "u")
+        .selfJoin(SQL.select().field("*").from("titi").build(), "i")
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t,(SELECT * FROM tutu) u", query.getQuery());
+    assertEquals("SELECT t.titi,u.tata "
+        + "FROM toto t,"
+        + "(SELECT * FROM tutu) u,"
+        + "(SELECT * FROM titi) i", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
 
@@ -151,10 +155,14 @@ public class SelectBuilderTest {
         .field("u.tata")
         .from("toto t")
         .naturalJoin(SQL.select().field("*").from("tutu").done(), "u")
+        .naturalJoin(SQL.select().field("*").from("titi").build(), "i")
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t NATURAL JOIN (SELECT * FROM tutu) u", query.getQuery());
+    assertEquals("SELECT t.titi,u.tata "
+        + "FROM toto t "
+        + "NATURAL JOIN (SELECT * FROM tutu) u "
+        + "NATURAL JOIN (SELECT * FROM titi) i", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
 
@@ -185,10 +193,14 @@ public class SelectBuilderTest {
         .field("u.tata")
         .from("toto t")
         .crossJoin(SQL.select().field("*").from("tutu").done(), "u")
+        .crossJoin(SQL.select().field("*").from("titi").build(), "i")
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t CROSS JOIN (SELECT * FROM tutu) u", query.getQuery());
+    assertEquals("SELECT t.titi,u.tata "
+        + "FROM toto t "
+        + "CROSS JOIN (SELECT * FROM tutu) u "
+        + "CROSS JOIN (SELECT * FROM titi) i", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
 
@@ -257,10 +269,14 @@ public class SelectBuilderTest {
         .field("u.tata")
         .from("toto t")
         .innerJoin(SQL.select().field("*").from("tutu").done(), "u", SQL.clauses().field("t.i").equals().field("u.a"))
+        .innerJoin(SQL.select().field("*").from("titi").build(), "i", SQL.clauses().field("t.i").equals().field("i.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t INNER JOIN (SELECT * FROM tutu) u ON t.i = u.a", query.getQuery());
+    assertEquals("SELECT t.titi,u.tata "
+        + "FROM toto t "
+        + "INNER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
+        + "INNER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
 
@@ -291,10 +307,14 @@ public class SelectBuilderTest {
         .field("u.tata")
         .from("toto t")
         .leftOuterJoin(SQL.select().field("*").from("tutu").done(), "u", SQL.clauses().field("t.i").equals().field("u.a"))
+        .leftOuterJoin(SQL.select().field("*").from("titi").build(), "i", SQL.clauses().field("t.i").equals().field("i.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t LEFT OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a", query.getQuery());
+    assertEquals("SELECT t.titi,u.tata "
+        + "FROM toto t "
+        + "LEFT OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
+        + "LEFT OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
 
@@ -325,10 +345,14 @@ public class SelectBuilderTest {
         .field("u.tata")
         .from("toto t")
         .rightOuterJoin(SQL.select().field("*").from("tutu").done(), "u", SQL.clauses().field("t.i").equals().field("u.a"))
+        .rightOuterJoin(SQL.select().field("*").from("titi").done(), "i", SQL.clauses().field("t.i").equals().field("i.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t RIGHT OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a", query.getQuery());
+    assertEquals("SELECT t.titi,u.tata "
+        + "FROM toto t "
+        + "RIGHT OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
+        + "RIGHT OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
 
@@ -359,10 +383,14 @@ public class SelectBuilderTest {
         .field("u.tata")
         .from("toto t")
         .fullOuterJoin(SQL.select().field("*").from("tutu").done(), "u", SQL.clauses().field("t.i").equals().field("u.a"))
+        .fullOuterJoin(SQL.select().field("*").from("titi").done(), "i", SQL.clauses().field("t.i").equals().field("i.a"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t FULL OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a", query.getQuery());
+    assertEquals("SELECT t.titi,u.tata "
+        + "FROM toto t "
+        + "FULL OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
+        + "FULL OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
     assertEquals(0, query.getValues().size());
   }
 
