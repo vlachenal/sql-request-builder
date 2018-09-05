@@ -592,6 +592,23 @@ public class ClausesBuilder {
   }
   // Check and add value to prepared statement -
 
+  // Parentheses +
+  /**
+   * Check and add clauses
+   *
+   * @param boolAgg the boolean aggregator to use
+   * @param other the other clauses to add
+   */
+  private void checkAndAddClauses(final String boolAgg, final ClausesBuilder other) {
+    if(!other.firstClause) {
+      if(!firstClause) {
+        buffer.append(' ').append(boolAgg).append(' ');
+      }
+      buffer.append('(').append(other.buffer).append(')');
+      values.addAll(other.values);
+    }
+  }
+
   /**
    * Add clauses into parenthesis with AND
    *
@@ -600,10 +617,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public ClausesBuilder and(final ClausesBuilder other) {
-    if(!other.firstClause) {
-      buffer.append(" AND (").append(other.buffer).append(')');
-      values.addAll(other.values);
-    }
+    checkAndAddClauses("AND", other);
     return this;
   }
 
@@ -615,12 +629,10 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public ClausesBuilder or(final ClausesBuilder other) {
-    if(!other.firstClause) {
-      buffer.append(" OR (").append(other.buffer).append(')');
-      values.addAll(other.values);
-    }
+    checkAndAddClauses("OR", other);
     return this;
   }
+  // Parentheses -
   // Methods -
 
 }
