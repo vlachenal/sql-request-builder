@@ -1326,6 +1326,56 @@ public class SelectBuilderTest {
     assertEquals(2, query.getValues().size());
     assertEquals(2, query.values().length);
   }
+
+  /**
+   * Test add clauses with AND operator
+   */
+  @Test
+  public void testAndOtherClauses() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from("toto t")
+        .where(SQL.clauses("t.tata", Clauses::between, 1, 2, (val) -> val < 1000)
+               .and(SQL.clauses().field("t.a").equals().field("2")
+                    .or().field("t.b").equals().field("3")
+                   )
+               .and(SQL.clauses("t.c", Clauses::equalsTo, null))
+            )
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi "
+        + "FROM toto t "
+        + "WHERE t.tata BETWEEN ? AND ? "
+        + "AND (t.a = 2 OR t.b = 3)", query.getQuery());
+    assertEquals(2, query.getValues().size());
+    assertEquals(2, query.values().length);
+  }
+
+  /**
+   * Test add clauses with AND operator
+   */
+  @Test
+  public void testOrOtherClauses() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from("toto t")
+        .where(SQL.clauses("t.tata", Clauses::between, 1, 2, (val) -> val < 1000)
+               .or(SQL.clauses().field("t.a").equals().field("2")
+                    .and().field("t.b").equals().field("3")
+                   )
+               .or(SQL.clauses("t.c", Clauses::equalsTo, null))
+            )
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi "
+        + "FROM toto t "
+        + "WHERE t.tata BETWEEN ? AND ? "
+        + "OR (t.a = 2 AND t.b = 3)", query.getQuery());
+    assertEquals(2, query.getValues().size());
+    assertEquals(2, query.values().length);
+  }
   // Tests -
 
 }

@@ -593,15 +593,32 @@ public class ClausesBuilder {
   // Check and add value to prepared statement -
 
   /**
-   * Add clauses into parenthesis
+   * Add clauses into parenthesis with AND
    *
    * @param other the clauses to add
    *
    * @return {@code this}
    */
-  public ClausesBuilder compound(final ClausesBuilder other) {
-    buffer.append('(').append(other.buffer).append(')');
-    values.addAll(other.values);
+  public ClausesBuilder and(final ClausesBuilder other) {
+    if(!other.firstClause) {
+      buffer.append(" AND (").append(other.buffer).append(')');
+      values.addAll(other.values);
+    }
+    return this;
+  }
+
+  /**
+   * Add clauses into parenthesis with OR
+   *
+   * @param other the clauses to add
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder or(final ClausesBuilder other) {
+    if(!other.firstClause) {
+      buffer.append(" OR (").append(other.buffer).append(')');
+      values.addAll(other.values);
+    }
     return this;
   }
   // Methods -
