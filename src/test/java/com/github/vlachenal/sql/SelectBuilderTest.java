@@ -48,6 +48,21 @@ public class SelectBuilderTest {
    * Test select single column on single table without clauses
    */
   @Test
+  public void testQueryDistinctSingleColSingleTableWithoutWhere() {
+    final SQLQuery query = SQL.select().distinct()
+        .field("titi")
+        .from("toto")
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT DISTINCT titi FROM toto", query.getQuery());
+    assertEquals(0, query.getValues().size());
+  }
+
+  /**
+   * Test select single column on single table without clauses
+   */
+  @Test
   public void testQuerySingleColWithAliasSingleTableWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("titi").as("t")
@@ -432,6 +447,78 @@ public class SelectBuilderTest {
         + "AND t.j NOT BETWEEN ? AND ? "
         + "AND t.k LIKE ? "
         + "AND t.l NOT LIKE ?", query.getQuery());
+    assertEquals(Stream.of("b","c","d","e","f","g", 1, 10, 1, 10,"%plip%","%plop%").collect(Collectors.toList()), query.getValues());
+  }
+
+  /**
+   * Simple clauses (the one which does not have to be check and add values as prepared statement)
+   */
+  @Test
+  public void testClausesWithValidValuesCustomChecker() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::equalsTo, "b")
+               .and("t.a", Clauses::notEquals, "c", (val) -> !val.equals("z"))
+               .and("t.a", Clauses::lesser, "d")
+               .and("t.a", Clauses::lesserEquals, "e")
+               .and("t.a", Clauses::greater, "f")
+               .and("t.a", Clauses::greateEquals, "g")
+               .and("t.i", Clauses::between, 1, 10, (val) -> val > 0 && val < 20)
+               .and("t.j", Clauses::notBetween, 1 ,10)
+               .and("t.k", Clauses::like, "%plip%")
+               .and("t.l", Clauses::notLike, "%plop%")
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = ? "
+        + "AND t.a <> ? "
+        + "AND t.a < ? "
+        + "AND t.a <= ? "
+        + "AND t.a > ? "
+        + "AND t.a >= ? "
+        + "AND t.i BETWEEN ? AND ? "
+        + "AND t.j NOT BETWEEN ? AND ? "
+        + "AND t.k LIKE ? "
+        + "AND t.l NOT LIKE ?", query.getQuery());
+    assertEquals(Stream.of("b","c","d","e","f","g", 1, 10, 1, 10,"%plip%","%plop%").collect(Collectors.toList()), query.getValues());
+  }
+
+  /**
+   * Simple clauses (the one which does not have to be check and add values as prepared statement)
+   */
+  @Test
+  public void testOrClausesWithValidValuesCustomChecker() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::equalsTo, "b")
+               .or("t.a", Clauses::notEquals, "c", (val) -> !val.equals("z"))
+               .or("t.a", Clauses::lesser, "d")
+               .or("t.a", Clauses::lesserEquals, "e")
+               .or("t.a", Clauses::greater, "f")
+               .or("t.a", Clauses::greateEquals, "g")
+               .or("t.i", Clauses::between, 1, 10, (val) -> val > 0 && val < 20)
+               .or("t.j", Clauses::notBetween, 1 ,10)
+               .or("t.k", Clauses::like, "%plip%")
+               .or("t.l", Clauses::notLike, "%plop%")
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = ? "
+        + "OR t.a <> ? "
+        + "OR t.a < ? "
+        + "OR t.a <= ? "
+        + "OR t.a > ? "
+        + "OR t.a >= ? "
+        + "OR t.i BETWEEN ? AND ? "
+        + "OR t.j NOT BETWEEN ? AND ? "
+        + "OR t.k LIKE ? "
+        + "OR t.l NOT LIKE ?", query.getQuery());
     assertEquals(Stream.of("b","c","d","e","f","g", 1, 10, 1, 10,"%plip%","%plop%").collect(Collectors.toList()), query.getValues());
   }
 
@@ -1057,6 +1144,7 @@ public class SelectBuilderTest {
     System.out.println("Values: " + query.getValues());
     assertEquals("SELECT t.titi FROM toto t WHERE t.tata BETWEEN ? AND ?", query.getQuery());
     assertEquals(2, query.getValues().size());
+    assertEquals(2, query.values().length);
   }
   // Tests -
 
