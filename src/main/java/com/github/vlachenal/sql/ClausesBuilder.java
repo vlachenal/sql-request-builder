@@ -606,6 +606,7 @@ public class ClausesBuilder {
       }
       buffer.append('(').append(other.buffer).append(')');
       values.addAll(other.values);
+      firstClause = false;
     }
   }
 
