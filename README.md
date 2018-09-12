@@ -88,9 +88,7 @@ The generated SQL request will be:
 SELECT * FROM Heroes WHERE last_name LIKE ? AND gender = ?
 ```
 
-With `%Croft%` and `F` as values.
-
-You can retrieve query and values like this:
+With `%Croft%` and `F` as values which can retrieve query and values like this:
 ```java
 String strQuery = query.getQuery();
 List<Object> valueLst = query.getValues();
