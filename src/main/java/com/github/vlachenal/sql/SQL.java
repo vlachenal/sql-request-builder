@@ -54,6 +54,28 @@ public final class SQL {
   }
 
   /**
+   * Initialize a new update builder
+   *
+   * @param table the table to update
+   *
+   * @return the new {@link UpdateBuilder}
+   */
+  public static UpdateBuilder update(final String table) {
+    return new UpdateBuilder(table);
+  }
+
+  /**
+   * Initialize a new delete builder
+   *
+   * @param table the table to delete
+   *
+   * @return the new {@link DeleteBuilder}
+   */
+  public static DeleteBuilder delete(final String table) {
+    return new DeleteBuilder(table);
+  }
+
+  /**
    * Initialize a new clauses builder
    *
    * @return the new {@link ClausesBuilder}
