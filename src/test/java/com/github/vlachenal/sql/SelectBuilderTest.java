@@ -1,11 +1,13 @@
 package com.github.vlachenal.sql;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
@@ -14,6 +16,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Vincent Lachenal
  */
+@DisplayName("SELECT request builder unit tests")
 public class SelectBuilderTest {
 
   // Tests +
@@ -21,6 +24,7 @@ public class SelectBuilderTest {
    * Test SQL query without from and where part (like in PostgreSQL store procedures)
    */
   @Test
+  @DisplayName("SELECT without FROM nor WHERE")
   public void testPgStoreProcedure() {
     final SQLQuery query = SQL.select().field("nextval()").build();
     System.out.println("SQL query: " + query.getQuery());
@@ -33,6 +37,7 @@ public class SelectBuilderTest {
    * Test select single column on single table without clauses
    */
   @Test
+  @DisplayName("SELECT one column FROM table whitout where")
   public void testQuerySingleColSingleTableWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("titi")
@@ -48,6 +53,7 @@ public class SelectBuilderTest {
    * Test select single column on single table without clauses
    */
   @Test
+  @DisplayName("SELECT DISTINCT one column FROM table whitout where")
   public void testQueryDistinctSingleColSingleTableWithoutWhere() {
     final SQLQuery query = SQL.select().distinct()
         .field("titi")
@@ -63,6 +69,7 @@ public class SelectBuilderTest {
    * Test select single column on single table without clauses
    */
   @Test
+  @DisplayName("SELECT one column with alias FROM table whitout where")
   public void testQuerySingleColWithAliasSingleTableWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("titi").as("t")
@@ -70,30 +77,30 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT titi AS t FROM toto", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT titi AS t FROM toto", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select on single table without clauses
    */
   @Test
+  @DisplayName("SELECT two columns FROM table whitout where")
   public void testQuerySingleTableWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("titi")
         .field("tata")
         .from("toto")
         .build();
-    System.out.println("SQL query: " + query.getQuery());
-    System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT titi,tata FROM toto", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT titi,tata FROM toto", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Self join")
   public void testQueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -101,16 +108,15 @@ public class SelectBuilderTest {
         .from("toto t")
         .selfJoin("tutu u")
         .build();
-    System.out.println("SQL query: " + query.getQuery());
-    System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t,tutu u", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t,tutu u", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Self join subquery")
   public void testQueryWithSubqueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -121,17 +127,18 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata "
-        + "FROM toto t,"
-        + "(SELECT * FROM tutu) u,"
-        + "(SELECT * FROM titi) i", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata "
+                  + "FROM toto t,"
+                  + "(SELECT * FROM tutu) u,"
+                  + "(SELECT * FROM titi) i", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Natural join")
   public void testQueryNaturalJoinWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -141,14 +148,16 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t NATURAL JOIN tutu u", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t NATURAL JOIN tutu u",
+                                 query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Natural join subquery")
   public void testQueryNaturalJoinWithSubqueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -159,17 +168,18 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata "
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata "
         + "FROM toto t "
         + "NATURAL JOIN (SELECT * FROM tutu) u "
-        + "NATURAL JOIN (SELECT * FROM titi) i", query.getQuery());
-    assertEquals(0, query.getValues().size());
+        + "NATURAL JOIN (SELECT * FROM titi) i", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Cross join")
   public void testQueryCrossJoinWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -179,14 +189,16 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t CROSS JOIN tutu u", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t CROSS JOIN tutu u",
+                                 query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Cross join subquery")
   public void testQueryCrossJoinWithSubqueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -197,17 +209,18 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata "
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata "
         + "FROM toto t "
         + "CROSS JOIN (SELECT * FROM tutu) u "
-        + "CROSS JOIN (SELECT * FROM titi) i", query.getQuery());
-    assertEquals(0, query.getValues().size());
+        + "CROSS JOIN (SELECT * FROM titi) i", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Inner join")
   public void testQueryInnerJoinWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -217,14 +230,16 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t INNER JOIN tutu u ON t.i = u.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t INNER JOIN tutu u ON t.i = u.a",
+                                 query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Join with invalid clause")
   public void testQueryJoinWithoutValidClause() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -235,14 +250,16 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t INNER JOIN tutu u ON t.i = u.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t INNER JOIN tutu u ON t.i = u.a",
+                                 query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Inner join with prepared statement value")
   public void testQueryInnerJoinWithOptionalValueWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -254,15 +271,16 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t "
-        + "INNER JOIN tutu u ON t.i = u.a AND u.u = ?", query.getQuery());
-    assertEquals(Stream.of("UHU").collect(Collectors.toList()), query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t "
+        + "INNER JOIN tutu u ON t.i = u.a AND u.u = ?", query.getQuery()),
+              () -> assertEquals(Stream.of("UHU").collect(Collectors.toList()), query.getValues()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Inner join subquery")
   public void testQueryInnerJoinWithSubqueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -273,17 +291,18 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata "
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata "
         + "FROM toto t "
         + "INNER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
-        + "INNER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+        + "INNER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Join")
   public void testQueryJoinWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -293,14 +312,16 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t INNER JOIN tutu u ON t.i = u.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t INNER JOIN tutu u ON t.i = u.a",
+                                 query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Join with subquery")
   public void testQueryJoinWithSubqueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -311,17 +332,18 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata "
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata "
         + "FROM toto t "
         + "INNER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
-        + "INNER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+        + "INNER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Left outer join")
   public void testQueryLeftOuterJoinWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -331,14 +353,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t LEFT OUTER JOIN tutu u ON t.i = u.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t LEFT OUTER JOIN tutu u ON t.i = u.a", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Left outer join with subquery")
   public void testQueryLeftOuterJoinWithSubqueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -349,17 +372,18 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata "
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata "
         + "FROM toto t "
         + "LEFT OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
-        + "LEFT OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+        + "LEFT OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Left outer join")
   public void testQueryLeftJoinWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -369,14 +393,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t LEFT OUTER JOIN tutu u ON t.i = u.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t LEFT OUTER JOIN tutu u ON t.i = u.a", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Left outer join subquery")
   public void testQueryLeftJoinWithSubqueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -387,17 +412,18 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata "
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata "
         + "FROM toto t "
         + "LEFT OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
-        + "LEFT OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+        + "LEFT OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Right outer join")
   public void testQueryRightOuterJoinWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -407,14 +433,16 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t RIGHT OUTER JOIN tutu u ON t.i = u.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t RIGHT OUTER JOIN tutu u ON t.i = u.a",
+                                 query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Right outer join with subquery")
   public void testQueryRightOuterJoinWithSubqueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -425,17 +453,18 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata "
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata "
         + "FROM toto t "
         + "RIGHT OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
-        + "RIGHT OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+        + "RIGHT OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Right join")
   public void testQueryRightJoinWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -445,14 +474,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t RIGHT OUTER JOIN tutu u ON t.i = u.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t RIGHT OUTER JOIN tutu u ON t.i = u.a", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Right join with subquery")
   public void testQueryRightJoinWithSubqueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -463,17 +493,18 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata "
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata "
         + "FROM toto t "
         + "RIGHT OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
-        + "RIGHT OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+        + "RIGHT OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Full outer join")
   public void testQueryFullOuterJoinWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -483,14 +514,16 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t FULL OUTER JOIN tutu u ON t.i = u.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t FULL OUTER JOIN tutu u ON t.i = u.a",
+                                 query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Full outer join with subquery")
   public void testQueryFullOuterJoinWithSubqueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -501,17 +534,18 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata "
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata "
         + "FROM toto t "
         + "FULL OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
-        + "FULL OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+        + "FULL OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Full join")
   public void testQueryFullJoinWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -521,14 +555,16 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t FULL OUTER JOIN tutu u ON t.i = u.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t FULL OUTER JOIN tutu u ON t.i = u.a",
+                                 query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Full join with subquery")
   public void testQueryFullJoinWithSubqueryWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -539,17 +575,18 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata "
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata "
         + "FROM toto t "
         + "FULL OUTER JOIN (SELECT * FROM tutu) u ON t.i = u.a "
-        + "FULL OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery());
-    assertEquals(0, query.getValues().size());
+        + "FULL OUTER JOIN (SELECT * FROM titi) i ON t.i = i.a", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Simple clauses (the one which does not have to be check and add values as prepared statement)
    */
   @Test
+  @DisplayName("Static clauses")
   public void testSimpleClauses() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -575,7 +612,7 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t "
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
         + "WHERE t.a = t.b "
         + "AND t.a <> t.c "
         + "AND t.a < t.d "
@@ -590,14 +627,15 @@ public class SelectBuilderTest {
         + "AND t.j NOT BETWEEN 1 AND 10 "
         + "AND t.k LIKE '%tata%' "
         + "AND t.l NOT LIKE '%titi%' "
-        + "AND NOT (t.m = t.n OR t.o = t.p)", query.getQuery());
-    assertEquals(0, query.getValues().size());
+        + "AND NOT (t.m = t.n OR t.o = t.p)", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Simple clauses (the one which does not have to be check and add values as prepared statement)
    */
   @Test
+  @DisplayName("Optional clauses with valid values")
   public void testClausesWithValidValues() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -616,7 +654,7 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t "
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
         + "WHERE t.a = ? "
         + "AND t.a <> ? "
         + "AND t.a < ? "
@@ -626,14 +664,16 @@ public class SelectBuilderTest {
         + "AND t.i BETWEEN ? AND ? "
         + "AND t.j NOT BETWEEN ? AND ? "
         + "AND t.k LIKE ? "
-        + "AND t.l NOT LIKE ?", query.getQuery());
-    assertEquals(Stream.of("b","c","d","e","f","g", 1, 10, 1, 10,"%plip%","%plop%").collect(Collectors.toList()), query.getValues());
+        + "AND t.l NOT LIKE ?", query.getQuery()),
+              () -> assertEquals(Stream.of("b","c","d","e","f","g", 1, 10, 1, 10,"%plip%","%plop%").collect(Collectors.toList()),
+                                 query.getValues()));
   }
 
   /**
    * Simple clauses (the one which does not have to be check and add values as prepared statement)
    */
   @Test
+  @DisplayName("Clause custom checker")
   public void testClausesWithValidValuesCustomChecker() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -652,7 +692,7 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t "
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
         + "WHERE t.a = ? "
         + "AND t.a <> ? "
         + "AND t.a < ? "
@@ -662,14 +702,16 @@ public class SelectBuilderTest {
         + "AND t.i BETWEEN ? AND ? "
         + "AND t.j NOT BETWEEN ? AND ? "
         + "AND t.k LIKE ? "
-        + "AND t.l NOT LIKE ?", query.getQuery());
-    assertEquals(Stream.of("b","c","d","e","f","g", 1, 10, 1, 10,"%plip%","%plop%").collect(Collectors.toList()), query.getValues());
+        + "AND t.l NOT LIKE ?", query.getQuery()),
+              () -> assertEquals(Stream.of("b","c","d","e","f","g", 1, 10, 1, 10,"%plip%","%plop%").collect(Collectors.toList()),
+                                 query.getValues()));
   }
 
   /**
    * Simple clauses (the one which does not have to be check and add values as prepared statement)
    */
   @Test
+  @DisplayName("OR clause custom checker")
   public void testOrClausesWithValidValuesCustomChecker() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -688,7 +730,7 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t "
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
         + "WHERE t.a = ? "
         + "OR t.a <> ? "
         + "OR t.a < ? "
@@ -698,14 +740,16 @@ public class SelectBuilderTest {
         + "OR t.i BETWEEN ? AND ? "
         + "OR t.j NOT BETWEEN ? AND ? "
         + "OR t.k LIKE ? "
-        + "OR t.l NOT LIKE ?", query.getQuery());
-    assertEquals(Stream.of("b","c","d","e","f","g", 1, 10, 1, 10,"%plip%","%plop%").collect(Collectors.toList()), query.getValues());
+        + "OR t.l NOT LIKE ?", query.getQuery()),
+              () -> assertEquals(Stream.of("b","c","d","e","f","g", 1, 10, 1, 10,"%plip%","%plop%").collect(Collectors.toList()),
+                                 query.getValues()));
   }
 
   /**
    * Test clauses with null value
    */
   @Test
+  @DisplayName("Optional clause with null value")
   public void testClausesWithNullValue() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -716,14 +760,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a = ?", query.getQuery());
-    assertEquals(Stream.of("b").collect(Collectors.toList()), query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a = ?", query.getQuery()),
+              () -> assertEquals(Stream.of("b").collect(Collectors.toList()), query.getValues()));
   }
 
   /**
    * Test clauses with null value
    */
   @Test
+  @DisplayName("No valid values")
   public void testClausesWhereNoValidValue() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -732,14 +777,15 @@ public class SelectBuilderTest {
         .where(SQL.clauses("t.a", Clauses::notEquals, null)).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test clause with empty value
    */
   @Test
+  @DisplayName("Optional clause with empty string value")
   public void testClausesWithEmptyValue() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -750,14 +796,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a = ?", query.getQuery());
-    assertEquals(Stream.of("b").collect(Collectors.toList()), query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a = ?", query.getQuery()),
+              () -> assertEquals(Stream.of("b").collect(Collectors.toList()), query.getValues()));
   }
 
   /**
    * Test clause with first value invalid
    */
   @Test
+  @DisplayName("First clause with invalid value")
   public void testClausesWithFirstValueInvalid() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -768,14 +815,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ?", query.getQuery());
-    assertEquals(Stream.of("c").collect(Collectors.toList()), query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ?", query.getQuery()),
+              () -> assertEquals(Stream.of("c").collect(Collectors.toList()), query.getValues()));
   }
 
   /**
    * Test clause with empty value
    */
   @Test
+  @DisplayName("Optional clause with custom checker and invalid value")
   public void testClausesWithInvalidValueCustomChecker() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -786,14 +834,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a = ?", query.getQuery());
-    assertEquals(Stream.of("b").collect(Collectors.toList()), query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a = ?", query.getQuery()),
+              () -> assertEquals(Stream.of("b").collect(Collectors.toList()), query.getValues()));
   }
 
   /**
    * Test select without clauses
    */
   @Test
+  @DisplayName("Inner join with optional values")
   public void testQueryInnerJoinWithOptionalValue() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -807,10 +856,10 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,u.tata FROM toto t "
+    assertAll(() -> assertEquals("SELECT t.titi,u.tata FROM toto t "
         + "INNER JOIN tutu u ON t.i = u.a AND u.u = ? "
-        + "WHERE t.a = ?", query.getQuery());
-    assertEquals(Stream.of("UHU","a").collect(Collectors.toList()), query.getValues());
+        + "WHERE t.a = ?", query.getQuery()),
+              () -> assertEquals(Stream.of("UHU","a").collect(Collectors.toList()), query.getValues()));
   }
 
   public class ExampleRequest {
@@ -826,6 +875,7 @@ public class SelectBuilderTest {
    * Test exemple query
    */
   @Test
+  @DisplayName("README.md example")
   public void testExampleQuery() {
     final ExampleRequest req = new ExampleRequest();
     req.gender = "F";
@@ -841,10 +891,10 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("Query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT * FROM Heroes "
+    assertAll(() -> assertEquals("SELECT * FROM Heroes "
         + "WHERE last_name LIKE ? "
-        + "AND gender = ?", query.getQuery());
-    assertEquals(Stream.of("%Croft%","F").collect(Collectors.toList()), query.getValues());
+        + "AND gender = ?", query.getQuery()),
+              () -> assertEquals(Stream.of("%Croft%","F").collect(Collectors.toList()), query.getValues()));
     System.out.println(SQL.select().field("a").as("b").field("c").from("T").build().getQuery());
   }
 
@@ -852,6 +902,7 @@ public class SelectBuilderTest {
    * Test optional valid IN clause
    */
   @Test
+  @DisplayName("IN clause with valid values")
   public void testOptionalValidIn() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -861,14 +912,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN ('plip','plop')", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN ('plip','plop')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test optional invalid IN clause
    */
   @Test
+  @DisplayName("IN clause with invalid values")
   public void testOptionalInvalidIn() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -878,14 +930,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test optional valid NOT IN clause
    */
   @Test
+  @DisplayName("NOT IN clause with valid values")
   public void testOptionalValidNotIn() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -895,14 +948,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN ('plip','plop')", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN ('plip','plop')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test optional invalid NOT IN clause
    */
   @Test
+  @DisplayName("NOT IN clause with invalid values")
   public void testOptionalInvalidNotIn() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -912,14 +966,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test valid IN clause
    */
   @Test
+  @DisplayName("IN clause")
   public void testSelectIn() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -929,14 +984,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN ('plip','plop')", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN ('plip','plop')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test valid NOT IN clause
    */
   @Test
+  @DisplayName("NOT IN clause")
   public void testSelectNotIn() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -946,14 +1002,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN ('plip','plop')", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN ('plip','plop')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test IN subquery clause
    */
   @Test
+  @DisplayName("IN subquery")
   public void testSelectInSelect() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -963,14 +1020,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN (SELECT u.a FROM tutu u)", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN (SELECT u.a FROM tutu u)", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test NOT IN subquery clause
    */
   @Test
+  @DisplayName("NOT IN subquery")
   public void testSelectNotInSelect() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -980,14 +1038,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN (SELECT u.a FROM tutu u)", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN (SELECT u.a FROM tutu u)", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test IN subquery clause
    */
   @Test
+  @DisplayName("IN subquery result")
   public void testSelectInSelectRes() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -997,14 +1056,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN (SELECT u.a FROM tutu u)", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a IN (SELECT u.a FROM tutu u)", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test NOT IN subquery clause
    */
   @Test
+  @DisplayName("NOT IN subquery result")
   public void testSelectNotInSelectRes() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1014,14 +1074,15 @@ public class SelectBuilderTest {
             ).build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN (SELECT u.a FROM tutu u)", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a NOT IN (SELECT u.a FROM tutu u)", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test window function with only limit
    */
   @Test
+  @DisplayName("Fetch")
   public void testLimit() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1032,14 +1093,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ? FETCH FIRST 10 ROWS ONLY", query.getQuery());
-    assertEquals(1, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ? FETCH FIRST 10 ROWS ONLY", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
   }
 
   /**
    * Test window function with limit and offset
    */
   @Test
+  @DisplayName("Fetch offset")
   public void testLimitOffset() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1050,14 +1112,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ? OFFSET 50 ROWS FETCH FIRST 10 ROWS ONLY", query.getQuery());
-    assertEquals(1, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ? OFFSET 50 ROWS FETCH FIRST 10 ROWS ONLY", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
   }
 
   /**
    * Test window function with only limit in 'subbuilder'
    */
   @Test
+  @DisplayName("Fetch without where")
   public void testLimitWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1067,14 +1130,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t FETCH FIRST 10 ROWS ONLY", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t FETCH FIRST 10 ROWS ONLY", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test limit/offset in 'subbuilder'
    */
   @Test
+  @DisplayName("Fetch offset without where")
   public void testLimitOffsetWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1084,14 +1148,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t OFFSET 50 ROWS FETCH FIRST 10 ROWS ONLY", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t OFFSET 50 ROWS FETCH FIRST 10 ROWS ONLY", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test group by
    */
   @Test
+  @DisplayName("Group by")
   public void testGroupBy() {
     final SQLQuery query = SQL.select()
         .field("count(t.titi)")
@@ -1101,14 +1166,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT count(t.titi),t.tata FROM toto t GROUP BY t.tata", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT count(t.titi),t.tata FROM toto t GROUP BY t.tata", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test group by
    */
   @Test
+  @DisplayName("Group by having")
   public void testGroupByHaving() {
     final SQLQuery query = SQL.select()
         .field("sum(t.titi)")
@@ -1119,14 +1185,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT sum(t.titi),t.tata FROM toto t GROUP BY t.tata HAVING sum(t.titi) >= 2", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT sum(t.titi),t.tata FROM toto t GROUP BY t.tata HAVING sum(t.titi) >= 2", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test order by
    */
   @Test
+  @DisplayName("Order by")
   public void testOrderBy() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1136,14 +1203,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t ORDER BY t.tata", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t ORDER BY t.tata", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test order by
    */
   @Test
+  @DisplayName("Order by ascending")
   public void testOrderByAsc() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1153,14 +1221,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t ORDER BY t.tata ASC", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t ORDER BY t.tata ASC", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test order by
    */
   @Test
+  @DisplayName("Order by descending")
   public void testOrderByDesc() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1170,14 +1239,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi,t.tata FROM toto t ORDER BY t.tata DESC", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t ORDER BY t.tata DESC", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test SQL union
    */
   @Test
+  @DisplayName("Union")
   public void testUnion() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1186,14 +1256,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi FROM toto t UNION SELECT t.titi FROM tutu t", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi FROM toto t UNION SELECT t.titi FROM tutu t", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test SQL union all
    */
   @Test
+  @DisplayName("Union all")
   public void testUnionAll() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1202,14 +1273,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi FROM toto t UNION ALL SELECT t.titi FROM tutu t", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi FROM toto t UNION ALL SELECT t.titi FROM tutu t", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select from subquery
    */
   @Test
+  @DisplayName("From subquery")
   public void testFromSubquery() {
     final SQLQuery query = SQL.select()
         .field("titi")
@@ -1220,14 +1292,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT titi FROM (SELECT titi FROM tutu)", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT titi FROM (SELECT titi FROM tutu)", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select from subquery
    */
   @Test
+  @DisplayName("From subquery builder")
   public void testFromSubqueryBuilder() {
     final SQLQuery query = SQL.select()
         .field("titi")
@@ -1238,14 +1311,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT titi FROM (SELECT titi FROM tutu)", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT titi FROM (SELECT titi FROM tutu)", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select from subquery
    */
   @Test
+  @DisplayName("From subquery with alias")
   public void testFromSubqueryWithAlias() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1256,14 +1330,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi FROM (SELECT titi FROM tutu) t", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi FROM (SELECT titi FROM tutu) t", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test select from subquery
    */
   @Test
+  @DisplayName("From subquery builder with alias")
   public void testFromSubqueryBuilderWithAlias() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1274,15 +1349,16 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi FROM (SELECT titi FROM tutu) t", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi FROM (SELECT titi FROM tutu) t", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
    * Test clause with custom checker
    */
   @Test
-  public void testClauseCustomChecker() {
+  @DisplayName("Clause custom checker")
+  void testClauseCustomChecker() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
         .from("toto t")
@@ -1290,14 +1366,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi FROM toto t WHERE t.tata LIKE ?", query.getQuery());
-    assertEquals(1, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi FROM toto t WHERE t.tata LIKE ?", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
   }
 
   /**
    * Test clause with custom checker
    */
   @Test
+  @DisplayName("Two values operator")
   public void testClauseTwoValues() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1306,14 +1383,15 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi FROM toto t WHERE t.tata BETWEEN ? AND ?", query.getQuery());
-    assertEquals(2, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT t.titi FROM toto t WHERE t.tata BETWEEN ? AND ?", query.getQuery()),
+              () -> assertEquals(2, query.getValues().size()));
   }
 
   /**
    * Test clause with custom checker
    */
   @Test
+  @DisplayName("Two values operator with custom checker")
   public void testClauseTwoValuesCustomChecker() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1322,15 +1400,16 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi FROM toto t WHERE t.tata BETWEEN ? AND ?", query.getQuery());
-    assertEquals(2, query.getValues().size());
-    assertEquals(2, query.values().length);
+    assertAll(() -> assertEquals("SELECT t.titi FROM toto t WHERE t.tata BETWEEN ? AND ?", query.getQuery()),
+              () -> assertEquals(2, query.getValues().size()),
+              () -> assertEquals(2, query.values().length));
   }
 
   /**
    * Test add clauses with AND operator
    */
   @Test
+  @DisplayName("AND other clauses")
   public void testAndOtherClauses() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1344,18 +1423,19 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi "
+    assertAll(() -> assertEquals("SELECT t.titi "
         + "FROM toto t "
         + "WHERE t.tata BETWEEN ? AND ? "
-        + "AND (t.a = 2 OR t.b = 3)", query.getQuery());
-    assertEquals(2, query.getValues().size());
-    assertEquals(2, query.values().length);
+        + "AND (t.a = 2 OR t.b = 3)", query.getQuery()),
+              () -> assertEquals(2, query.getValues().size()),
+              () -> assertEquals(2, query.values().length));
   }
 
   /**
    * Test add clauses with AND operator
    */
   @Test
+  @DisplayName("OR other clauses")
   public void testOrOtherClauses() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1369,18 +1449,19 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi "
+    assertAll(() -> assertEquals("SELECT t.titi "
         + "FROM toto t "
         + "WHERE t.tata BETWEEN ? AND ? "
-        + "OR (t.a = 2 AND t.b = 3)", query.getQuery());
-    assertEquals(2, query.getValues().size());
-    assertEquals(2, query.values().length);
+        + "OR (t.a = 2 AND t.b = 3)", query.getQuery()),
+              () -> assertEquals(2, query.getValues().size()),
+              () -> assertEquals(2, query.values().length));
   }
 
   /**
    * Test add clauses with AND operator
    */
   @Test
+  @DisplayName("First clause with invalid value")
   public void testAndOtherClausesWithFirstInvalid() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
@@ -1394,11 +1475,11 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT t.titi "
+    assertAll(() -> assertEquals("SELECT t.titi "
         + "FROM toto t "
-        + "WHERE (t.a = 2 OR t.b = 3)", query.getQuery());
-    assertEquals(0, query.getValues().size());
-    assertEquals(0, query.values().length);
+        + "WHERE (t.a = 2 OR t.b = 3)", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()),
+              () -> assertEquals(0, query.values().length));
   }
   // Tests -
 
