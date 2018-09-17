@@ -9,6 +9,8 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 
 /**
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.Test;
  * @author Vincent Lachenal
  */
 @DisplayName("SELECT request builder unit tests")
+@Execution(ExecutionMode.CONCURRENT)
 public class SelectBuilderTest {
 
   // Tests +
