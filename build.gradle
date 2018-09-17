@@ -39,6 +39,10 @@ javadoc {
   }
 }
 
+test {
+    useJUnitPlatform()
+}
+
 jacocoTestReport {
   reports {
     xml.enabled = true
@@ -49,8 +53,8 @@ jacocoTestReport {
 check.dependsOn jacocoTestReport
 
 dependencies {
-  // Use JUnit test framework
-  testImplementation 'junit:junit:4.12'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
 }
 
 // Publish to Maven +
