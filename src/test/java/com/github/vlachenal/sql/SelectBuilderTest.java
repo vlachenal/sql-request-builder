@@ -875,7 +875,7 @@ public class SelectBuilderTest {
   }
 
   /**
-   * Test exemple query
+   * Test example query
    */
   @Test
   @DisplayName("README.md example")

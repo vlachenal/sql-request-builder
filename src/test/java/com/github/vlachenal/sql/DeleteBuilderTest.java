@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
+
 /**
  * {@link DeleteBuilder} unit tests
  *
@@ -93,6 +94,22 @@ public class DeleteBuilderTest {
     System.out.println("Values: " + query.getValues());
     assertAll(() -> assertEquals("DELETE FROM toto WHERE b = ?", query.getQuery()),
               () -> assertEquals(Stream.of("plop").collect(Collectors.toList()), query.getValues()));
+  }
+
+  /**
+   * Test example query
+   */
+  @Test
+  @DisplayName("Wiki example")
+  public void testExampleQuery() {
+    final SQLQuery query = SQL.delete("Heroes")
+        .where(SQL.clauses("first_name", Clauses::equalsTo, "Lara")
+               .and("last_name", Clauses::like, "Cr%ft"))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("DELETE FROM Heroes WHERE first_name = ? AND last_name LIKE ?", query.getQuery()),
+              () -> assertEquals(Stream.of("Lara","Cr%ft").collect(Collectors.toList()), query.getValues()));
   }
   // Tests -
 

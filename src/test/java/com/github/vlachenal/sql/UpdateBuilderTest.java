@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
+
 /**
  * {@link UpdateBuilder} unit tests
  *
@@ -35,6 +36,7 @@ public class UpdateBuilderTest {
     assertAll(() -> assertEquals("UPDATE toto SET a = ?", query.getQuery()),
               () -> assertEquals(Stream.of(1).collect(Collectors.toList()), query.getValues()));
   }
+
   /**
    * UPDATE table one field without 'WHERE' unit test
    */
@@ -110,6 +112,23 @@ public class UpdateBuilderTest {
     System.out.println("Values: " + query.getValues());
     assertAll(() -> assertEquals("UPDATE toto SET a = ? WHERE b = ?", query.getQuery()),
               () -> assertEquals(Stream.of(1, "plop").collect(Collectors.toList()), query.getValues()));
+  }
+
+  /**
+   * Test example query
+   */
+  @Test
+  @DisplayName("Wiki example")
+  public void testExampleQuery() {
+    final SQLQuery query = SQL.update("Heroes")
+        .field("last_name", "Croft")
+        .where(SQL.clauses("first_name", Clauses::equalsTo, "Lara")
+               .and("last_name", Clauses::equalsTo, "Craft"))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("UPDATE Heroes SET last_name = ? WHERE first_name = ? AND last_name = ?", query.getQuery()),
+              () -> assertEquals(Stream.of("Croft", "Lara","Craft").collect(Collectors.toList()), query.getValues()));
   }
   // Tests -
 
