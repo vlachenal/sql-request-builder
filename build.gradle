@@ -40,7 +40,7 @@ javadoc {
 }
 
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }
 
 jacocoTestReport {
@@ -57,7 +57,7 @@ dependencies {
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 }
 
-version = '0.4'
+version = '0.5'
 jar {
   manifest {
     attributes("Manifest-Version": "1.0",
