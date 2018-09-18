@@ -85,7 +85,7 @@ public final class Clauses {
    *
    * @return clause request part
    */
-  public static String greateEquals(final String column) {
+  public static String greaterEquals(final String column) {
     return column + " >= ?";
   }
 
