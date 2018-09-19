@@ -19,9 +19,9 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 allprojects {
-    eclipse.project {
-        natures 'org.eclipse.buildship.core.gradleprojectnature'
-    }
+  eclipse.project {
+    natures 'org.eclipse.buildship.core.gradleprojectnature'
+  }
 }
 
 // In this section you declare where to find the dependencies of your project
@@ -80,13 +80,13 @@ jar {
 group = 'com.github.vlachenal'
 
 task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allJava
+  classifier = 'sources'
+  from sourceSets.main.allJava
 }
 
 task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
+  classifier = 'javadoc'
+  from javadoc.destinationDir
 }
 
 publishing {
