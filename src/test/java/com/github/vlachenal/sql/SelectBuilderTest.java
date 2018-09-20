@@ -32,8 +32,8 @@ public class SelectBuilderTest {
     final SQLQuery query = SQL.select().field("nextval()").build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT nextval()", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT nextval()", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
@@ -48,8 +48,8 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT titi FROM toto", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT titi FROM toto", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
@@ -64,8 +64,8 @@ public class SelectBuilderTest {
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
-    assertEquals("SELECT DISTINCT titi FROM toto", query.getQuery());
-    assertEquals(0, query.getValues().size());
+    assertAll(() -> assertEquals("SELECT DISTINCT titi FROM toto", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
 
   /**
