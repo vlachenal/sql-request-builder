@@ -178,6 +178,28 @@ public final class Clauses {
   public static String notIn(final String column) {
     return column + " NOT IN ";
   }
+
+  /**
+   * Provides 'exists' clause with {@code EXISTS} operator.
+   *
+   * @param column the column (not used)
+   *
+   * @return clause request part
+   */
+  public static String exists(final String column) {
+    return "EXISTS ";
+  }
+
+  /**
+   * Provides 'not exists' clause with {@code NOT EXISTS} operator.
+   *
+   * @param column the column (not used)
+   *
+   * @return clause request part
+   */
+  public static String notExists(final String column) {
+    return "NOT EXISTS ";
+  }
   // Methods -
 
 }

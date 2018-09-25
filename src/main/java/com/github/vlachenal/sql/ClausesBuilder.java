@@ -58,6 +58,39 @@ public class ClausesBuilder {
   /**
    * {@link ClausesBuilder} constructor.<br>
    * This constructor will try to add a first clause if value is valid. Value will
+   * be validated with {@code SQL::isValidValue} function.<br>
+   * This constructor can be used to add 'EXISTS' clause.
+   *
+   * @param <T> the value type
+   *
+   * @param column the column
+   * @param clause the clause maker
+   * @param value the value
+   */
+  public <T> ClausesBuilder(final ClauseMaker clause, final T value) {
+    this();
+    checkAndAddClause(null, null, clause, value, SQL::isValidValue);
+  }
+
+  /**
+   * {@link ClausesBuilder} constructor<br>
+   * This constructor will try to add a first clause if value is valid.<br>
+   * This constructor can be used to add 'EXISTS' clause.
+   *
+   * @param <T> the value type
+   *
+   * @param clause the clause maker
+   * @param value the value
+   * @param checker the value checker to use
+   */
+  public <T> ClausesBuilder(final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
+    this();
+    checkAndAddClause(null, null, clause, value, checker);
+  }
+
+  /**
+   * {@link ClausesBuilder} constructor.<br>
+   * This constructor will try to add a first clause if value is valid. Value will
    * be validated with {@code SQL::isValidValue} function.
    *
    * @param <T> the value type
@@ -407,6 +440,38 @@ public class ClausesBuilder {
    *
    * @param <T> the value type
    *
+   * @param clause the clause maker
+   * @param value the value
+   *
+   * @return {@code this}
+   */
+  public <T> ClausesBuilder and(final ClauseMaker clause, final T value) {
+    checkAndAddClause("AND", null, clause, value, SQL::isValidValue);
+    return this;
+  }
+
+  /**
+   * Add {@code AND} clause if value is valid
+   *
+   * @param <T> the value type
+   *
+   * @param clause the clause maker
+   * @param value the value
+   * @param checker the value checker to use
+   *
+   * @return {@code this}
+   */
+  public <T> ClausesBuilder and(final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
+    checkAndAddClause("AND", null, clause, value, checker);
+    return this;
+  }
+
+  /**
+   * Add {@code AND} clause if value is valid. Value will be validate with
+   * {@code SQL::isValidValue} function.
+   *
+   * @param <T> the value type
+   *
    * @param column the column
    * @param clause the clause maker
    * @param value the value
@@ -468,6 +533,38 @@ public class ClausesBuilder {
    */
   public <T> ClausesBuilder and(final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
     checkAndAddClause("AND", column, clause, value1, value2, checker);
+    return this;
+  }
+
+  /**
+   * Add {@code OR} clause if value is valid. Value will be validate with
+   * {@code SQL::isValidValue} function.
+   *
+   * @param <T> the value type
+   *
+   * @param clause the clause maker
+   * @param value the value
+   *
+   * @return {@code this}
+   */
+  public <T> ClausesBuilder or(final ClauseMaker clause, final T value) {
+    checkAndAddClause("OR", null, clause, value, SQL::isValidValue);
+    return this;
+  }
+
+  /**
+   * Add {@code OR} clause if value is valid
+   *
+   * @param <T> the value type
+   *
+   * @param clause the clause maker
+   * @param value the value
+   * @param checker the value checker to use
+   *
+   * @return {@code this}
+   */
+  public <T> ClausesBuilder or(final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
+    checkAndAddClause("OR", null, clause, value, checker);
     return this;
   }
 
@@ -558,8 +655,15 @@ public class ClausesBuilder {
         buffer.append(' ').append(boolAgg).append(' ');
       }
       buffer.append(clause.makeClause(column));
-      if(value instanceof Collection) {
+      if(value instanceof Collection) { // For (NOT) IN operators
         buffer.append(SQL.toSQLList((Collection<?>)value));
+      } else if(value instanceof SelectBuilder) { // For (NOT) EXISTS operators
+        buffer.append('(').append(value).append(')');
+        values.addAll(((SelectBuilder)value).values);
+      } else if(value instanceof SQLQuery) { // For (NOT) EXISTS operators
+        final SQLQuery query = (SQLQuery)value;
+        buffer.append('(').append(query.getQuery()).append(')');
+        values.addAll(query.getValues());
       } else {
        values.add(value);
       }

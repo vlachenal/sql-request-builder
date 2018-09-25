@@ -89,6 +89,35 @@ public final class SQL {
    *
    * @param <T> the value type
    *
+   * @param clause the clause maker
+   * @param value the value
+   *
+   * @return the new {@link ClausesBuilder}
+   */
+  public static <T> ClausesBuilder clauses(final ClauseMaker clause, final T value) {
+    return new ClausesBuilder(clause, value);
+  }
+
+  /**
+   * Initialize a new clauses builder and add the first clause if vaue is valid
+   *
+   * @param <T> the value type
+   *
+   * @param clause the clause maker
+   * @param value the value
+   * @param checker the value checker to use
+   *
+   * @return the new {@link ClausesBuilder}
+   */
+  public static <T> ClausesBuilder clauses(final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
+    return new ClausesBuilder(clause, value, checker);
+  }
+
+  /**
+   * Initialize a new clauses builder and add the first clause if vaue is valid
+   *
+   * @param <T> the value type
+   *
    * @param column the column
    * @param clause the clause maker
    * @param value the value
