@@ -1613,6 +1613,28 @@ public class SelectBuilderTest {
         + "FROM toto t WHERE t.a = ?", query.getQuery()),
               () -> assertEquals(1, query.getValues().size()));
   }
+
+  /**
+   * Optional exists as first clause
+   */
+  @Test
+  @DisplayName("Invalid optional exists as first clause")
+  public void testOrOptionalExistsInvalid() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::equalsTo, "plop")
+               .or(Clauses::exists, SQL.select().field("1")
+                   .from("tata a")
+                   .where(SQL.clauses().field("t.id").equals().field("a.id")),
+                   (plop) -> false))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi "
+        + "FROM toto t WHERE t.a = ?", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
   // Tests -
 
 }
