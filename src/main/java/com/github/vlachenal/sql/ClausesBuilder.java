@@ -63,7 +63,6 @@ public class ClausesBuilder {
    *
    * @param <T> the value type
    *
-   * @param column the column
    * @param clause the clause maker
    * @param value the value
    */
