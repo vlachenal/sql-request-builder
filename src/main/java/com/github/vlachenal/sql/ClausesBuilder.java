@@ -434,6 +434,18 @@ public class ClausesBuilder {
 
   // Check and add value to prepared statement +
   /**
+   * Add {@code AND} other clauses if clauses are not {@code null} or empty.
+   *
+   * @param clauses the clauses to add
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder and(final ClausesProvider clauses) {
+    checkAndAddClauses("AND", clauses);
+    return this;
+  }
+
+  /**
    * Add {@code AND} clause if value is valid. Value will be validate with
    * {@code SQL::isValidValue} function.
    *
@@ -635,6 +647,34 @@ public class ClausesBuilder {
   public <T> ClausesBuilder or(final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
     checkAndAddClause("OR", column, clause, value1, value2, checker);
     return this;
+  }
+  /**
+   * Add {@code AND} other clauses if clauses are not {@code null} or empty.
+   *
+   * @param clauses the clauses to add
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder or(final ClausesProvider clauses) {
+    checkAndAddClauses("OR", clauses);
+    return this;
+  }
+
+  /**
+   * Check and add clauses
+   *
+   * @param boolAgg the boolean aggregator to use
+   * @param clauses the clauses to add
+   */
+  private void checkAndAddClauses(final String boolAgg, final ClausesProvider clauses) {
+    final ClausesBuilder builder = clauses.getClauses();
+    if(builder != null && builder.buffer.length() != 0) {
+      if(!firstClause) {
+        buffer.append(' ').append(boolAgg).append(' ');
+      }
+      buffer.append(builder.buffer);
+      values.addAll(builder.values);
+    }
   }
 
   /**

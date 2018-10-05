@@ -1635,6 +1635,113 @@ public class SelectBuilderTest {
         + "FROM toto t WHERE t.a = ?", query.getQuery()),
               () -> assertEquals(1, query.getValues().size()));
   }
+
+  /**
+   * Provides clauses
+   *
+   * @param plop plop ...
+   *
+   * @return the {@link ClausesBuilder}
+   */
+  private ClausesBuilder provides(final Boolean plop) {
+    ClausesBuilder clauses = null;
+    if(plop == Boolean.FALSE) {
+      clauses = SQL.clauses();
+    } else if(plop == Boolean.TRUE) {
+      clauses = SQL.clauses()
+          .field("plip").equals().field("plop")
+          .and("plap", Clauses::equalsTo, 1);
+    } // else null
+    return clauses;
+  }
+
+  /**
+   * And provides ...
+   */
+  @Test
+  @DisplayName("Add AND with provider")
+  public void testAndProvides() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equals().field("t.b")
+               .and(() -> provides(Boolean.TRUE))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = t.b "
+        + "AND plip = plop "
+        + "AND plap = ?", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
+   * And provides ...
+   */
+  @Test
+  @DisplayName("Add AND with empty provider")
+  public void testAndProvidesFalse() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equals().field("t.b")
+               .and(() -> provides(Boolean.FALSE))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = t.b", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * And provides ...
+   */
+  @Test
+  @DisplayName("Add AND with null provider")
+  public void testAndProvidesNull() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equals().field("t.b")
+               .and(() -> provides(null))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = t.b", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * And provides ...
+   */
+  @Test
+  @DisplayName("Add OR with provider")
+  public void testOrProvides() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equals().field("t.b")
+               .or(() -> provides(Boolean.TRUE))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = t.b "
+        + "OR plip = plop "
+        + "AND plap = ?", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
   // Tests -
 
 }
