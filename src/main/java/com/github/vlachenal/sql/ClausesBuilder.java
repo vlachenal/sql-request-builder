@@ -26,7 +26,7 @@ import java.util.List;
 
 /**
  * SQL clauses builder.<br>
- * This class should be instanciated through {@link SQL}.
+ * This class should be instantiated through {@link SQL}.
  *
  * @since 0.1
  *
@@ -346,7 +346,7 @@ public class ClausesBuilder {
    *
    * @return {@code this}
    */
-  public ClausesBuilder greateEquals() {
+  public ClausesBuilder greaterEquals() {
     buffer.append(" >= ");
     return this;
   }

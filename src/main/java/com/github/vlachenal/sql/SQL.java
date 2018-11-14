@@ -85,7 +85,7 @@ public final class SQL {
   }
 
   /**
-   * Initialize a new clauses builder and add the first clause if vaue is valid
+   * Initialize a new clauses builder and add the first clause if value is valid
    *
    * @param <T> the value type
    *
@@ -99,7 +99,7 @@ public final class SQL {
   }
 
   /**
-   * Initialize a new clauses builder and add the first clause if vaue is valid
+   * Initialize a new clauses builder and add the first clause if value is valid
    *
    * @param <T> the value type
    *
@@ -114,7 +114,7 @@ public final class SQL {
   }
 
   /**
-   * Initialize a new clauses builder and add the first clause if vaue is valid
+   * Initialize a new clauses builder and add the first clause if value is valid
    *
    * @param <T> the value type
    *
@@ -129,7 +129,7 @@ public final class SQL {
   }
 
   /**
-   * Initialize a new clauses builder and add the first clause if vaue is valid
+   * Initialize a new clauses builder and add the first clause if value is valid
    *
    * @param <T> the value type
    *
@@ -145,7 +145,7 @@ public final class SQL {
   }
 
   /**
-   * Initialize a new clauses builder and add the first clause if vaue is valid
+   * Initialize a new clauses builder and add the first clause if value is valid
    *
    * @param <T> the value type
    *
@@ -161,7 +161,7 @@ public final class SQL {
   }
 
   /**
-   * Initialize a new clauses builder and add the first clause if vaue is valid
+   * Initialize a new clauses builder and add the first clause if value is valid
    *
    * @param <T> the value type
    *

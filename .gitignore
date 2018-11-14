@@ -8,3 +8,5 @@ bin/
 **/*~
 /.apt_generated/
 .factorypath
+.idea/
+out/

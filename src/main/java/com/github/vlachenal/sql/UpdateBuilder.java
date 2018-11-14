@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * SQL {@code UPDATE} request builder.<br>
- * This class should be instanciated through {@link SQL} static method.
+ * This class should be instantiated through {@link SQL} static method.
  *
  * @since 0.5
  *

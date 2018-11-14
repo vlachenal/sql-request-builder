@@ -134,7 +134,7 @@ public final class Clauses {
   }
 
   /**
-   * Provides 'beween' clause with {@code BETWEEN} operator
+   * Provides 'between' clause with {@code BETWEEN} operator
    *
    * @param column the column
    *

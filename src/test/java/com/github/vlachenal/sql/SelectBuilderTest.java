@@ -601,7 +601,7 @@ public class SelectBuilderTest {
                .and().field("t.a").lesser().field("t.d")
                .and().field("t.a").lesserEquals().field("t.e")
                .and().field("t.a").greater().field("t.f")
-               .and().field("t.a").greateEquals().field("t.g")
+               .and().field("t.a").greaterEquals().field("t.g")
                .and().field("t.a").isNotNull()
                .and().field("t.h").isNull()
                .and().exists(SQL.select().field("1").from("tata a").where(SQL.clauses().field("a.a").equals().field("t.a")))
@@ -1184,7 +1184,7 @@ public class SelectBuilderTest {
         .field("t.tata")
         .from("toto t")
         .groupBy("t.tata")
-        .having(SQL.clauses().field("sum(t.titi)").greateEquals().field("2"))
+        .having(SQL.clauses().field("sum(t.titi)").greaterEquals().field("2"))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());

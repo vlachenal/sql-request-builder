@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"com.github.vlachenal.sql"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.github.vlachenal.sql"}]
