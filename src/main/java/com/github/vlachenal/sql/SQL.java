@@ -1,6 +1,6 @@
 /*
   SQL request builder:  Dynamic SQL request builder for java
-  Copyright (C) 2012 Vincent Lachenal
+  Copyright (C) 2018 Vincent Lachenal
 
   This file is part of SQL request builder.
 
