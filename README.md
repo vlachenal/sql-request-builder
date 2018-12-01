@@ -12,7 +12,7 @@ This library provides a fluent API to add clauses only when filter has a valid v
 
 Every valid value will be added as prepared statement value to avoid SQL injections.
 
-I will not recommended to use this library for static SQL request. It will induce overhead compared to static SQL query string.
+I will not recommend to use this library for static SQL request. It will induce overhead compared to static SQL query string.
 
 ## Requirements
 sql-request-builder is a standalone library. The only requirement is Java 1.8+.
