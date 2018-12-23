@@ -16,5 +16,3 @@ include 'services:webservice'
 */
 
 rootProject.name = 'sql-request-builder'
-
-enableFeaturePreview('STABLE_PUBLISHING')
