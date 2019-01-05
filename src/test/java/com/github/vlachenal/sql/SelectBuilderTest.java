@@ -1752,7 +1752,7 @@ public class SelectBuilderTest {
     final SQLQuery query = SQL.select()
         .field("t.titi")
         .field("t.tata")
-        .from("toto t").done()
+        .from("toto t")
         .windowByRowNumber("foo", "row_num", "t.titi ASC", 15, 20)
         .build();
     System.out.println("SQL query: " + query.getQuery());
@@ -1788,7 +1788,7 @@ public class SelectBuilderTest {
     final SQLQuery query = SQL.select()
         .field("t.titi")
         .field("t.tata")
-        .from("toto t").done()
+        .from("toto t")
         .windowByRowNumber("foo", "row_num", "t.titi ASC", -1, 20)
         .build();
     System.out.println("SQL query: " + query.getQuery());
@@ -1824,7 +1824,7 @@ public class SelectBuilderTest {
     final SQLQuery query = SQL.select()
         .field("t.titi")
         .field("t.tata")
-        .from("toto t").done()
+        .from("toto t")
         .windowByRank("foo", "row_num", "t.titi ASC", 15, -1)
         .build();
     System.out.println("SQL query: " + query.getQuery());
@@ -1842,7 +1842,7 @@ public class SelectBuilderTest {
     final SQLQuery query = SQL.select()
         .field("t.titi")
         .field("t.tata")
-        .from("toto t").done()
+        .from("toto t")
         .windowByRank("foo", "row_num", "t.titi ASC", -1, 20)
         .build();
     System.out.println("SQL query: " + query.getQuery());

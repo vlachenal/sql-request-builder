@@ -217,11 +217,7 @@ public class SelectBuilder {
     final StringBuilder colBuffer = new StringBuilder();
     colBuffer.append(',').append(function).append(" OVER(ORDER BY ").append(order).append(") AS ").append(rowColumn);
     final int idx = buffer.indexOf(" FROM");
-    if(idx == -1) {
-      buffer.append(colBuffer);
-    } else {
-      buffer.insert(idx, colBuffer);
-    }
+    buffer.insert(idx, colBuffer);
     buffer.insert(0, "SELECT * FROM (");
     buffer.append(") AS ").append(alias).append(" WHERE");
     if(min > 0) {

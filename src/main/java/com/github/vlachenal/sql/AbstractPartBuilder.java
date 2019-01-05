@@ -143,6 +143,36 @@ public class AbstractPartBuilder {
   public SelectBuilder fetch(final long limit) {
     return select.fetch(limit);
   }
+
+  /**
+   * Modify current query to add apply {code row_number} window function as define in SQL:2003 standart.
+   *
+   * @param alias the current query table alias
+   * @param rowColumn the row column alias
+   * @param order the {@code ORDER} instruction
+   * @param min the minimum row number value
+   * @param max the maximum row number value
+   *
+   * @return {@code this}
+   */
+  public SelectBuilder windowByRowNumber(final String alias, final String rowColumn, final String order, final int min, final int max) {
+    return select.windowByRowNumber(alias, rowColumn, order, min, max);
+  }
+
+  /**
+   * Modify current query to add apply {code rank} window function as define in SQL:2003 standart.
+   *
+   * @param alias the current query table alias
+   * @param rowColumn the row column alias
+   * @param order the {@code ORDER} instruction
+   * @param min the minimum row number value
+   * @param max the maximum row number value
+   *
+   * @return {@code this}
+   */
+  public SelectBuilder windowByRank(final String alias, final String rowColumn, final String order, final int min, final int max) {
+    return select.windowByRank(alias, rowColumn, order, min, max);
+  }
   // Methods -
 
 }
