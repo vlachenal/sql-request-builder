@@ -172,6 +172,74 @@ public class SelectBuilder {
   }
 
   /**
+   * Modify current query to add apply {code row_number} window function as define in SQL:2003 standart.
+   *
+   * @param alias the current query table alias
+   * @param rowColumn the row column alias
+   * @param order the {@code ORDER} instruction
+   * @param min the minimum row number value
+   * @param max the maximum row number value
+   *
+   * @return {@code this}
+   */
+  public SelectBuilder windowByRowNumber(final String alias, final String rowColumn, final String order, final int min, final int max) {
+    window("row_number()", alias, rowColumn, order, min, max);
+    return this;
+  }
+
+  /**
+   * Modify current query to add apply {code rank} window function as define in SQL:2003 standart.
+   *
+   * @param alias the current query table alias
+   * @param rowColumn the row column alias
+   * @param order the {@code ORDER} instruction
+   * @param min the minimum row number value
+   * @param max the maximum row number value
+   *
+   * @return {@code this}
+   */
+  public SelectBuilder windowByRank(final String alias, final String rowColumn, final String order, final int min, final int max) {
+    window("rank()", alias, rowColumn, order, min, max);
+    return this;
+  }
+
+  /**
+   * Modify current query to add apply {code row_number} window function as define in SQL 2003 standart.
+   *
+   * @param function the window function to apply
+   * @param alias the current query table alias
+   * @param rowColumn the row column alias
+   * @param order the {@code ORDER} instruction
+   * @param min the minimum row number value
+   * @param max the maximum row number value
+   */
+  private void window(final String function, final String alias, final String rowColumn, final String order, final int min, final int max) {
+    final StringBuilder colBuffer = new StringBuilder();
+    colBuffer.append(',').append(function).append(" OVER(ORDER BY ").append(order).append(") AS ").append(rowColumn);
+    final int idx = buffer.indexOf(" FROM");
+    if(idx == -1) {
+      buffer.append(colBuffer);
+    } else {
+      buffer.insert(idx, colBuffer);
+    }
+    buffer.insert(0, "SELECT * FROM (");
+    buffer.append(") AS ").append(alias).append(" WHERE");
+    if(min > 0) {
+      buffer.append(' ').append(rowColumn).append(" >= ?");
+      values.add(min);
+    }
+    if(max > 1) {
+      if(min > 0) {
+        buffer.append(" AND ");
+      } else {
+        buffer.append(' ');
+      }
+      buffer.append(rowColumn).append(" < ?");
+      values.add(max);
+    }
+  }
+
+  /**
    * Build SQL query
    *
    * @return the query and its prepared statement values

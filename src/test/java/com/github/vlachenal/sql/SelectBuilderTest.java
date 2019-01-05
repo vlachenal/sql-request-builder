@@ -1742,6 +1742,114 @@ public class SelectBuilderTest {
         + "AND plap = ?", query.getQuery()),
               () -> assertEquals(1, query.getValues().size()));
   }
+
+  /**
+   * Test window function by row number
+   */
+  @Test
+  @DisplayName("Window by row number")
+  public void testWindowByRowNum() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t").done()
+        .windowByRowNumber("foo", "row_num", "t.titi ASC", 15, 20)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT * FROM (SELECT t.titi,t.tata,row_number() OVER(ORDER BY t.titi ASC) AS row_num FROM toto t) AS foo WHERE row_num >= ? AND row_num < ?", query.getQuery()),
+              () -> assertEquals(2, query.getValues().size()));
+  }
+
+  /**
+   * Test window function by row number
+   */
+  @Test
+  @DisplayName("Window by row number - min only")
+  public void testWindowByRowNumMin() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t").done()
+        .windowByRowNumber("foo", "row_num", "t.titi ASC", 15, -1)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT * FROM (SELECT t.titi,t.tata,row_number() OVER(ORDER BY t.titi ASC) AS row_num FROM toto t) AS foo WHERE row_num >= ?", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
+   * Test window function by row number
+   */
+  @Test
+  @DisplayName("Window by row number - max only")
+  public void testWindowByRowNumMax() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t").done()
+        .windowByRowNumber("foo", "row_num", "t.titi ASC", -1, 20)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT * FROM (SELECT t.titi,t.tata,row_number() OVER(ORDER BY t.titi ASC) AS row_num FROM toto t) AS foo WHERE row_num < ?", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
+   * Test window function by row number
+   */
+  @Test
+  @DisplayName("Window by rank")
+  public void testWindowByRank() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t").done()
+        .windowByRank("foo", "row_num", "t.titi ASC", 15, 20)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT * FROM (SELECT t.titi,t.tata,rank() OVER(ORDER BY t.titi ASC) AS row_num FROM toto t) AS foo WHERE row_num >= ? AND row_num < ?", query.getQuery()),
+              () -> assertEquals(2, query.getValues().size()));
+  }
+
+  /**
+   * Test window function by row number
+   */
+  @Test
+  @DisplayName("Window by rank - min only")
+  public void testWindowByRankMin() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t").done()
+        .windowByRank("foo", "row_num", "t.titi ASC", 15, -1)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT * FROM (SELECT t.titi,t.tata,rank() OVER(ORDER BY t.titi ASC) AS row_num FROM toto t) AS foo WHERE row_num >= ?", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
+   * Test window function by row number
+   */
+  @Test
+  @DisplayName("Window by rank - max only")
+  public void testWindowByRankMax() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t").done()
+        .windowByRank("foo", "row_num", "t.titi ASC", -1, 20)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT * FROM (SELECT t.titi,t.tata,rank() OVER(ORDER BY t.titi ASC) AS row_num FROM toto t) AS foo WHERE row_num < ?", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
   // Tests -
 
 }
