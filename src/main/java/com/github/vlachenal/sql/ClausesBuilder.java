@@ -22,6 +22,7 @@ package com.github.vlachenal.sql;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -694,7 +695,9 @@ public class ClausesBuilder {
         buffer.append(' ').append(boolAgg).append(' ');
       }
       buffer.append(clause.makeClause(column));
-      if(value instanceof Collection) { // For (NOT) IN operators
+      if(value instanceof Optional<?>) {
+      	values.add(((Optional<?>)value).get());
+      } else if(value instanceof Collection) { // For (NOT) IN operators
         buffer.append(SQL.toSQLList((Collection<?>)value));
       } else if(value instanceof SelectBuilder) { // For (NOT) EXISTS operators
         buffer.append('(').append(value).append(')');
@@ -704,7 +707,7 @@ public class ClausesBuilder {
         buffer.append('(').append(query.getQuery()).append(')');
         values.addAll(query.getValues());
       } else {
-       values.add(value);
+      	values.add(value);
       }
       firstClause = false;
     }
@@ -728,8 +731,16 @@ public class ClausesBuilder {
         buffer.append(' ').append(boolAgg).append(' ');
       }
       buffer.append(clause.makeClause(column));
-      values.add(value1);
-      values.add(value2);
+      if(value1 instanceof Optional<?>) {
+      	values.add(((Optional<?>)value1).get());
+      } else {
+      	values.add(value1);
+      }
+      if(value2 instanceof Optional<?>) {
+      	values.add(((Optional<?>)value2).get());
+      } else {
+      	values.add(value2);
+      }
       firstClause = false;
     }
   }

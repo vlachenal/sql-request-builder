@@ -21,6 +21,7 @@ package com.github.vlachenal.sql;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -71,6 +72,20 @@ public class UpdateBuilder {
     }
     buffer.append(column).append(" = ?");
     values.add(value);
+    return this;
+  }
+
+  /**
+   * Add field to update.<br>
+   * Value will be added as prepared statement value (with '?' wildcard).
+   *
+   * @param column the column
+   * @param value the value
+   *
+   * @return {@code this}
+   */
+  public UpdateBuilder field(final String column, final Optional<?> value) {
+  	value.ifPresent(o -> field(column, o));
     return this;
   }
 

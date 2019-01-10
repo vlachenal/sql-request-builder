@@ -3,6 +3,7 @@ package com.github.vlachenal.sql;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -1741,6 +1742,111 @@ public class SelectBuilderTest {
         + "OR plip = plop "
         + "AND plap = ?", query.getQuery()),
               () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
+   * Non empty optional clause
+   */
+  @Test
+  @DisplayName("Non empty optional clause")
+  public void testOptionalClauses() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equals().field("t.b")
+               .and("t.c", Clauses::equalsTo, Optional.of("stuff"))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = t.b AND t.c = ?", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
+   * Empty optional clause
+   */
+  @Test
+  @DisplayName("Empty optional clause")
+  public void testEmptyOptionalClauses() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equals().field("t.b")
+               .and("t.c", Clauses::equalsTo, Optional.empty())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = t.b", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * Empty optional clause
+   */
+  @Test
+  @DisplayName("Between optional clause")
+  public void testBetweenOptionalClauses() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equals().field("t.b")
+               .and("t.c", Clauses::between, Optional.of("staff"), Optional.of("stuff"))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = t.b AND t.c BETWEEN ? AND ?", query.getQuery()),
+              () -> assertEquals(2, query.getValues().size()));
+  }
+
+  /**
+   * Empty optional clause
+   */
+  @Test
+  @DisplayName("Between empty optional first value clause")
+  public void testBetweenEmptyLeftOptionalClauses() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equals().field("t.b")
+               .and("t.c", Clauses::between, Optional.empty(), Optional.of("stuff"))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = t.b", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * Empty optional clause
+   */
+  @Test
+  @DisplayName("Between empty optional second value clause")
+  public void testBetweenEmptyRightOptionalClauses() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equals().field("t.b")
+               .and("t.c", Clauses::between, Optional.of("staff"), Optional.empty())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = t.b", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
   }
   // Tests -
 

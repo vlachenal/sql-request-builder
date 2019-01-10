@@ -21,6 +21,7 @@ package com.github.vlachenal.sql;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -241,7 +242,9 @@ public final class SQL {
   public static <T> boolean isValidValue(final T value) {
     boolean valid = false;
     if(value != null) {
-      if(value instanceof Collection) {
+    	if(value instanceof Optional<?>) {
+    		valid = ((Optional<?>)value).isPresent();
+    	} else if(value instanceof Collection<?>) {
         valid = !((Collection<?>)value).isEmpty();
       } else if(value instanceof String) {
         valid = !((String)value).isEmpty();

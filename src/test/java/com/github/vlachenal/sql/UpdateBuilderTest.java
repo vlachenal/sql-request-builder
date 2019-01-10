@@ -3,6 +3,7 @@ package com.github.vlachenal.sql;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -51,6 +52,38 @@ public class UpdateBuilderTest {
     System.out.println("Values: " + query.getValues());
     assertAll(() -> assertEquals("UPDATE toto SET a = ?, b = ?", query.getQuery()),
               () -> assertEquals(Stream.of(1, "titi").collect(Collectors.toList()), query.getValues()));
+  }
+
+  /**
+   * UPDATE table one field without 'WHERE' unit test
+   */
+  @Test
+  @DisplayName("Update present optional")
+  public void testUpdatePresentOptionalTable() {
+    final SQLQuery query = SQL.update("toto")
+        .field("a", 1)
+        .field("b", Optional.of("titi"))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("UPDATE toto SET a = ?, b = ?", query.getQuery()),
+              () -> assertEquals(Stream.of(1, "titi").collect(Collectors.toList()), query.getValues()));
+  }
+
+  /**
+   * UPDATE table one field without 'WHERE' unit test
+   */
+  @Test
+  @DisplayName("Update present optional")
+  public void testUpdateEmptyOptionalTable() {
+    final SQLQuery query = SQL.update("toto")
+        .field("a", 1)
+        .field("b", Optional.empty())
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("UPDATE toto SET a = ?", query.getQuery()),
+              () -> assertEquals(Stream.of(1).collect(Collectors.toList()), query.getValues()));
   }
 
   /**
@@ -107,6 +140,22 @@ public class UpdateBuilderTest {
     final SQLQuery query = SQL.update("toto").field("a", 1)
         .where(SQL.clauses("a", Clauses::equalsTo, null)
                .and("b", Clauses::equalsTo, "plop"))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("UPDATE toto SET a = ? WHERE b = ?", query.getQuery()),
+              () -> assertEquals(Stream.of(1, "plop").collect(Collectors.toList()), query.getValues()));
+  }
+
+  /**
+   * UPDATE table one field with two optional clause one invalid unit test
+   */
+  @Test
+  @DisplayName("Update one field two optional clause one empty")
+  public void testUpdateTableWhereTwoOptEmptyClause() {
+    final SQLQuery query = SQL.update("toto").field("a", 1)
+        .where(SQL.clauses("a", Clauses::equalsTo, Optional.empty())
+               .and("b", Clauses::equalsTo, Optional.of("plop")))
         .build();
     System.out.println("SQL query: " + query.getQuery());
     System.out.println("Values: " + query.getValues());
