@@ -647,6 +647,11 @@ public class ClausesBuilder {
     return checkAndAddClauses("OR", clauses);
   }
 
+  /**
+   * Add boolean clauses aggregator
+   *
+   * @param boolAgg the aggregator to use
+   */
   private void addBooleanAggregator(final String boolAgg) {
     if(!firstClause) {
       buffer.append(' ').append(boolAgg).append(' ');
