@@ -442,8 +442,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public ClausesBuilder and(final ClausesProvider clauses) {
-    checkAndAddClauses("AND", clauses);
-    return this;
+    return checkAndAddClauses("AND", clauses);
   }
 
   /**
@@ -645,8 +644,13 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public ClausesBuilder or(final ClausesProvider clauses) {
-    checkAndAddClauses("OR", clauses);
-    return this;
+    return checkAndAddClauses("OR", clauses);
+  }
+
+  private void addBooleanAggregator(final String boolAgg) {
+    if(!firstClause) {
+      buffer.append(' ').append(boolAgg).append(' ');
+    }
   }
 
   /**
@@ -654,16 +658,18 @@ public class ClausesBuilder {
    *
    * @param boolAgg the boolean aggregator to use
    * @param clauses the clauses to add
+   *
+   * @return {@code this}
    */
-  private void checkAndAddClauses(final String boolAgg, final ClausesProvider clauses) {
+  private ClausesBuilder checkAndAddClauses(final String boolAgg, final ClausesProvider clauses) {
     final ClausesBuilder builder = clauses.getClauses();
     if(builder != null && builder.buffer.length() != 0) {
-      if(!firstClause) {
-        buffer.append(' ').append(boolAgg).append(' ');
-      }
+    	addBooleanAggregator(boolAgg);
       buffer.append(builder.buffer);
       values.addAll(builder.values);
+      firstClause = false;
     }
+    return this;
   }
 
   /**
@@ -681,9 +687,7 @@ public class ClausesBuilder {
    */
   private final <T> ClausesBuilder checkAndAddClause(final String boolAgg, final String column, final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
     if(checker.isValid(value)) {
-      if(!firstClause) {
-        buffer.append(' ').append(boolAgg).append(' ');
-      }
+    	addBooleanAggregator(boolAgg);
       buffer.append(clause.makeClause(column));
       if(value instanceof Optional<?>) {
       	values.add(((Optional<?>)value).get());
@@ -720,9 +724,7 @@ public class ClausesBuilder {
    */
   private final <T> ClausesBuilder checkAndAddClause(final String boolAgg, final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
     if(checker.isValid(value1) && checker.isValid(value2)) {
-      if(!firstClause) {
-        buffer.append(' ').append(boolAgg).append(' ');
-      }
+    	addBooleanAggregator(boolAgg);
       buffer.append(clause.makeClause(column));
       if(value1 instanceof Optional<?>) {
       	values.add(((Optional<?>)value1).get());
@@ -751,9 +753,7 @@ public class ClausesBuilder {
    */
   private ClausesBuilder checkAndAddClauses(final String boolAgg, final ClausesBuilder other) {
     if(!other.firstClause) {
-      if(!firstClause) {
-        buffer.append(' ').append(boolAgg).append(' ');
-      }
+    	addBooleanAggregator(boolAgg);
       buffer.append('(').append(other.buffer).append(')');
       values.addAll(other.values);
       firstClause = false;
