@@ -232,7 +232,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public ClausesBuilder notExists(final SelectBuilder query) {
-    buffer.append("NOT EXISTS(").append(query.toString()).append(')');
+    buffer.append("NOT EXISTS(").append(query).append(')');
     values.addAll(query.values);
     return this;
   }
@@ -245,7 +245,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public ClausesBuilder exists(final SelectBuilder query) {
-    buffer.append("EXISTS(").append(query.toString()).append(')');
+    buffer.append("EXISTS(").append(query).append(')');
     values.addAll(query.values);
     return this;
   }
@@ -458,8 +458,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder and(final ClauseMaker clause, final T value) {
-    checkAndAddClause("AND", null, clause, value, SQL::isValidValue);
-    return this;
+    return checkAndAddClause("AND", null, clause, value, SQL::isValidValue);
   }
 
   /**
@@ -474,8 +473,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder and(final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
-    checkAndAddClause("AND", null, clause, value, checker);
-    return this;
+    return checkAndAddClause("AND", null, clause, value, checker);
   }
 
   /**
@@ -491,8 +489,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder and(final String column, final ClauseMaker clause, final T value) {
-    checkAndAddClause("AND", column, clause, value, SQL::isValidValue);
-    return this;
+    return checkAndAddClause("AND", column, clause, value, SQL::isValidValue);
   }
 
   /**
@@ -508,8 +505,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder and(final String column, final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
-    checkAndAddClause("AND", column, clause, value, checker);
-    return this;
+    return checkAndAddClause("AND", column, clause, value, checker);
   }
 
   /**
@@ -526,8 +522,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder and(final String column, final ClauseMaker clause, final T value1, final T value2) {
-    checkAndAddClause("AND", column, clause, value1, value2, SQL::isValidValue);
-    return this;
+    return checkAndAddClause("AND", column, clause, value1, value2, SQL::isValidValue);
   }
 
   /**
@@ -544,8 +539,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder and(final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
-    checkAndAddClause("AND", column, clause, value1, value2, checker);
-    return this;
+    return checkAndAddClause("AND", column, clause, value1, value2, checker);
   }
 
   /**
@@ -560,8 +554,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder or(final ClauseMaker clause, final T value) {
-    checkAndAddClause("OR", null, clause, value, SQL::isValidValue);
-    return this;
+    return checkAndAddClause("OR", null, clause, value, SQL::isValidValue);
   }
 
   /**
@@ -576,8 +569,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder or(final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
-    checkAndAddClause("OR", null, clause, value, checker);
-    return this;
+    return checkAndAddClause("OR", null, clause, value, checker);
   }
 
   /**
@@ -593,8 +585,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder or(final String column, final ClauseMaker clause, final T value) {
-    checkAndAddClause("OR", column, clause, value, SQL::isValidValue);
-    return this;
+    return checkAndAddClause("OR", column, clause, value, SQL::isValidValue);
   }
 
   /**
@@ -610,8 +601,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder or(final String column, final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
-    checkAndAddClause("OR", column, clause, value, checker);
-    return this;
+    return checkAndAddClause("OR", column, clause, value, checker);
   }
 
   /**
@@ -628,8 +618,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder or(final String column, final ClauseMaker clause, final T value1, final T value2) {
-    checkAndAddClause("OR", column, clause, value1, value2, SQL::isValidValue);
-    return this;
+    return checkAndAddClause("OR", column, clause, value1, value2, SQL::isValidValue);
   }
 
   /**
@@ -646,8 +635,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public <T> ClausesBuilder or(final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
-    checkAndAddClause("OR", column, clause, value1, value2, checker);
-    return this;
+    return checkAndAddClause("OR", column, clause, value1, value2, checker);
   }
   /**
    * Add {@code AND} other clauses if clauses are not {@code null} or empty.
@@ -688,8 +676,10 @@ public class ClausesBuilder {
    * @param clause the clause type (operator)
    * @param value the value (second operand)
    * @param checker the value checker
+   *
+   * @return {@code this}
    */
-  private final <T> void checkAndAddClause(final String boolAgg, final String column, final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
+  private final <T> ClausesBuilder checkAndAddClause(final String boolAgg, final String column, final ClauseMaker clause, final T value, final ValueChecker<T> checker) {
     if(checker.isValid(value)) {
       if(!firstClause) {
         buffer.append(' ').append(boolAgg).append(' ');
@@ -711,6 +701,7 @@ public class ClausesBuilder {
       }
       firstClause = false;
     }
+    return this;
   }
 
   /**
@@ -724,8 +715,10 @@ public class ClausesBuilder {
    * @param value1 the first value (second operand)
    * @param value2 the first value (third operand)
    * @param checker the value checker
+   *
+   * @return {@code this}
    */
-  private final <T> void checkAndAddClause(final String boolAgg, final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
+  private final <T> ClausesBuilder checkAndAddClause(final String boolAgg, final String column, final ClauseMaker clause, final T value1, final T value2, final ValueChecker<T> checker) {
     if(checker.isValid(value1) && checker.isValid(value2)) {
       if(!firstClause) {
         buffer.append(' ').append(boolAgg).append(' ');
@@ -743,6 +736,7 @@ public class ClausesBuilder {
       }
       firstClause = false;
     }
+    return this;
   }
   // Check and add value to prepared statement -
 
@@ -752,8 +746,10 @@ public class ClausesBuilder {
    *
    * @param boolAgg the boolean aggregator to use
    * @param other the other clauses to add
+   *
+   * @return {@code this}
    */
-  private void checkAndAddClauses(final String boolAgg, final ClausesBuilder other) {
+  private ClausesBuilder checkAndAddClauses(final String boolAgg, final ClausesBuilder other) {
     if(!other.firstClause) {
       if(!firstClause) {
         buffer.append(' ').append(boolAgg).append(' ');
@@ -762,6 +758,7 @@ public class ClausesBuilder {
       values.addAll(other.values);
       firstClause = false;
     }
+    return this;
   }
 
   /**
@@ -772,8 +769,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public ClausesBuilder and(final ClausesBuilder other) {
-    checkAndAddClauses("AND", other);
-    return this;
+    return checkAndAddClauses("AND", other);
   }
 
   /**
@@ -784,8 +780,7 @@ public class ClausesBuilder {
    * @return {@code this}
    */
   public ClausesBuilder or(final ClausesBuilder other) {
-    checkAndAddClauses("OR", other);
-    return this;
+    return checkAndAddClauses("OR", other);
   }
   // Parentheses -
   // Methods -
