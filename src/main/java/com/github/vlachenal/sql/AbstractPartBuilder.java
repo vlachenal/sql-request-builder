@@ -145,7 +145,7 @@ public class AbstractPartBuilder {
   }
 
   /**
-   * Modify current query to add apply {code row_number} window function as define in SQL:2003 standart.
+   * Modify current query to add apply {@code row_number} window function as define in SQL:2003 standard.
    *
    * @param alias the current query table alias
    * @param rowColumn the row column alias
@@ -160,7 +160,7 @@ public class AbstractPartBuilder {
   }
 
   /**
-   * Modify current query to add apply {code rank} window function as define in SQL:2003 standart.
+   * Modify current query to add apply {@code rank} window function as define in SQL:2003 standard.
    *
    * @param alias the current query table alias
    * @param rowColumn the row column alias
