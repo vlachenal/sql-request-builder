@@ -19,7 +19,6 @@
 */
 package com.github.vlachenal.sql;
 
-
 /**
  * Value checker functional interface.<br>
  * Provides a method to check if a value is valid for adding it into SQL query.
@@ -34,7 +33,8 @@ package com.github.vlachenal.sql;
 public interface ValueChecker<T> {
 
   /**
-   * Check if value is valid
+   * Check if value is valid.<br>
+   * Optional value has to be check (i.e. with isPresent() method)
    *
    * @param value the value to check
    *

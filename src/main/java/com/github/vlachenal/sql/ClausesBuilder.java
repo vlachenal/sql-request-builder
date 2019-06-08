@@ -695,6 +695,7 @@ public class ClausesBuilder {
     	addBooleanAggregator(boolAgg);
       buffer.append(clause.makeClause(column));
       if(value instanceof Optional<?>) {
+        // Optional value has already been check at his point
       	values.add(((Optional<?>)value).get());
       } else if(value instanceof Collection) { // For (NOT) IN operators
         buffer.append(SQL.toSQLList((Collection<?>)value));
@@ -732,11 +733,13 @@ public class ClausesBuilder {
     	addBooleanAggregator(boolAgg);
       buffer.append(clause.makeClause(column));
       if(value1 instanceof Optional<?>) {
+        // Optional value has already been check at his point
       	values.add(((Optional<?>)value1).get());
       } else {
       	values.add(value1);
       }
       if(value2 instanceof Optional<?>) {
+        // Optional value has already been check at his point
       	values.add(((Optional<?>)value2).get());
       } else {
       	values.add(value2);
