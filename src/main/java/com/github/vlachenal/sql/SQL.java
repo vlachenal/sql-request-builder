@@ -86,6 +86,17 @@ public final class SQL {
   }
 
   /**
+   * Initialize a new clauses builder from another one
+   *
+   * @param other the other {@link ClausesBuilder}
+   *
+   * @return the new {@link ClausesBuilder}
+   */
+  public static ClausesBuilder clauses(final ClausesBuilder other) {
+    return new ClausesBuilder(other);
+  }
+
+  /**
    * Initialize a new clauses builder and add the first clause if value is valid
    *
    * @param <T> the value type

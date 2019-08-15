@@ -1303,6 +1303,29 @@ public class SelectBuilderTest {
   }
 
   /**
+   * Test SQL union
+   */
+  @Test
+  @DisplayName("Union, values and copy")
+  public void testUnionWithValuesAndCopy() {
+    final ClausesBuilder clauses = SQL.clauses("t.tata", Clauses::equalsTo, "1");
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from("toto t")
+        .where(SQL.clauses(clauses).and("t.plop", Clauses::equalsTo, "plip"))
+        .union(SQL.select().field("t.titi")
+               .from("tutu t")
+               .where(SQL.clauses(clauses).and("t.plip", Clauses::equalsTo, "plop")))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi FROM toto t WHERE t.tata = ? AND t.plop = ? "
+        + "UNION SELECT t.titi FROM tutu t WHERE t.tata = ? AND t.plip = ?",
+        query.getQuery()),
+              () -> assertEquals(4, query.getValues().size()));
+  }
+
+  /**
    * Test SQL union all
    */
   @Test

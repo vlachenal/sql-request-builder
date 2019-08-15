@@ -57,6 +57,17 @@ public class ClausesBuilder {
   }
 
   /**
+   * {@link ClausesBuilder} copy constructor
+   *
+   * @param other the {@link ClausesBuilder} to copy
+   */
+  public ClausesBuilder(final ClausesBuilder other) {
+    buffer = new StringBuilder(other.buffer);
+    values = new ArrayList<>(other.values);
+    firstClause = other.firstClause;
+  }
+
+  /**
    * {@link ClausesBuilder} constructor.<br>
    * This constructor will try to add a first clause if value is valid. Value will
    * be validated with {@code SQL::isValidValue} function.<br>
