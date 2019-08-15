@@ -60,30 +60,6 @@ loadScripts(document, 'script');</script>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
@@ -99,9 +75,16 @@ loadScripts(document, 'script');</script>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" disabled="disabled">
+<input type="reset" id="reset" value="reset" disabled="disabled">
+</li>
+</ul>
+</div>
 <a id="skip.navbar.top">
 <!--   -->
-</a></div>
+</a>
 <!-- ========= END OF TOP NAVBAR ========= -->
 </div>
 <div class="navPadding">&nbsp;</div>
@@ -151,12 +134,14 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="memberSummary">
+<div class="memberSummary">
+<table>
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Constructor</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
+<tbody>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">ClausesBuilder</a></span>()</code></th>
 <td class="colLast">
@@ -182,6 +167,12 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.github.vlachenal.sql.ClausesBuilder)">ClausesBuilder</a></span>&#8203;(<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a>&nbsp;other)</code></th>
+<td class="colLast">
+<div class="block"><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql"><code>ClausesBuilder</code></a> copy constructor</div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T)">ClausesBuilder</a></span>&#8203;(java.lang.String&nbsp;column,
               <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
               T&nbsp;value)</code></th>
@@ -190,7 +181,7 @@ extends java.lang.Object</pre>
  This constructor will try to add a first clause if value is valid.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T,com.github.vlachenal.sql.ValueChecker)">ClausesBuilder</a></span>&#8203;(java.lang.String&nbsp;column,
               <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
               T&nbsp;value,
@@ -200,7 +191,7 @@ extends java.lang.Object</pre>
  This constructor will try to add a first clause if value is valid.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T,T)">ClausesBuilder</a></span>&#8203;(java.lang.String&nbsp;column,
               <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
               T&nbsp;value1,
@@ -210,7 +201,7 @@ extends java.lang.Object</pre>
  This constructor will try to add a first clause if value is valid.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T,T,com.github.vlachenal.sql.ValueChecker)">ClausesBuilder</a></span>&#8203;(java.lang.String&nbsp;column,
               <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
               T&nbsp;value1,
@@ -221,7 +212,9 @@ extends java.lang.Object</pre>
  This constructor will try to add a first clause if value is valid.</div>
 </td>
 </tr>
+</tbody>
 </table>
+</div>
 </li>
 </ul>
 </section>
@@ -232,21 +225,24 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<div class="memberSummary">
+<div role="tablist" aria-orientation="horizontal"><button role="tab" aria-selected="true" aria-controls="memberSummary_tabpanel" tabindex="0" onkeydown="switchTab(event)" id="t0" class="activeTableTab">All Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t2" class="tableTab" onclick="show(2);">Instance Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t4" class="tableTab" onclick="show(8);">Concrete Methods</button></div>
+<div id="memberSummary_tabpanel" role="tabpanel">
+<table aria-labelledby="t0">
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
-<tr id="i0" class="altColor">
+<tbody>
+<tr class="altColor" id="i0">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#and()">and</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add <code>AND</code> to SQL query</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr class="rowColor" id="i1">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#and(com.github.vlachenal.sql.ClauseMaker,T)">and</a></span>&#8203;(<a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
    T&nbsp;value)</code></th>
@@ -254,7 +250,7 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>AND</code> clause if value is valid.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr class="altColor" id="i2">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#and(com.github.vlachenal.sql.ClauseMaker,T,com.github.vlachenal.sql.ValueChecker)">and</a></span>&#8203;(<a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
    T&nbsp;value,
@@ -263,21 +259,21 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>AND</code> clause if value is valid</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#and(com.github.vlachenal.sql.ClausesBuilder)">and</a></span>&#8203;(<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a>&nbsp;other)</code></th>
 <td class="colLast">
 <div class="block">Add clauses into parenthesis with AND</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#and(com.github.vlachenal.sql.ClausesProvider)">and</a></span>&#8203;(<a href="ClausesProvider.html" title="interface in com.github.vlachenal.sql">ClausesProvider</a>&nbsp;clauses)</code></th>
 <td class="colLast">
 <div class="block">Add <code>AND</code> other clauses if clauses are not <code>null</code> or empty.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#and(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T)">and</a></span>&#8203;(java.lang.String&nbsp;column,
    <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
@@ -286,7 +282,7 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>AND</code> clause if value is valid.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#and(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T,com.github.vlachenal.sql.ValueChecker)">and</a></span>&#8203;(java.lang.String&nbsp;column,
    <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
@@ -296,7 +292,7 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>AND</code> clause if value is valid</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#and(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T,T)">and</a></span>&#8203;(java.lang.String&nbsp;column,
    <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
@@ -306,7 +302,7 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>AND</code> clause if value is valid.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#and(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T,T,com.github.vlachenal.sql.ValueChecker)">and</a></span>&#8203;(java.lang.String&nbsp;column,
    <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
@@ -317,63 +313,63 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>AND</code> clause if value is valid</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr class="rowColor" id="i9">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#between()">between</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add <code>BETWEEN</code> clause</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals()">equals</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add equals clause with <code>=</code> operator</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr class="rowColor" id="i11">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#exists(com.github.vlachenal.sql.SelectBuilder)">exists</a></span>&#8203;(<a href="SelectBuilder.html" title="class in com.github.vlachenal.sql">SelectBuilder</a>&nbsp;query)</code></th>
 <td class="colLast">
 <div class="block">Add <code>EXISTS</code> in subquery clause</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr class="altColor" id="i12">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#field(java.lang.String)">field</a></span>&#8203;(java.lang.String&nbsp;column)</code></th>
 <td class="colLast">
 <div class="block">Add field to clause</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr class="rowColor" id="i13">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#greater()">greater</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add greater clause with <code>&gt;</code> operator</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr class="altColor" id="i14">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#greaterEquals()">greaterEquals</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add greater or equals clause with <code>&gt;=</code> operator</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr class="rowColor" id="i15">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#in(com.github.vlachenal.sql.SelectBuilder)">in</a></span>&#8203;(<a href="SelectBuilder.html" title="class in com.github.vlachenal.sql">SelectBuilder</a>&nbsp;query)</code></th>
 <td class="colLast">
 <div class="block">Add <code>IN</code> subquery clause.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr class="altColor" id="i16">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#in(com.github.vlachenal.sql.SQLQuery)">in</a></span>&#8203;(<a href="SQLQuery.html" title="class in com.github.vlachenal.sql">SQLQuery</a>&nbsp;query)</code></th>
 <td class="colLast">
 <div class="block">Add <code>IN</code> subquery clause.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr class="rowColor" id="i17">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#in(java.util.Collection)">in</a></span>&#8203;(java.util.Collection&lt;T&gt;&nbsp;values)</code></th>
 <td class="colLast">
@@ -384,84 +380,84 @@ extends java.lang.Object</pre>
  You can format text values with <a href="SQL.html" title="class in com.github.vlachenal.sql"><code>SQL</code></a> utility methods.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr class="altColor" id="i18">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNotNull()">isNotNull</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add <code>IS NOT NULL</code> clause</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr class="rowColor" id="i19">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNull()">isNull</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add <code>IS NULL</code> clause</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr class="altColor" id="i20">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lesser()">lesser</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add lesser clause with <code>&lt;</code> operator</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr class="rowColor" id="i21">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lesserEquals()">lesserEquals</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add lesser or equals clause with <code>&lt;=</code> operator</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr class="altColor" id="i22">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#like()">like</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add <code>LIKE</code> clause</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr class="rowColor" id="i23">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#not(com.github.vlachenal.sql.ClausesBuilder)">not</a></span>&#8203;(<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a>&nbsp;clauses)</code></th>
 <td class="colLast">
 <div class="block">Add <code>NOT</code> command</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr class="altColor" id="i24">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#notBetween()">notBetween</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add <code>NOT BETWEEN</code> clause</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr class="rowColor" id="i25">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#notEquals()">notEquals</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add not equals clause with <code>&lt;&gt;</code> operator</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr class="altColor" id="i26">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#notExists(com.github.vlachenal.sql.SelectBuilder)">notExists</a></span>&#8203;(<a href="SelectBuilder.html" title="class in com.github.vlachenal.sql">SelectBuilder</a>&nbsp;query)</code></th>
 <td class="colLast">
 <div class="block">Add <code>NOT EXISTS</code> in subquery clause</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr class="rowColor" id="i27">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#notIn(com.github.vlachenal.sql.SelectBuilder)">notIn</a></span>&#8203;(<a href="SelectBuilder.html" title="class in com.github.vlachenal.sql">SelectBuilder</a>&nbsp;query)</code></th>
 <td class="colLast">
 <div class="block">Add <code>NOT IN</code> subquery clause.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr class="altColor" id="i28">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#notIn(com.github.vlachenal.sql.SQLQuery)">notIn</a></span>&#8203;(<a href="SQLQuery.html" title="class in com.github.vlachenal.sql">SQLQuery</a>&nbsp;query)</code></th>
 <td class="colLast">
 <div class="block">Add <code>NOT IN</code> subquery clause.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr class="rowColor" id="i29">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#notIn(java.util.Collection)">notIn</a></span>&#8203;(java.util.Collection&lt;T&gt;&nbsp;values)</code></th>
 <td class="colLast">
@@ -472,21 +468,21 @@ extends java.lang.Object</pre>
  You can format text values with <a href="SQL.html" title="class in com.github.vlachenal.sql"><code>SQL</code></a> utility methods.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr class="altColor" id="i30">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#notLike()">notLike</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add <code>NOT LIKE</code> clause</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr class="rowColor" id="i31">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#or()">or</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Add <code>OR</code> to SQL query</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr class="altColor" id="i32">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#or(com.github.vlachenal.sql.ClauseMaker,T)">or</a></span>&#8203;(<a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
   T&nbsp;value)</code></th>
@@ -494,7 +490,7 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>OR</code> clause if value is valid.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr class="rowColor" id="i33">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#or(com.github.vlachenal.sql.ClauseMaker,T,com.github.vlachenal.sql.ValueChecker)">or</a></span>&#8203;(<a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
   T&nbsp;value,
@@ -503,21 +499,21 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>OR</code> clause if value is valid</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr class="altColor" id="i34">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#or(com.github.vlachenal.sql.ClausesBuilder)">or</a></span>&#8203;(<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a>&nbsp;other)</code></th>
 <td class="colLast">
 <div class="block">Add clauses into parenthesis with OR</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr class="rowColor" id="i35">
 <td class="colFirst"><code><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#or(com.github.vlachenal.sql.ClausesProvider)">or</a></span>&#8203;(<a href="ClausesProvider.html" title="interface in com.github.vlachenal.sql">ClausesProvider</a>&nbsp;clauses)</code></th>
 <td class="colLast">
 <div class="block">Add <code>AND</code> other clauses if clauses are not <code>null</code> or empty.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr class="altColor" id="i36">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#or(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T)">or</a></span>&#8203;(java.lang.String&nbsp;column,
   <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
@@ -526,7 +522,7 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>OR</code> clause if value is valid.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr class="rowColor" id="i37">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#or(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T,com.github.vlachenal.sql.ValueChecker)">or</a></span>&#8203;(java.lang.String&nbsp;column,
   <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
@@ -536,7 +532,7 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>OR</code> clause if value is valid</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr class="altColor" id="i38">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#or(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T,T)">or</a></span>&#8203;(java.lang.String&nbsp;column,
   <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
@@ -546,7 +542,7 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>OR</code> clause if value is valid.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr class="rowColor" id="i39">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#or(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T,T,com.github.vlachenal.sql.ValueChecker)">or</a></span>&#8203;(java.lang.String&nbsp;column,
   <a href="ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a>&nbsp;clause,
@@ -557,7 +553,10 @@ extends java.lang.Object</pre>
 <div class="block">Add <code>OR</code> clause if value is valid</div>
 </td>
 </tr>
+</tbody>
 </table>
+</div>
+</div>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -589,6 +588,20 @@ extends java.lang.Object</pre>
 <h4>ClausesBuilder</h4>
 <pre>public&nbsp;ClausesBuilder()</pre>
 <div class="block"><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql"><code>ClausesBuilder</code></a> default constructor</div>
+</li>
+</ul>
+<a id="&lt;init&gt;(com.github.vlachenal.sql.ClausesBuilder)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ClausesBuilder</h4>
+<pre>public&nbsp;ClausesBuilder&#8203;(<a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a>&nbsp;other)</pre>
+<div class="block"><a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql"><code>ClausesBuilder</code></a> copy constructor</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>other</code> - the <a href="ClausesBuilder.html" title="class in com.github.vlachenal.sql"><code>ClausesBuilder</code></a> to copy</dd>
+</dl>
 </li>
 </ul>
 <a id="&lt;init&gt;(com.github.vlachenal.sql.ClauseMaker,java.lang.Object)">
@@ -1517,24 +1530,6 @@ extends java.lang.Object</pre>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
@@ -1550,9 +1545,10 @@ extends java.lang.Object</pre>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
+</div>
 <a id="skip.navbar.bottom">
 <!--   -->
-</a></div>
+</a>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 </nav>
 </footer>

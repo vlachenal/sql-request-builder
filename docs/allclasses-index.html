@@ -60,33 +60,16 @@ loadScripts(document, 'script');</script>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="allclasses.html">All&nbsp;Classes</a></li>
-</ul>
 <ul class="navListSearch">
 <li><label for="search">SEARCH:</label>
 <input type="text" id="search" value="search" disabled="disabled">
 <input type="reset" id="reset" value="reset" disabled="disabled">
 </li>
 </ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
 </div>
 <a id="skip.navbar.top">
 <!--   -->
-</a></div>
+</a>
 <!-- ========= END OF TOP NAVBAR ========= -->
 </div>
 <div class="navPadding">&nbsp;</div>
@@ -103,53 +86,56 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="allClassesContainer">
 <ul class="blockList">
 <li class="blockList">
-<table class="typeSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Classes</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Interface Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Class Summary</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<div class="typeSummary">
+<div role="tablist" aria-orientation="horizontal"><button role="tab" aria-selected="true" aria-controls="typeSummary_tabpanel" tabindex="0" onkeydown="switchTab(event)" id="t0" class="activeTableTab">All Classes</button><button role="tab" aria-selected="false" aria-controls="typeSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t1" class="tableTab" onclick="show(1);">Interface Summary</button><button role="tab" aria-selected="false" aria-controls="typeSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t2" class="tableTab" onclick="show(2);">Class Summary</button></div>
+<div id="typeSummary_tabpanel" role="tabpanel">
+<table aria-labelledby="t0">
 <tr>
 <th class="colFirst" scope="col">Class</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
-<tr id="i0" class="altColor">
+<tbody>
+<tr class="altColor" id="i0">
 <td class="colFirst"><a href="com/github/vlachenal/sql/AbstractPartBuilder.html" title="class in com.github.vlachenal.sql">AbstractPartBuilder</a></td>
 <th class="colLast" scope="row">
 <div class="block">Abstract SQL query part builder.<br>
  Acts like a decorator to call some initial <a href="com/github/vlachenal/sql/SelectBuilder.html" title="class in com.github.vlachenal.sql"><code>SelectBuilder</code></a> methods.</div>
 </th>
 </tr>
-<tr id="i1" class="rowColor">
+<tr class="rowColor" id="i1">
 <td class="colFirst"><a href="com/github/vlachenal/sql/ClauseMaker.html" title="interface in com.github.vlachenal.sql">ClauseMaker</a></td>
 <th class="colLast" scope="row">
 <div class="block">Clause maker functional interface</div>
 </th>
 </tr>
-<tr id="i2" class="altColor">
+<tr class="altColor" id="i2">
 <td class="colFirst"><a href="com/github/vlachenal/sql/Clauses.html" title="class in com.github.vlachenal.sql">Clauses</a></td>
 <th class="colLast" scope="row">
 <div class="block">Provides clauses function for optional clauses in <a href="com/github/vlachenal/sql/ClausesBuilder.html" title="class in com.github.vlachenal.sql"><code>ClausesBuilder</code></a>.<br>
  Functions can (should) be used as <a href="com/github/vlachenal/sql/ClauseMaker.html" title="interface in com.github.vlachenal.sql"><code>ClauseMaker</code></a>.</div>
 </th>
 </tr>
-<tr id="i3" class="rowColor">
+<tr class="rowColor" id="i3">
 <td class="colFirst"><a href="com/github/vlachenal/sql/ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></td>
 <th class="colLast" scope="row">
 <div class="block">SQL clauses builder.<br>
  This class should be instantiated through <a href="com/github/vlachenal/sql/SQL.html" title="class in com.github.vlachenal.sql"><code>SQL</code></a>.</div>
 </th>
 </tr>
-<tr id="i4" class="altColor">
+<tr class="altColor" id="i4">
 <td class="colFirst"><a href="com/github/vlachenal/sql/ClausesProvider.html" title="interface in com.github.vlachenal.sql">ClausesProvider</a></td>
 <th class="colLast" scope="row">
 <div class="block">Clauses provider</div>
 </th>
 </tr>
-<tr id="i5" class="rowColor">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><a href="com/github/vlachenal/sql/DeleteBuilder.html" title="class in com.github.vlachenal.sql">DeleteBuilder</a></td>
 <th class="colLast" scope="row">
 <div class="block">SQL <code>DELETE</code> request builder.<br>
  This class should be instantiated through <a href="com/github/vlachenal/sql/SQL.html" title="class in com.github.vlachenal.sql"><code>SQL</code></a> static method.</div>
 </th>
 </tr>
-<tr id="i6" class="altColor">
+<tr class="altColor" id="i6">
 <td class="colFirst"><a href="com/github/vlachenal/sql/FieldsBuilder.html" title="class in com.github.vlachenal.sql">FieldsBuilder</a></td>
 <th class="colLast" scope="row">
 <div class="block">Field builder.<br>
@@ -157,26 +143,26 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  and in <code>ORDER BY</code> and <code>GROUP BY</code> command.</div>
 </th>
 </tr>
-<tr id="i7" class="rowColor">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><a href="com/github/vlachenal/sql/FromBuilder.html" title="class in com.github.vlachenal.sql">FromBuilder</a></td>
 <th class="colLast" scope="row">
 <div class="block">SQL from table builder</div>
 </th>
 </tr>
-<tr id="i8" class="altColor">
+<tr class="altColor" id="i8">
 <td class="colFirst"><a href="com/github/vlachenal/sql/SelectBuilder.html" title="class in com.github.vlachenal.sql">SelectBuilder</a></td>
 <th class="colLast" scope="row">
 <div class="block">SQL <code>SELECT</code> query builder.<br>
  This class should be instantiated through <a href="com/github/vlachenal/sql/SQL.html" title="class in com.github.vlachenal.sql"><code>SQL</code></a> static method.</div>
 </th>
 </tr>
-<tr id="i9" class="rowColor">
+<tr class="rowColor" id="i9">
 <td class="colFirst"><a href="com/github/vlachenal/sql/SQL.html" title="class in com.github.vlachenal.sql">SQL</a></td>
 <th class="colLast" scope="row">
 <div class="block">SQL request builder entry point and utility methods</div>
 </th>
 </tr>
-<tr id="i10" class="altColor">
+<tr class="altColor" id="i10">
 <td class="colFirst"><a href="com/github/vlachenal/sql/SQLQuery.html" title="class in com.github.vlachenal.sql">SQLQuery</a></td>
 <th class="colLast" scope="row">
 <div class="block">SQL query.<br>
@@ -184,21 +170,24 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  This is the result of the builders.</div>
 </th>
 </tr>
-<tr id="i11" class="rowColor">
+<tr class="rowColor" id="i11">
 <td class="colFirst"><a href="com/github/vlachenal/sql/UpdateBuilder.html" title="class in com.github.vlachenal.sql">UpdateBuilder</a></td>
 <th class="colLast" scope="row">
 <div class="block">SQL <code>UPDATE</code> request builder.<br>
  This class should be instantiated through <a href="com/github/vlachenal/sql/SQL.html" title="class in com.github.vlachenal.sql"><code>SQL</code></a> static method.</div>
 </th>
 </tr>
-<tr id="i12" class="altColor">
+<tr class="altColor" id="i12">
 <td class="colFirst"><a href="com/github/vlachenal/sql/ValueChecker.html" title="interface in com.github.vlachenal.sql">ValueChecker</a>&lt;<a href="com/github/vlachenal/sql/ValueChecker.html" title="type parameter in ValueChecker">T</a>&gt;</td>
 <th class="colLast" scope="row">
 <div class="block">Value checker functional interface.<br>
  Provides a method to check if a value is valid for adding it into SQL query.</div>
 </th>
 </tr>
+</tbody>
 </table>
+</div>
+</div>
 </li>
 </ul>
 </div>
@@ -222,28 +211,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="help-doc.html">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
 <a id="skip.navbar.bottom">
 <!--   -->
-</a></div>
+</a>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 </nav>
 </footer>

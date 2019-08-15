@@ -54,33 +54,16 @@ loadScripts(document, 'script');</script>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="allclasses.html">All&nbsp;Classes</a></li>
-</ul>
 <ul class="navListSearch">
 <li><label for="search">SEARCH:</label>
 <input type="text" id="search" value="search" disabled="disabled">
 <input type="reset" id="reset" value="reset" disabled="disabled">
 </li>
 </ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
 </div>
 <a id="skip.navbar.top">
 <!--   -->
-</a></div>
+</a>
 <!-- ========= END OF TOP NAVBAR ========= -->
 </div>
 <div class="navPadding">&nbsp;</div>
@@ -201,6 +184,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Initialize a new clauses builder and add the first clause if value is valid</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/github/vlachenal/sql/SQL.html#clauses(com.github.vlachenal.sql.ClausesBuilder)">clauses(ClausesBuilder)</a></span> - Static method in class com.github.vlachenal.sql.<a href="com/github/vlachenal/sql/SQL.html" title="class in com.github.vlachenal.sql">SQL</a></dt>
+<dd>
+<div class="block">Initialize a new clauses builder from another one</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/github/vlachenal/sql/SQL.html#clauses(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T)">clauses(String, ClauseMaker, T)</a></span> - Static method in class com.github.vlachenal.sql.<a href="com/github/vlachenal/sql/SQL.html" title="class in com.github.vlachenal.sql">SQL</a></dt>
 <dd>
 <div class="block">Initialize a new clauses builder and add the first clause if value is valid</div>
@@ -241,6 +228,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block"><a href="com/github/vlachenal/sql/ClausesBuilder.html" title="class in com.github.vlachenal.sql"><code>ClausesBuilder</code></a> constructor<br>
  This constructor will try to add a first clause if value is valid.<br>
  This constructor can be used to add 'EXISTS' clause.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/github/vlachenal/sql/ClausesBuilder.html#%3Cinit%3E(com.github.vlachenal.sql.ClausesBuilder)">ClausesBuilder(ClausesBuilder)</a></span> - Constructor for class com.github.vlachenal.sql.<a href="com/github/vlachenal/sql/ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></dt>
+<dd>
+<div class="block"><a href="com/github/vlachenal/sql/ClausesBuilder.html" title="class in com.github.vlachenal.sql"><code>ClausesBuilder</code></a> copy constructor</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/github/vlachenal/sql/ClausesBuilder.html#%3Cinit%3E(java.lang.String,com.github.vlachenal.sql.ClauseMaker,T)">ClausesBuilder(String, ClauseMaker, T)</a></span> - Constructor for class com.github.vlachenal.sql.<a href="com/github/vlachenal/sql/ClausesBuilder.html" title="class in com.github.vlachenal.sql">ClausesBuilder</a></dt>
 <dd>
@@ -566,7 +557,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/github/vlachenal/sql/ValueChecker.html#isValid(T)">isValid(T)</a></span> - Method in interface com.github.vlachenal.sql.<a href="com/github/vlachenal/sql/ValueChecker.html" title="interface in com.github.vlachenal.sql">ValueChecker</a></dt>
 <dd>
-<div class="block">Check if value is valid</div>
+<div class="block">Check if value is valid.<br>
+ Optional value has to be check (i.e. with isPresent() method)</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/github/vlachenal/sql/SQL.html#isValidValue(T)">isValidValue(T)</a></span> - Static method in class com.github.vlachenal.sql.<a href="com/github/vlachenal/sql/SQL.html" title="class in com.github.vlachenal.sql">SQL</a></dt>
 <dd>
@@ -988,28 +980,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="help-doc.html">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
 <a id="skip.navbar.bottom">
 <!--   -->
-</a></div>
+</a>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 </nav>
 </footer>
