@@ -1282,6 +1282,48 @@ public class SelectBuilderTest {
   }
 
   /**
+   * Test SQL union
+   */
+  @Test
+  @DisplayName("Union and values")
+  public void testUnionWithValues() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from("toto t")
+        .where(SQL.clauses("t.tata", Clauses::equalsTo, "1"))
+        .union(SQL.select().field("t.titi")
+               .from("tutu t")
+               .where(SQL.clauses("t.tata", Clauses::equalsTo, "2")))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi FROM toto t WHERE t.tata = ? "
+        + "UNION SELECT t.titi FROM tutu t WHERE t.tata = ?", query.getQuery()),
+              () -> assertEquals(2, query.getValues().size()));
+  }
+
+  /**
+   * Test SQL union all
+   */
+  @Test
+  @DisplayName("Union all")
+  public void testUnionAllWithValues() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .from("toto t")
+        .where(SQL.clauses("t.tata", Clauses::equalsTo, "1"))
+        .unionAll(SQL.select().field("t.titi")
+                  .from("tutu t")
+                  .where(SQL.clauses("t.tata", Clauses::equalsTo, "2")))
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi FROM toto t WHERE t.tata = ? "
+        + "UNION ALL SELECT t.titi FROM tutu t WHERE t.tata = ?", query.getQuery()),
+              () -> assertEquals(2, query.getValues().size()));
+  }
+
+  /**
    * Test select from subquery
    */
   @Test

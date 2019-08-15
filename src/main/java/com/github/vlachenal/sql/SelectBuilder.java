@@ -132,6 +132,7 @@ public class SelectBuilder {
    */
   public SelectBuilder union(final SelectBuilder other) {
     buffer.append(" UNION ").append(other.buffer);
+    values.addAll(other.values);
     return this;
   }
 
@@ -144,6 +145,7 @@ public class SelectBuilder {
    */
   public SelectBuilder unionAll(final SelectBuilder other) {
     buffer.append(" UNION ALL ").append(other.buffer);
+    values.addAll(other.values);
     return this;
   }
 
