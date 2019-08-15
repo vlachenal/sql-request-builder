@@ -2125,6 +2125,24 @@ public class SelectBuilderTest {
   }
 
   /**
+   * SQL =any(?)
+   */
+  @Test
+  @DisplayName("=any(?)")
+  public void testEqualsAnyValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::equalsAny, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a = any(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
    * SQL <>any(SELECT ...)
    */
   @Test
@@ -2167,6 +2185,24 @@ public class SelectBuilderTest {
     assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
         + "WHERE t.a <> any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
               () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <>any(?)
+   */
+  @Test
+  @DisplayName("<>any(?)")
+  public void testNotEqualsAnyValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::notEqualsAny, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> any(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
   }
 
   /**
@@ -2215,6 +2251,24 @@ public class SelectBuilderTest {
   }
 
   /**
+   * SQL <any(?)
+   */
+  @Test
+  @DisplayName("<any(?)")
+  public void testLesserAnyValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::lesserAny, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a < any(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
    * SQL <=any(SELECT ...)
    */
   @Test
@@ -2257,6 +2311,24 @@ public class SelectBuilderTest {
     assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
         + "WHERE t.a <= any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
               () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <=any(?)
+   */
+  @Test
+  @DisplayName("<=any(?)")
+  public void testLesserEqualsAnyValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::lesserEqualsAny, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <= any(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
   }
 
   /**
@@ -2305,6 +2377,24 @@ public class SelectBuilderTest {
   }
 
   /**
+   * SQL >any(?)
+   */
+  @Test
+  @DisplayName(">any(?)")
+  public void testGreaterAnyValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::greaterAny, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a > any(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
    * SQL >=any(SELECT ...)
    */
   @Test
@@ -2347,6 +2437,24 @@ public class SelectBuilderTest {
     assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
         + "WHERE t.a >= any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
               () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL >=any(?)
+   */
+  @Test
+  @DisplayName(">=any(?)")
+  public void testGreaterEqualsAnyValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::greaterEqualsAny, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a >= any(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
   }
 
   /**
@@ -2395,6 +2503,24 @@ public class SelectBuilderTest {
   }
 
   /**
+   * SQL =all(?)
+   */
+  @Test
+  @DisplayName("=all(?)")
+  public void testEqualsAllValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::equalsAll, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a = all(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
    * SQL <>all(SELECT ...)
    */
   @Test
@@ -2437,6 +2563,24 @@ public class SelectBuilderTest {
     assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
         + "WHERE t.a <> all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
               () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <>all(?)
+   */
+  @Test
+  @DisplayName("<>all(?)")
+  public void testNotEqualsAllValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::notEqualsAll, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> all(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
   }
 
   /**
@@ -2485,6 +2629,24 @@ public class SelectBuilderTest {
   }
 
   /**
+   * SQL <all(?)
+   */
+  @Test
+  @DisplayName("<all(?)")
+  public void testLesserAllValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::lesserAll, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a < all(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
    * SQL <=all(SELECT ...)
    */
   @Test
@@ -2527,6 +2689,24 @@ public class SelectBuilderTest {
     assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
         + "WHERE t.a <= all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
               () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <=all(?)
+   */
+  @Test
+  @DisplayName("<=all(?)")
+  public void testLesserEqualsAllValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::lesserEqualsAll, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <= all(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
   }
 
   /**
@@ -2575,6 +2755,24 @@ public class SelectBuilderTest {
   }
 
   /**
+   * SQL >all(?)
+   */
+  @Test
+  @DisplayName(">all(?)")
+  public void testGreaterAllValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::greaterAll, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a > all(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
    * SQL >=all(SELECT ...)
    */
   @Test
@@ -2617,6 +2815,24 @@ public class SelectBuilderTest {
     assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
         + "WHERE t.a >= all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
               () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL >=all(?)
+   */
+  @Test
+  @DisplayName(">=all(?)")
+  public void testGreaterEqualsAllValue() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::greaterEqualsAll, "1") // DO NOT DO THAT => only works with java.sql.Array
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a >= all(?)", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
   }
   // Tests -
 
