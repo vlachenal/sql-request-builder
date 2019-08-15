@@ -2078,6 +2078,546 @@ public class SelectBuilderTest {
         + "WHERE t.a = t.b", query.getQuery()),
               () -> assertEquals(0, query.getValues().size()));
   }
+
+  /**
+   * SQL =any(SELECT ...)
+   */
+  @Test
+  @DisplayName("=any(builder)")
+  public void testEqualsAnyBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equalsAny(SQL.select().field("ta.a")
+                                       .from("tata ta")
+                                       .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL =any(SELECT ...)
+   */
+  @Test
+  @DisplayName("=any(request)")
+  public void testEqualsAnyQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equalsAny(SQL.select().field("ta.a")
+                                       .from("tata ta")
+                                       .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                       .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <>any(SELECT ...)
+   */
+  @Test
+  @DisplayName("<>any(builder)")
+  public void testNotEqualsAnyBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").notEqualsAny(SQL.select().field("ta.a")
+                                          .from("tata ta")
+                                          .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a <> any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <>any(SELECT ...)
+   */
+  @Test
+  @DisplayName("<>any(request)")
+  public void testNotEqualsAnyQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").notEqualsAny(SQL.select().field("ta.a")
+                                          .from("tata ta")
+                                          .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                          .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a <> any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <any(SELECT ...)
+   */
+  @Test
+  @DisplayName("<any(builder)")
+  public void testLesserAnyBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").lesserAny(SQL.select().field("ta.a")
+                                       .from("tata ta")
+                                       .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a < any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <any(SELECT ...)
+   */
+  @Test
+  @DisplayName("<any(request)")
+  public void testLesserAnyQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").lesserAny(SQL.select().field("ta.a")
+                                       .from("tata ta")
+                                       .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                       .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a < any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <=any(SELECT ...)
+   */
+  @Test
+  @DisplayName("<=any(builder)")
+  public void testLesserEqualsAnyBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").lesserEqualsAny(SQL.select().field("ta.a")
+                                             .from("tata ta")
+                                             .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a <= any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <=any(SELECT ...)
+   */
+  @Test
+  @DisplayName("<=any(request)")
+  public void testLesserEqualsAnyQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").lesserEqualsAny(SQL.select().field("ta.a")
+                                             .from("tata ta")
+                                             .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                             .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a <= any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL >any(SELECT ...)
+   */
+  @Test
+  @DisplayName(">any(builder)")
+  public void testGreaterAnyBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").greaterAny(SQL.select().field("ta.a")
+                                        .from("tata ta")
+                                        .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a > any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL >any(SELECT ...)
+   */
+  @Test
+  @DisplayName(">any(request)")
+  public void testGreaterAnyQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").greaterAny(SQL.select().field("ta.a")
+                                        .from("tata ta")
+                                        .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                        .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a > any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL >=any(SELECT ...)
+   */
+  @Test
+  @DisplayName(">=any(builder)")
+  public void testGreaterEqualsAnyBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").greaterEqualsAny(SQL.select().field("ta.a")
+                                              .from("tata ta")
+                                              .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a >= any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL >=any(SELECT ...)
+   */
+  @Test
+  @DisplayName(">=any(request)")
+  public void testGreaterEqualsAnyQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").greaterEqualsAny(SQL.select().field("ta.a")
+                                              .from("tata ta")
+                                              .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                              .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a >= any(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL =all(SELECT ...)
+   */
+  @Test
+  @DisplayName("=all(builder)")
+  public void testEqualsAllBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equalsAll(SQL.select().field("ta.a")
+                                       .from("tata ta")
+                                       .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL =anllSELECT ...)
+   */
+  @Test
+  @DisplayName("=anllrequest)")
+  public void testEqualsAllQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").equalsAll(SQL.select().field("ta.a")
+                                       .from("tata ta")
+                                       .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                       .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a = all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <>all(SELECT ...)
+   */
+  @Test
+  @DisplayName("<>all(builder)")
+  public void testNotEqualsAllBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").notEqualsAll(SQL.select().field("ta.a")
+                                          .from("tata ta")
+                                          .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a <> all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <>all(SELECT ...)
+   */
+  @Test
+  @DisplayName("<>all(request)")
+  public void testNotEqualsAllQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").notEqualsAll(SQL.select().field("ta.a")
+                                          .from("tata ta")
+                                          .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                          .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a <> all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <all(SELECT ...)
+   */
+  @Test
+  @DisplayName("<all(builder)")
+  public void testLesserAllBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").lesserAll(SQL.select().field("ta.a")
+                                       .from("tata ta")
+                                       .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a < all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <all(SELECT ...)
+   */
+  @Test
+  @DisplayName("<all(request)")
+  public void testLesserAllQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").lesserAll(SQL.select().field("ta.a")
+                                       .from("tata ta")
+                                       .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                       .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a < all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <=all(SELECT ...)
+   */
+  @Test
+  @DisplayName("<=all(builder)")
+  public void testLesserEqualsAllBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").lesserEqualsAll(SQL.select().field("ta.a")
+                                             .from("tata ta")
+                                             .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a <= all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL <=all(SELECT ...)
+   */
+  @Test
+  @DisplayName("<=all(request)")
+  public void testLesserEqualsAllQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").lesserEqualsAll(SQL.select().field("ta.a")
+                                             .from("tata ta")
+                                             .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                             .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a <= all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL >all(SELECT ...)
+   */
+  @Test
+  @DisplayName(">all(builder)")
+  public void testGreaterAllBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").greaterAll(SQL.select().field("ta.a")
+                                        .from("tata ta")
+                                        .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a > all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL >all(SELECT ...)
+   */
+  @Test
+  @DisplayName(">all(request)")
+  public void testGreaterAllQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").greaterAll(SQL.select().field("ta.a")
+                                        .from("tata ta")
+                                        .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                        .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a > all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL >=all(SELECT ...)
+   */
+  @Test
+  @DisplayName(">=all(builder)")
+  public void testGreaterEqualsAllBuilder() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").greaterEqualsAll(SQL.select().field("ta.a")
+                                              .from("tata ta")
+                                              .where(SQL.clauses().field("ta.plop").equals().field("'plip'")))
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a >= all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
+
+  /**
+   * SQL >=all(SELECT ...)
+   */
+  @Test
+  @DisplayName(">=all(request)")
+  public void testGreaterEqualsAllQuery() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses()
+               .field("t.a").greaterEqualsAll(SQL.select().field("ta.a")
+                                              .from("tata ta")
+                                              .where(SQL.clauses().field("ta.plop").equals().field("'plip'"))
+                                              .build())
+            ).build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t "
+        + "WHERE t.a >= all(SELECT ta.a FROM tata ta WHERE ta.plop = 'plip')", query.getQuery()),
+              () -> assertEquals(0, query.getValues().size()));
+  }
   // Tests -
 
 }
