@@ -34,7 +34,7 @@ If you are using Maven, you can add the following dependency to your `pom.xml`:
 
 If you are using Gradle, you can add the following dependency:
 ```groovy
-compile "com.github.vlachenal:sql-request-builder:0.11"
+compile "com.github.vlachenal:sql-request-builder:0.12"
 ```
 
 Otherwise, you can clone this repository and build library using `jar` task.
