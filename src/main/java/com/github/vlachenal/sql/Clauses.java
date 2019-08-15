@@ -19,7 +19,6 @@
 */
 package com.github.vlachenal.sql;
 
-
 /**
  * Provides clauses function for optional clauses in {@link ClausesBuilder}.<br>
  * Functions can (should) be used as {@link ClauseMaker}. Every function will format
@@ -199,6 +198,150 @@ public final class Clauses {
    */
   public static String notExists(final String column) {
     return "NOT EXISTS ";
+  }
+
+  /**
+   * Provides 'equals to any of' clause with {@code = any()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String equalsAny(final String column) {
+    return column + " = any(?)";
+  }
+
+  /**
+   * Provides 'not equals to any of' clause with {@code <> any()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String notEqualsAny(final String column) {
+    return column + " <> any(?)";
+  }
+
+  /**
+   * Provides 'lesser than any of' clause with {@code < any()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String lesserAny(final String column) {
+    return column + " < any(?)";
+  }
+
+  /**
+   * Provides 'lesser than or equals to any of' clause with {@code <= any()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String lesserEqualsAny(final String column) {
+    return column + " <= any(?)";
+  }
+
+  /**
+   * Provides 'greater than to any of' clause with {@code > any()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String greaterAny(final String column) {
+    return column + " > any(?)";
+  }
+
+  /**
+   * Provides 'greater than or equals to any of' clause with {@code >= any()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String greaterEqualsAny(final String column) {
+    return column + " >= any(?)";
+  }
+
+  /**
+   * Provides 'equals to all of' clause with {@code = all()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String equalsAll(final String column) {
+    return column + " = all(?)";
+  }
+
+  /**
+   * Provides 'not equals to all of' clause with {@code <> all()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String notEqualsAll(final String column) {
+    return column + " <> all(?)";
+  }
+
+  /**
+   * Provides 'lesser than all of' clause with {@code < all()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String lesserAll(final String column) {
+    return column + " < all(?)";
+  }
+
+  /**
+   * Provides 'lesser than or equals to all of' clause with {@code <= all()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String lesserEqualsAll(final String column) {
+    return column + " <= all(?)";
+  }
+
+  /**
+   * Provides 'greater than to all of' clause with {@code > all()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String greaterAll(final String column) {
+    return column + " > all(?)";
+  }
+
+  /**
+   * Provides 'greater than or equals to all of' clause with {@code >= all()} operator.<br>
+   * Value has to be {@code java.sql.Array}.
+   *
+   * @param column the column
+   *
+   * @return clause request part
+   */
+  public static String greaterEqualsAll(final String column) {
+    return column + " >= all(?)";
   }
   // Methods -
 

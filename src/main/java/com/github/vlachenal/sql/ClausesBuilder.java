@@ -442,6 +442,294 @@ public class ClausesBuilder {
     buffer.append(" OR ");
     return this;
   }
+
+  /**
+   * Add {@code = any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder equalsAny(final SQLQuery query) {
+    buffer.append(" = any(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code <> any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder notEqualsAny(final SQLQuery query) {
+    buffer.append(" <> any(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code < any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder lesserAny(final SQLQuery query) {
+    buffer.append(" < any(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code = any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder lesserEqualsAny(final SQLQuery query) {
+    buffer.append(" <= any(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code > any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder greaterAny(final SQLQuery query) {
+    buffer.append(" > any(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code = any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder greaterEqualsAny(final SQLQuery query) {
+    buffer.append(" >= any(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code = any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder equalsAny(final SelectBuilder query) {
+    buffer.append(" = any(").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code <> any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder notEqualsAny(final SelectBuilder query) {
+    buffer.append(" <> any(").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code < any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder lesserAny(final SelectBuilder query) {
+    buffer.append(" < any(").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code = any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder lesserEqualsAny(final SelectBuilder query) {
+    buffer.append(" <= any(").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code > any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder greaterAny(final SelectBuilder query) {
+    buffer.append(" > any(").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code = any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder greaterEqualsAny(final SelectBuilder query) {
+    buffer.append(" >= any(").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code = all()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder equalsAll(final SQLQuery query) {
+    buffer.append(" = all(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code <> all()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder notEqualsAll(final SQLQuery query) {
+    buffer.append(" <> all(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code < all()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder lesserAll(final SQLQuery query) {
+    buffer.append(" < all(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code = all()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder lesserEqualsAll(final SQLQuery query) {
+    buffer.append(" <= all(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code > all()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder greaterAll(final SQLQuery query) {
+    buffer.append(" > all(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code = all()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder greaterEqualsAll(final SQLQuery query) {
+    buffer.append(" >= all(").append(query.getQuery()).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code = all()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder equalsAll(final SelectBuilder query) {
+    buffer.append(" = all(").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code <> any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder notEqualsAll(final SelectBuilder query) {
+    buffer.append(" <> all(").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code < all()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder lesserAll(final SelectBuilder query) {
+    buffer.append(" < all(").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code = all()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder lesserEqualsAll(final SelectBuilder query) {
+    buffer.append(" <= all(").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code > all()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder greaterAll(final SelectBuilder query) {
+    buffer.append(" > all(").append(query).append(')');
+    return this;
+  }
+
+  /**
+   * Add {@code = any()} subquery clause.
+   *
+   * @param query the subquery
+   *
+   * @return {@code this}
+   */
+  public ClausesBuilder greaterEqualsAll(final SelectBuilder query) {
+    buffer.append(" >= all(").append(query).append(')');
+    return this;
+  }
   // No check no prepared statement values -
 
   // Check and add value to prepared statement +
