@@ -1087,7 +1087,7 @@ public class SelectBuilderTest {
    */
   @Test
   @DisplayName("Fetch")
-  public void testLimit() {
+  public void testFetch() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
         .field("t.tata")
@@ -1106,7 +1106,7 @@ public class SelectBuilderTest {
    */
   @Test
   @DisplayName("Fetch offset")
-  public void testLimitOffset() {
+  public void testFetchOffset() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
         .field("t.tata")
@@ -1121,11 +1121,68 @@ public class SelectBuilderTest {
   }
 
   /**
+   * Test window function with only limit
+   */
+  @Test
+  @DisplayName("Limit")
+  public void testLimit() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::notEquals, "a"))
+        .limitOffset(10, 0)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ? LIMIT 10", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
+   * Test window function with limit and offset
+   */
+  @Test
+  @DisplayName("Limit offset")
+  public void testLimitOffset() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::notEquals, "a"))
+        .limitOffset(10, 50)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ? LIMIT 10 OFFSET 50", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
+   * Test window function with limit and offset
+   */
+  @Test
+  @DisplayName("Fetch next offset")
+  public void testFetchNextOffset() {
+    final SQLQuery query = SQL.select()
+        .field("t.titi")
+        .field("t.tata")
+        .from("toto t")
+        .where(SQL.clauses("t.a", Clauses::notEquals, "a"))
+        .offset(50).fetchNext(10)
+        .build();
+    System.out.println("SQL query: " + query.getQuery());
+    System.out.println("Values: " + query.getValues());
+    assertAll(() -> assertEquals("SELECT t.titi,t.tata FROM toto t WHERE t.a <> ? OFFSET 50 ROWS FETCH NEXT 10 ROWS ONLY", query.getQuery()),
+              () -> assertEquals(1, query.getValues().size()));
+  }
+
+  /**
    * Test window function with only limit in 'subbuilder'
    */
   @Test
   @DisplayName("Fetch without where")
-  public void testLimitWithoutWhere() {
+  public void testFetchWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
         .field("t.tata")
@@ -1143,7 +1200,7 @@ public class SelectBuilderTest {
    */
   @Test
   @DisplayName("Fetch offset without where")
-  public void testLimitOffsetWithoutWhere() {
+  public void testFetchOffsetWithoutWhere() {
     final SQLQuery query = SQL.select()
         .field("t.titi")
         .field("t.tata")

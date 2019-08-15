@@ -162,6 +162,18 @@ public class SelectBuilder {
   }
 
   /**
+   * Add {@code FETCH NEXT n ROWS ONLY} (Oracle)
+   *
+   * @param limit the limit value
+   *
+   * @return {@code this}
+   */
+  public SelectBuilder fetchNext(final long limit) {
+    buffer.append(" FETCH NEXT ").append(limit).append(" ROWS ONLY");
+    return this;
+  }
+
+  /**
    * Add {@code FETCH FIRST n ROWS ONLY}
    *
    * @param limit the limit value
@@ -170,6 +182,23 @@ public class SelectBuilder {
    */
   public SelectBuilder fetch(final long limit) {
     buffer.append(" FETCH FIRST ").append(limit).append(" ROWS ONLY");
+    return this;
+  }
+
+  /**
+   * Add {@code LIMIT l OFFSET o} (works with MySQL, PostgreSQL and SQLite3).<br>
+   * {@code OFFSET} will be added when offset is greater than {@code 0}.
+   *
+   * @param limit the maximum number of result
+   * @param offset the offset value
+   *
+   * @return {@code this}
+   */
+  public SelectBuilder limitOffset(final long limit, final long offset) {
+    buffer.append(" LIMIT ").append(limit);
+    if(offset > 0) {
+      buffer.append(" OFFSET ").append(offset);
+    }
     return this;
   }
 
