@@ -28,13 +28,13 @@ If you are using Maven, you can add the following dependency to your `pom.xml`:
 <dependency>
   <groupId>com.github.vlachenal</groupId>
   <artifactId>sql-request-builder</artifactId>
-  <version>0.12</version>
+  <version>0.13</version>
 </dependency>
 ```
 
 If you are using Gradle, you can add the following dependency:
 ```groovy
-compile "com.github.vlachenal:sql-request-builder:0.12"
+compile "com.github.vlachenal:sql-request-builder:0.13"
 ```
 
 Otherwise, you can clone this repository and build library using `jar` task.
