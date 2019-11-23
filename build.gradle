@@ -58,18 +58,20 @@ dependencies {
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
 }
 
-version = '0.13'
+//version = '0.13'
 jar {
+  archiveBaseName = 'sql-request-builder'
+  archiveVersion = '0.13'
   manifest {
     attributes("Manifest-Version": "1.0",
                "Name": "com/github/vlachenal/sql/",
                "Creadted-By": System.getProperty('java.version') + " (" + System.getProperty('java.vendor') + ")",
                "Application-Name": "SQL request builder",
                "Specification-Title": "SQL request builder",
-               "Specification-Version": version,
+               "Specification-Version": archiveVersion,
                "Specification-Vendor": "Vincent Lachenal",
                "Implementation-Title": "com.github.vlachenal.sql",
-               "Implementation-Version": version,
+               "Implementation-Version": archiveVersion,
                "Implementation-Vendor": "Vincent Lachenal",
                'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                "Source-Compatibility": sourceCompatibility,
