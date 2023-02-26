@@ -195,6 +195,9 @@ public class SelectBuilder {
    * @return {@code this}
    */
   public SelectBuilder limitOffset(final long limit, final long offset) {
+    if(limit < 1) {
+      return this;
+    }
     buffer.append(" LIMIT ").append(limit);
     if(offset > 0) {
       buffer.append(" OFFSET ").append(offset);
